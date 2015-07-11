@@ -1,0 +1,50 @@
+﻿@using IES.Service.Common;
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@(PageData["title"] ?? "课程中心4.0")</title>
+    <meta name="description" content="@PageData["description"]">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!--[if lte IE 8]>
+       <script>
+         document.createElement('ng-include');
+         document.createElement('ng-pluralize');
+         document.createElement('ng-view');
+        document.createElement('ies-file-uploader');
+         // Optionally these for CSS
+         document.createElement('ng:include');
+         document.createElement('ng:pluralize');
+         document.createElement('ng:view');
+       </script>
+     <![endif]-->
+
+    @Styles.Render("~/content/css/Layout6")
+    <script>
+        //应用程序根目录-->  结果('/')||('/g2s')
+        window.appPatch = "@Request.ApplicationPath" == "/" ? "" : "@Request.ApplicationPath";
+    </script>
+    <script src="~/Frameworks/jwplay/jwplayer.js"></script>
+    <script src="~/js/jquery-1.8.3.min.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+</head>
+<body class="bg_color">
+    <div class="wrap">
+        @RenderPage("Top.cshtml")
+        <div class="preview_box" ng-controller="FCLearnController">
+            @RenderPage("MyOCFC.cshtml")
+            <div class="reverse_box">
+                @RenderPage("MyFCLeft.cshtml")
+                @RenderBody()
+            </div>
+        </div>
+        <div>@RenderPage("Foot.cshtml")</div>
+        <a class='icon backto_top' href='#'></a>
+    </div>
+    @Scripts.Render("~/js/framework")
+    @Scripts.Render("~/js/app")
+    @Scripts.Render("~/js/Layout")
+</body>
+</html>

@@ -1,0 +1,83 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .warm_img{display:block;width:50px ;height:50px;background:url(../../../Images/warm.jpg) no-repeat;background-size:50px 50px;}
+    .ComAdd_btn{float:right;margin-top:8px}
+    .ComAdd_btn em {background-position: 0px -24px;float: left;}
+    .ComAdd_btn span {float: left;display: block;width: 72px;height: 24px;background: #475c7c;line-height: 24px;color: #fff;text-align: center;}
+    .ComAdd_btn span:hover {background: #556d93;}
+    .determin_btn{display:block;float:left;height:32px;width:102px;background:#2f3c51;line-height:32px;color:#fff;text-align:center;font-size:13px;}
+    .determin_btn:hover {background: #374760;}
+    .cancel_btn{display:block;float:left;height:32px;width:79px;background:#888;text-align:center;font-size:13px;line-height:32px;color:#fff;}
+    .cancel_btn:hover{background:#999}
+    .notes_page_head{width: 100%; height: 41px; background: #33425a}
+    .notes_page_head span{float:left;line-height:41px;font-size:15px;font-weight:bold;color:#fff;margin-left:13px}
+    .notes_page_head a{float:right;margin-right:10px;margin-top:13px;display: inline-block;width: 16px;height: 16px;background: url(/Images/closefliv.png) no-repeat;-moz-transform:rotate(-45deg); -webkit-transform:rotate(-45deg); filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3)}
+    .notes_page_cont{width: 799px; height: 379px; border-bottom: 1px solid #ccc; border-left: 1px solid #ccc; border-right: 1px solid #ccc;}
+</style>
+<div style="width:1000px;margin:0;border:0">
+    
+</div>
+<div style="width:801px;height:auto;border:0">
+    <div class="notes_page_head">
+        <span>添加笔记</span>
+        <a></a>
+    </div>
+    <div class="notes_page_cont">
+        <div style="width:799px;height:29px;border:0"></div>
+        <div style="margin:0px 29px;height:350px;width:741px;border:0">
+            <input style=" border:1px solid #808080;" type="hidden" name="oEditor1" id="oEditor1" />
+            <iframe id="frmoEditor1" src="/Frameworks/ewebeditor/ewebeditor.htm?id=oEditor1&style=coolblue" frameborder="0" scrolling="no" width="741" height="260" style="display: block;"></iframe>
+            <div style="float:left;height:44px;width:741px;border:0">
+                <a class="ComAdd_btn" href="javascript:;"><em class="icon_24"></em><span>新增资料</span></a>
+            </div>
+            <div style="float:left;height:32px;width:741px">
+                <a class="determin_btn" style="margin-left:269px">保存笔记</a>
+                <a class="cancel_btn" style="margin-left:10px">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width:401px;height:auto;border:0">
+    <div class="notes_page_head">
+        <span>提示</span>
+        <a></a>
+    </div>
+    <div style="width:399px;border:1px solid #ccc;height:199px">
+        <div class="warm_img" style="margin:33px 0 0 39px;float:left"></div>
+        <span style="float:left;margin:43px 0 0 9px;font-size:15px;color:#666">确定取消对该笔的“赞”？</span>
+        <div style="float:left;height:32px;width:399px;margin-top:60px">
+            <a class="determin_btn" style="margin-left:107px;width:79px">确定</a>
+            <a class="cancel_btn" style="margin-left:19px">取消</a>
+        </div>
+    </div>
+</div>
+<div style="width:801px;height:auto;border:0">
+    <div class="notes_page_head">
+        <span>活跃度积分规则</span>
+        <a></a>
+    </div>
+    <div style="width:799px;border:1px solid #ccc;height:233px;line-height:30px">
+        <div style="width:799px;height:20px;border:0"></div>
+        <div style="margin-left:65px;height:35px;width:600px">           
+            <span style="font-size:16px;color:#000">活跃度积分规则明细：</span>
+        </div>
+        <div style="margin-left:65px;height:30px;width:600px">
+            <em style="display: block; width: 9px; height: 9px; background: #374760; float: left; margin-top: 11px; margin-right: 8px"></em>
+            <span style="font-size:13px;color:#666;float:left;">课程学习过程中，分享自己的笔记给其他人 -- 80个活跃积分</span>
+        </div>
+        <div style="margin-left:65px;height:30px;width:600px">
+            <em style="display: block; width: 9px; height: 9px; background: #374760; float: left; margin-top: 11px; margin-right: 8px"></em>
+            <span style="font-size: 13px; color: #666;float:left">单条笔记被别人赞/评论/收藏 -- 1个活跃积分</span>
+        </div>
+        <div style="margin-left:65px;height:30px;width:600px">
+            <em style="display: block; width: 9px; height: 9px; background: #374760; float: left; margin-top: 11px; margin-right: 8px"></em>
+            <span style="font-size: 13px; color: #666;float:left">每记录一条笔记 -- 1个活跃积分</span>
+        </div>
+        <div style="margin-left:65px;height:20px;width:600px"></div>
+        <div style="margin-left:65px;height:30px;width:600px">
+            <span style="font-size:13px;color:red">*温馨提示：活跃度高的笔记会给老师留下良好的印象，可能会给最终的学习成绩加分哦！</span>
+        </div>
+    </div>
+</div>

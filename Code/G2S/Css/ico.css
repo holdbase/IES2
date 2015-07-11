@@ -1,0 +1,11 @@
+﻿.ico_data{background: url(../Images/ico/20_ico_data.png) no-repeat;width: 20px;height: 20px;cursor:pointer;display:inline-block;}
+.ico_discuss{background: url(../Images/ico/20_ico_discuss.png) no-repeat;width: 20px;height: 20px;cursor:pointer;display:inline-block;}
+.ico_edit{background: url(../Images/ico/20_ico_edit.png) no-repeat;width: 20px;height: 20px;cursor:pointer;display:inline-block;}
+.ico_info{background: url(../Images/ico/20_ico_info.png) no-repeat;width: 20px;height: 20px;cursor:pointer;display:inline-block;}
+.ico_knowledge{background: url(../Images/ico/20_ico_knowledge.png) no-repeat;width: 20px;height: 20px;cursor:pointer;display:inline-block;}
+.ico_problem{background: url(../Images/ico/20_ico_problem.png) no-repeat;width: 20px;height: 20px;cursor:pointer;display:inline-block;}
+.ico_star{background: url(../Images/ico/20_ico_star.png) no-repeat;width: 20px;height: 20px;cursor:pointer;display:inline-block;}
+
+
+.pos_nolight{background-position: 0px 0px;}
+.pos_highlight{background-position: -20px 0px;}

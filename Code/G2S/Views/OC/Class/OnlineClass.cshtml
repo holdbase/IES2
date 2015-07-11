@@ -1,0 +1,239 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Css/class.css" rel="stylesheet" />
+
+<div class="class_item" ng-controller="OnLineController">
+    <div class="item_box">
+        <ul class="class_item_list">
+            <li title="在读教学班"><a target="_self" href="index">在读教学班</a></li>
+            <li title="结业教学班"><a target="_self" href="index?IsHistroy=true">结业教学班</a></li>
+            <li title="网络招生班级" class="active"><a href="javascript:;">网络招生班级</a></li>
+        </ul>
+        <div class="class_operation">
+            <a title="新增招生" href="#" ng-click="AddorEditOCMoocDialo(-1)"><em><i class="icon icon_add"></i></em><span>新增招生</span></a>
+        </div>
+    </div>
+    @*<div class="class_tip" ng-show="OCMoocModel.IsHistroy">
+        <select class="term_select" ng-hide="true">
+            <option>全部学期</option>
+            <option>第一学期</option>
+            <option>第二学期</option>
+        </select>
+        <span ng-hide="true" class="class_search"><input type="text" ng-model="OCMoocModel.Key" placeholder="{{OCMoocModel.Key}}"><i class="icon search_icon" style="cursor:pointer" ng-click="SearchOCMoocList()"></i></span>
+    </div>*@
+    <table class="class_table">
+        <tr>
+            <th width="10"></th>
+            <th width="60"></th>
+            <th width="80">招生方式</th>
+            <th width="180">招生起止日期</th>
+            <th width="180">教学运行时间</th>
+            <th width="80">人数限制</th>
+            <th width="80">在读学生</th>
+            <th width="80">结业学生</th>
+            @*<th width="80">注册码</th>*@
+            <th></th>
+        </tr> @*on-get-mooc-list*@
+        <tr ng-repeat="OCMooc in OCMoocRecruitList|orderBy:'IsHistroy'" ng-class="{true: 'oddbg', false: ''}[$even]" ng-mouseover="Show_btn=true" ng-mouseleave="Show_btn=false">
+            <td></td>
+            <td><span ng-class="{true: 'recruit_status recruting', false: 'recruit_status recruited'}[OCMooc.IsHistroy==0]" ng-bind-template="{{OCMooc.IsHistroy==0?'进行中':'已结束'}}"></span></td>
+            <td ng-bind-template="{{OCMooc.JoinType==1?'随时加入':'统一开课'}}"></td>
+            <td>
+                <span ng-if="OCMooc.JoinType==1" ng-bind="OCMooc.RecruitStartDate|dateFormat"></span>
+                <span ng-if="OCMooc.JoinType==2" ng-bind-template="{{OCMooc.RecruitStartDate| dateFormat}}~{{OCMooc.RecruitEndDate| dateFormat}}"></span>
+            </td>
+            <td>
+                <span ng-if="OCMooc.JoinType==1">根据学生报名日起算</span>
+                <span ng-if="OCMooc.JoinType==2" ng-bind-template="{{OCMooc.StartDate| dateFormat}}~{{OCMooc.EndDate| dateFormat}}"></span>
+            </td>
+            <td ng-bind-template="{{OCMooc.UserLimit<=0?'不限':OCMooc.UserLimit}}"></td>
+            <td><a class="num_box" ng-click="ShowOCMoocStudentList(OCMooc,0)" href="javascript:;" ng-bind="OCMooc.InReadStudentNum"></a></td>
+            <td><a class="num_box" ng-click="ShowOCMoocStudentList(OCMooc,1)" href="javascript:;" ng-bind="OCMooc.CompleteStudentNum"></a></td>
+            @*<td><a class="btn_open" href="javascript:;" ng-click="ShowRegNumUpdDialog(OCMooc)" ng-bind="!OCMooc.RegStatus?'未启用':OCMooc.RegNum"></a></td>*@
+            <td>
+                <div class="register_btn_box" ng-show="Show_btn" style="margin-right:20px;">
+                    <div ng-class="{true: 'register_btns', false: 'register_btn'}[Show_btn]">
+                        <span  class="icon icon_throw" ng-click="OCMooc_Del(OCMooc)" ng-mouseover="Show_del=true" ng-mouseleave="Show_del=false">
+                            <div class="icon_explain" ng-class="{true: 'icon_explain block', false: 'icon_explain none'}[Show_del]">删除</div>
+                        </span>
+                        <span ng-if="OCMooc.IsHistroy!=1" ng-click="OCMoocRecruitHistory_Upd(OCMooc)" class="icon date_icon" ng-mouseover="Show_IsHistroy=true" ng-mouseleave="Show_IsHistroy=false">
+                            <div class="icon_explain" ng-class="{true: 'icon_explain block', false: 'icon_explain none'}[Show_IsHistroy]">设为结业</div>
+                        </span>
+                        <span ng-if="OCMooc.IsHistroy!=1" class="icon pause_btn" ng-class="{true: 'icon pause_btn', false: 'icon broad_btn'}[OCMooc.RecruitStatus==1]" ng-click="RecruitStatusUpd(OCMooc)" ng-mouseover="Show_pause=true" ng-mouseleave="Show_pause=false">
+                            <div class="icon_explain" ng-class="{true: 'icon_explain block', false: 'icon_explain none'}[Show_pause]" ng-bind-template="{{OCMooc.RecruitStatus==1?'暂停招生':'开启招生'}}"></div>
+                        </span>
+                        <span class="icon export_btn" ng-mouseover="Show_imput=true" ng-mouseleave="Show_imput=false">
+                            <div class="icon_explain" ng-class="{true: 'icon_explain block', false: 'icon_explain none'}[Show_imput]">导出学生</div>
+                        </span>
+                        <span ng-if="OCMooc.IsHistroy!=1" class="icon btn_edit" ng-click="AddorEditOCMoocDialo(OCMooc)" ng-mouseover="Show_edit=true" ng-mouseleave="Show_edit=false">
+                            <div class="icon_explain" ng-class="{true: 'block icon_explain ', false: 'none icon_explain'}[Show_edit]">编辑</div>
+                        </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="OCMoocPage" style="float:right;margin-right:20px; margin-top:10px;"></div>
+
+    <div id="myRegNumModal" class="modal hide fade" style="width:500px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4>注册码</h4>
+        <span class="icon close_pop" data-dismiss="modal"></span>
+        <div class="form_box">
+            <div class="register_box">
+                注册码：<input type="checkbox" ng-model="OCMoocModel_Upd.RegStatus" ng-checked="OCMoocModel_Upd.RegStatus"><span>启用</span><input class="register_code" type="text" ng-model="OCMoocModel_Upd.RegNum" value="{{OCMoocModel_Upd.RegNum}}">
+                <p class="code_tip" style="margin-top:10px;">你需要将注册码，通过其他方式告知你的学生</p>
+            </div>
+            <div class="btn_box">
+                <a class="save" style="cursor:pointer" ng-click="OCMoocRegNum_Upd()">确定</a>
+                <a class="cancel" style="cursor:pointer" data-dismiss="modal" aria-hidden="true">取消</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="myAddOrEditModal" data-backdrop="static" class="modal hide fade" style="width:700px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4>新增招生</h4>
+        <span class="icon close_pop" data-dismiss="modal"></span>
+        <div class="pop_wrap">
+            <div class="recruit_detail">
+                <label>招生方式：</label>
+                <div class="recruit_r">
+                    <div class="recruit_way">
+                        <p class="style_box">
+                            <span><input class="way1" ng-disabled="AddorEditModel.RecruitID!=-1" name="way" type="radio" value="1" ng-model="AddorEditModel.JoinType">随时加入</span>
+                            <span><input class="way2" ng-disabled="AddorEditModel.RecruitID!=-1" name="way" type="radio" value="2" ng-model="AddorEditModel.JoinType">统一开课</span>
+                        </p>
+                        <div class="recruit_tip" ng-show="AddorEditModel.JoinType==1">不设定统一的入学时间，录取后，可立刻开始学习。学生遵循课程时间表的指引和约束，在要求的时间内，完成课程的在线学习、课程考试</div>
+                        <div class="recruit_tip" ng-show="AddorEditModel.JoinType==2">教师设定统一的开课时间，以及对应的教学计划，学生在同一时间开始学习。学生遵循教师设置的教学任务时间，完成课程的在线学习、面授、及课程考试</div>
+                    </div>
+                </div>
+            </div>
+            <div class="recruit_list" style="display:block;">
+                <div class="recruit_detail">
+                    <label>招生日期：</label>
+                    <div class="recruit_r">
+                        <div class="date_box">
+                            <div class="recruit_date">
+                                <input class="laydate-icon" id="recruitStartDate" value="{{AddorEditModel.RecruitStartDate |dateFormat}}" ng-model="AddorEditModel.RecruitStartDate" type="text">
+                            </div>
+                            <span ng-hide="AddorEditModel.JoinType==1">~</span>
+                            <div class="recruit_date" ng-hide="AddorEditModel.JoinType==1">
+                                <input class="laydate-icon" id="recruitEndDate" value="{{AddorEditModel.RecruitEndDate |dateFormat}}" ng-model="AddorEditModel.RecruitEndDate" type="text">
+                            </div>
+                            <b ng-hide="AddorEditModel.JoinType==1">*</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="recruit_detail" ng-show="AddorEditModel.JoinType==2">
+                    <label>教学运行：</label>
+                    <div class="recruit_r">
+                        <div class="date_box">
+                            <div class="recruit_date">
+                                <input class="laydate-icon" id="startDate" value="{{AddorEditModel.StartDate |dateFormat}}" ng-model="AddorEditModel.StartDate" type="text">
+                            </div>
+                            <span>~</span>
+                            <div class="recruit_date">
+                                <input class="laydate-icon" id="endDate" value="{{AddorEditModel.EndDate |dateFormat}}" ng-model="AddorEditModel.EndDate" type="text">
+                            </div>
+                            <b>*</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="recruit_detail">
+                    <label>人数限制：</label>
+                    <div class="recruit_r">
+                        <div class="people_limit">
+                            <input type="number" ng-value="{{AddorEditModel.UserLimit==0?'w':AddorEditModel.UserLimit}}" ng-model="AddorEditModel.UserLimit">
+                            <span>(空白默认为不限)</span>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="recruit_detail11">
+                    <label>指定教学班：</label>
+                    <div class="assort_box11">
+                        <div class="assort_item">
+                            <input class="course_sort" ng-mousedown="ShowOCMoocDownList()" value="{{SelecedClassValue}}" type="text">
+                            <span class="select_btn11" ng-click="ShowOCMoocDownList()">+</span>
+                        </div>
+                        <div class="select_box11" ng-show="ShowOCMoocClass" ng-mouseleave="ShowOCMoocDownList()">
+                            <p ng-repeat="OCClass in OCMoocClassDropdownList">
+                                <input type="checkbox" ng-checked="OCClass.IsSelected" ng-click="GetSelectedClass(OCClass)">{{OCClass.TeachingClassName}}({{OCClass.StudentCount}})人
+                            </p>
+                        </div>
+                    </div>
+                </div>*@
+                <div class="recruit_detail" ng-hide="true">
+                    <label>注册码：</label>
+                    <div class="recruit_r">
+                        <div class="enter_code">
+                            <p class="open_code"><input type="checkbox" ng-model="AddorEditModel.RegStatus">启用</p>
+                            <input class="code_input" ng-disabled="!AddorEditModel.RegStatus" ng-model="AddorEditModel.RegNum" type="text">
+                            <p class="code_tip">你需要将注册码，通过其他方式告知你的学生，指定教学班的学生无需注册加入，可直接学习。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn_box">
+                <a class="save" style="cursor:pointer" ng-click="OCMoocRecruitEdit()">确定</a>
+                <a class="cancel" style="cursor:pointer" data-dismiss="modal" aria-hidden="true">取消</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="myStudentDetailsModal" data-backdrop="static" class="modal hide fade" style="width:880px;left:40%" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4 ng-bind-template="{{SearchModeal.IsFinish==0?'在读学生':'结业学生'}}">在读学生</h4>
+        <span class="icon close_pop" data-dismiss="modal"></span>
+        <div class="pop_wrap">
+            <p style="width: 628px; float: left" class="stu_num">{{SearchModeal.IsFinish==0?'在读':'结业'}}：{{SearchModeal.StuNum}}/{{SearchModeal.UserLimit==0?'不限':SearchModeal.UserLimit}}</p>
+            <div style="width:210px;height:22px;float:right">
+                <a class="a_btn2" ng-click="Status_Upd(0,2)">通过</a>
+                <a class="a_btn2" ng-click="Status_Upd(0,0)">拒绝</a>
+                <a class="a_btn2" ng-click="Student_Del(0)">删除</a>
+            </div>
+            <div style="width:838px;height:10px;float:left"></div>
+            <table class="stu_table">
+                <tr>
+                    <th width="30"><input ng-change="IsSelectStu()" ng-model="AllstuCheck" style="display: block; margin: 5px 7px;" type="checkbox" /></th>
+                    <th width="90">学号</th>
+                    <th width="80">姓名</th>
+                    <th width="120">专业</th>
+                    <th width="120">行政班</th>
+                    <th width="65">年级</th>
+                    <th width="80">注册日期</th>
+                    <th style="text-align:center" width="100">MOOC学习进度</th>
+                    <th width="80" style="text-align:center">审核状态</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="MoocStudent in OCMoocStudentList" ng-class="{true: 'oddbg', false: ''}[$even]">
+                    <td><input ng-change="IsAllSelectStu()" ng-model="MoocStudent.IsSelected" style="display: block; margin: 5px 7px;" type="checkbox" /></td>
+                   
+                    @*<td ng-bind="MoocStudent.UserName"></td>
+                    <td ng-bind="MoocStudent.SpecialtyName"></td>
+                    <td ng-bind="MoocStudent.ClassName"></td>*@
+
+                    <td ng-bind="MoocStudent.UserNo"></td>
+                    <td title="{{MoocStudent.UserName}}"><p ng-bind="MoocStudent.UserName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 80px; "></p></td>
+                    <td title="{{MoocStudent.SpecialtyName}}"><p ng-bind="MoocStudent.SpecialtyName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 120px; "></p></td>
+                    <td title="{{MoocStudent.ClassName}}"><p ng-bind="MoocStudent.ClassName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 120px; "></p></td>
+
+                    <td ng-bind="MoocStudent.EntryDate"></td>
+                    <td ng-bind="MoocStudent.RegDate|dateFormat"></td>
+                    <td style="text-align:center" ng-bind="MoocStudent.MOOCLearningPace"></td>
+                    <td style="text-align:center" ng-bind="MoocStudent.Status | shStatusFilter"></td>
+                    <td style="text-align:center">
+                        <a ng-show="MoocStudent.Status!=1?true:false" title="删除" ng-click="Student_Del(MoocStudent.UserID)" class="icon_vote delete_btn"></a>
+                        <a ng-show="MoocStudent.Status!=1?true:false" title="重新审核" ng-click="Status_Upd(MoocStudent.UserID,1)" class="icon_score re_btn"></a>
+                        <a ng-show="MoocStudent.Status==1?true:false" title="通过" ng-click="Status_Upd(MoocStudent.UserID,2)" class="icon_score btn_open"></a>
+                        <a ng-show="MoocStudent.Status==1?true:false" title="拒绝" ng-click="Status_Upd(MoocStudent.UserID,0)" class="icon_score ban_btn"></a>
+                    </td>
+                </tr>
+            </table>
+            <div id="MoocStudentPage" style="float:right;margin-right:20px; margin-top:10px;"></div>
+            <div class="btn_box">
+                <a class="cancel" style="cursor:pointer" data-dismiss="modal" aria-hidden="true">关闭</a>
+            </div>
+        </div>
+    </div>
+
+
+</div>

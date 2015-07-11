@@ -1,0 +1,78 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout4.cshtml";
+}
+<script src="~/js/jquery-1.8.3.min.js"></script>
+<link href="~/Css/face.css" rel="stylesheet" />
+<link href="~/Css/home.css" rel="stylesheet" />
+<script src="~/js/face.js"></script>
+<!--右侧头部公告结束-->
+@*<div class="core_content">*@
+<div class="course_nav">
+    
+    <ul class="course_arrange">
+        <li class="active"><a href="#">我的课程</a></li>
+        <li ng-if="false"><a target="_self" href="../Home/MyCourse">我的课表</a></li>
+    </ul>
+    <a class="creat_course" title="新建课程" target="_self" href="../OC/CourseIndex"><i class="icon_24 icon_new"></i>新建课程</a>
+</div>
+<div class="course_box" ng-controller="HomeController">
+    <div class="switch_box">
+        <ul class="switch_list">
+            <li ng-class="{true: 'active', false: ''}[num==PageIndex]" style="cursor:pointer" ng-repeat="num in OcPagesNumList" ng-click="JumpPage(num,0)"></li>
+        </ul>
+        <div class="course_switch">
+            <ul class="course_list">
+                <li ng-repeat="oc in OcList|ocListFilter:'between':PageIndex:'2'" on-get-oc-list>
+                    <div class="img_tit">
+                        <img ng-if="oc.ImgFileUrl!=null&&oc.ImgFileUrl.length>0" title="{{oc.Name}}" src='{{oc.ImgFileUrl}}' width="280" height="150" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                        <img ng-if="oc.ImgFileUrl==null||oc.ImgFileUrl.length<=0" title="{{oc.Name}}" src="../Images/default/Course_M.jpg" width="280" height="150" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                        <div class="course_intro">
+                            <h4 title="{{oc.Name}}"><div class="strTitle" style="width:200px;height:40px">{{oc.Name}}</div></h4>
+                            <a ng-if="oc.Role<=2" ng-class="{true: 'icon delete_white', false: 'icon throw_btn'}[oc.Role==0]" title="{{oc.Role==0?'删除':'退出该课程'}}" href="javascript:;" ng-click="Del_OC(oc.OCID,oc.Role,oc.IsHasMainTeacher)"></a>
+                            <a ng-if="oc.IsHasSite==1" class="icon home_icon" href="javascript:;"></a>
+                            <a class="icon edit_icon" target="_blank" title="编辑" href="../OC/CourseIndex?currentoc={{oc.OCID}}"></a>
+                        </div>
+                    </div>
+                    <ul class="icon_list">
+                        <li title="翻转课堂"><a target="_self" href="../OC/FC/index?currentoc={{oc.OCID}}"><i class="icon_24 fanzhuan"></i>翻转课堂</a></li>
+                        <li title="网站"><a target="_blank" href="../OC/Site/index?currentoc={{oc.OCID}}"><i class="icon_24 site"></i>网站</a></li>
+                        <li title="MOOC"><a target="_blank" href="../OC/MOOC/index?currentoc={{oc.OCID}}"><i class="icon_24 mooc"></i>MOOC</a></li>
+                        <li title="学生"><a target="_self" href="../OC/class/index?currentoc={{oc.OCID}}"><i class="icon_24 student"></i>学生</a></li>
+                        <li title="团队"><a target="_self" href="../OC/Team/index?currentoc={{oc.OCID}}"><i class="icon_24 team"></i>团队</a></li>
+                    </ul>
+                </li>
+                <li ng-show="ocListFilter==null||ocListFilter.length<2">
+                    <div class="create_box">
+                        <img src="../Images/create_img.jpg" width="100" height="155" alt="">
+                        <div class="text_box">
+                            <span>如何在课程中心开课？</span>
+                            <p>MOOC新趋势<br>翻转玩起来<br>各类资源建起来<br>师生互动更便捷</p>
+                            <a target="_self" title="开始建课" href="../OC/CourseIndex">开始建课</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <a class="icon course_prev" href="javascript:;" ng-click="GetPageList(0)"></a>
+        <a class="icon course_next" href="javascript:;" ng-click="GetPageList(1)"></a>
+    </div>
+    <a class="shouqi" id="ShowCourse" href="#" ng-click="SlideCourse()">展开全部课程↓</a>
+    <ul class="course_all" ng-show="ShowCourse">
+        <li ng-repeat="oc in OcList">
+            <a class="course_img">
+                <img ng-if="oc.ImgFileUrl!=null&&oc.ImgFileUrl.length>0" title="{{oc.Name}}" src='{{oc.ImgFileUrl}}' width="120" height="65" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                <img ng-if="oc.ImgFileUrl==null||oc.ImgFileUrl.length<=0" title="{{oc.Name}}" src="../Images/default/Course_S.jpg" width="120" height="65" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+            </a>
+            <p title="{{oc.Name}}">{{oc.Name}}</p>
+            <ul class="small_icon">
+                <li title="翻转课堂"><a class="icon small_fz" target="_self" href="../OC/FC/index?currentoc={{oc.OCID}}"></a></li>
+                <li title="网站"><a class="icon small_site" target="_blank" href="../OC/Site/index?currentoc={{oc.OCID}}"></a></li>
+                <li title="MOOC"><a class="icon small_mooc" target="_blank" href="../OC/MOOC/index?currentoc={{oc.OCID}}"></a></li>
+                <li title="学生"><a class="icon small_stu" target="_self" href="../OC/Class/index?currentoc={{oc.OCID}}"></a></li>
+                <li title="团队"><a class="icon small_team" target="_self" href="../OC/Team/index?currentoc={{oc.OCID}}"></a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<!--右侧主题内容结束-->   

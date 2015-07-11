@@ -1,0 +1,84 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout.cshtml";
+    string type = Request["type"] == "1" && Request["type"] != null ? "投票" : "帖子";
+    string title = (Request["TopicID"] == null || Request["TopicID"] == "" ? "新增" : "编辑") + type;
+    PageData["title"] = title;
+}
+
+
+<link href="~/Css/forum.css" rel="stylesheet" />
+
+<div class="main_all main_course" ng-controller="ForumTopicCtrl">
+    <div id="box" style="display:none;">
+        <div ies-file-uploader id="eIesUploader"
+             ocid="OCID"
+             course-id="1"
+             filesize="512" @*文件大小以M为单位*@
+             filecount="5" @*允许上传的文件个数*@
+             filesuffix="filesuffix" @*文件类型*@
+             fileuptype="2" @*1:资料上传,2:附件上传*@>
+        </div>
+    </div>
+    <!--右侧主题内容开始-->
+    <div class="main_content">
+        <div class="coursesite_box">
+            <div class="current_class post_page">
+                <a class="return_home" href="javascript:ReturnPage();" ng-click="ReturnPage();"><i class="icon_forum icon_return"></i>返回</a>
+            </div>
+            <div class="tips_box" ng-init="tag=true" ng-show="tag">
+                <p>如果你对我们的系统有任何问题，请发帖到<a href="#">在线客服模块</a>，我们会第一时间为你解答。</p>
+                <i class="icon icon_cancel" onclick="$('.tips_box').slideUp()"></i>
+            </div>
+            <div class="post_box">
+                <input class="post_tit" ng-model="ForumTopic.Title" maxlength="50" type="text" placeholder="请输入话题名称[50个字以内]" style="width:850px;"><span class="red red_label">*</span>
+                <div class="example_box">
+                    <span>取一个好的标题常常会引起大家更活跃的讨论，如：</span>
+                    <p><i class="icon_forum icon_good"></i>量子力学的运动定律是什么？</p>
+                    <p><i class="icon_forum icon_bad"></i>讨论量子力学（范围太宽没有针对性）</p>
+                </div>
+                <div class="text_box">
+                    @*<img src="../../images/text_box2.jpg" width="870" height="250" alt="">*@
+                    <input type="hidden" name="oEditor1" ng-value="ForumTopic.Conten" id="oEditor1" />
+                    <iframe id="frmoEditor1" src="../../Frameworks/ewebeditor/ewebeditor.htm?id=oEditor1&style=mini" frameborder="0" scrolling="no" width="870" height="250" style="display: block;"></iframe>
+                </div>
+                <div class="select_module">
+                    <select ng-show="IsMooc!=1" ng-model="selected" ng-options="m.ForumTypeID as m.Title for m in ForumType_Item" style="width:860px;"></select>
+                    <select ng-show="IsMooc==1" ng-model="ChapterID" ng-options="m.ChapterID as m.Title for m in ChapterName_Items" style="width:860px;"></select>
+                    <span class="red red_label">*</span>
+                    <p>在适当的版块里面进行讨论，话题将更加聚焦，更能引起共鸣和讨论</p>
+                </div>
+                <div class="label_box">
+                    <div class="label_name">
+                        <input style="width:130px" type="text" ng-model="Tag" maxlength="8" placeholder="请输入标签名称">
+                        <em><i class="icon icon_add" ng-click="AddTag()"></i></em>
+                        <span ng-repeat="m in TagItems track by $index">
+                            <a href="javascript:;">{{m}}</a>
+                            <i ng-click="DelTag($index)" class="icon_admin remove_btn"></i>
+                        </span>
+                    </div>
+                    <p>添加适当的标签将有利于大家更加快速的搜索到你的主题，同时也是对知识点的快速归类!<span>(标签名称长度8个字符以内)</span></p>
+                </div>
+                @*上传文件*@
+                <div style="margin-top:20px;">
+                    <div class="label_name" style="margin-top:10px;" ng-repeat="m in fileList">
+                        <span>
+                            <i file-ext ext="{{m.FileName}}" class="icon_24" style="float:left;left:3px; top:3px;"></i>
+                            <a href="javascript:;" style="padding-left:35px;width:300px;" ng-bind="m.Title"></a>
+                            <i ng-click="Attachment_Del($index,m)" class="icon_admin remove_btn"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <a class="attach_box" role="button" data-toggle="modal" data-backdrop="static" ng-click="ShowBox()">
+                    <i class="icon_forum icon_upload"></i>
+                    上传附件
+                </a>
+                @*<a class="issue_btn" href="javascript:;">发布</a>ForumTopic_Add();*@
+                <input ng-show="TopicID==0" class="issue_btn" style="width: 130px; background: #374760;" value="发布" type="button" ng-click="ForumTopic_Add();" />
+                <input ng-show="TopicID>0" class="issue_btn" style="width: 130px; background: #374760;" value="确定" type="button" ng-click="ForumTopic_Upd();" />
+            </div>
+        </div>
+    </div>
+
+</div>
+

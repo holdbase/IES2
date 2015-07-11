@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:ng="http://angularjs.org" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title ng-bind="appname"></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="{{appname}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+
+    <link href="css/certificate.css" rel="stylesheet" />
+    <link href="css/common.css" rel="stylesheet" />
+    <link href="css/footer.css" rel="stylesheet" />
+    <link href="css/header.css" rel="stylesheet" />
+    <link href="css/micro.css" rel="stylesheet" />
+    <link href="css/side_left.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/frameworks/jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/frameworks/angular/angular.js"></script>
+    <script type="text/javascript" src="/frameworks/angular/angular-animate.js"></script>
+    <script type="text/javascript" src="/frameworks/angular/angular-cookies.js"></script>
+    <script type="text/javascript" src="/frameworks/angular/angular-sanitize.js"></script>
+    <script type="text/javascript" src="/frameworks/angular/angular-ui-router.js"></script>
+    <script type="text/javascript" src="/frameworks/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="/frameworks/es5/es5.js"></script>
+    <script type="text/javascript" src="/frameworks/es5/es5-sham.min.js"></script>
+    <script type="text/javascript" src="/frameworks/es5/es5-shim.min.js"></script>
+
+    <script type="text/javascript" src="/frameworks/check-list/checklist-model.js"></script>
+    <script type="text/javascript" src="/app/module.js"></script>
+
+    <!--***********************       Common        ***************************************-->
+    <script type="text/javascript" src="/app/common/prototype.func.js"></script>
+    <script type="text/javascript" src="/app/common/common.service.js"></script>
+
+    <!--***********************       Component        ***********************************-->
+    <script type="text/javascript" src="/Components/js/component.modal.js"></script>
+    <script type="text/javascript" src="/Components/js/bootstrap.pager.js"></script>
+
+    <!--***********************       Uploader ***********************************-->
+    <!--<link rel="stylesheet" type="text/css" href="/hbUploader/webuploader/webuploader.css">
+    <script type="text/javascript" src="/hbUploader/webuploader/webuploader.nolog.min.js"></script>
+    <script type="text/javascript" src="/hbUploader/hbUploader.services.js"></script>
+    <script type="text/javascript" src="/hbUploader/hbImageUploader/hbImageUploader.js"></script>-->
+
+    <!--***********************       Filters        ***********************************-->
+    <script type="text/javascript" src="/app/filters/filters.js"></script>
+
+    <!--***********************       Auth ***********************************-->
+    <!--<script type="text/javascript" src="/app/authority/auth.services.js"></script>-->
+
+    <!--***********************       Home        ***************************************-->
+    <!--<script type="text/javascript" src="/app/home/controllers/home.index.controller.js"></script>
+    <script type="text/javascript" src="/app/home/home.services.js"></script>
+    <script type="text/javascript" src="/app/home/home.routes.js"></script>-->
+
+    <!--***********************       File        ***************************************-->
+    <!--<script type="text/javascript" src="/app/file/controllers/file.imageUpload.controller.js"></script>
+    <script type="text/javascript" src="/app/file/file.routes.js"></script>
+    <script type="text/javascript" src="/app/file/file.services.js"></script>-->
+    <!--***********************       MicroCourse        ***************************************-->
+    <script type="text/javascript" src="/app/microCourse/controllers/course.view.controller.js"></script>
+    <script type="text/javascript" src="/app/microCourse/controllers/course.submit.controller.js"></script>
+    <script type="text/javascript" src="/app/microCourse/controllers/course.finished.controller.js"></script>
+    <script type="text/javascript" src="/app/microCourse/controllers/course.base.controller.js"></script>
+    <script type="text/javascript" src="/app/microCourse/controllers/course.create.controller.js"></script>
+    <script type="text/javascript" src="/app/microCourse/controllers/course.test.controller.js"></script>
+    <script type="text/javascript" src="/app/microCourse/controllers/course.overview.controller.js"></script>
+    <script type="text/javascript" src="/app/microCourse/controllers/course.publish.controller.js"></script>
+    <script type="text/javascript" src="/app/microCourse/microCourse.routes.js"></script>
+    <script type="text/javascript" src="/app/microCourse/microCourse.services.js"></script>
+
+    <script type="text/javascript" src="/app/app.js"></script>
+</head>
+<body>
+    <div ui-view></div>
+</body>
+</html>

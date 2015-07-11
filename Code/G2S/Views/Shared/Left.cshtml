@@ -1,0 +1,175 @@
+﻿@using IES.Cache;
+@using IES.Security;
+@using IES.JW.Model;
+@using IES.G2S.JW.BLL;
+@using IES.Service;
+@using IES.Service.Common;
+
+
+@helper gethref(string url, string leftmenu)
+{
+    var result = Browse.appPatch + url + "?leftmenu=" + leftmenu;
+    @result
+}
+
+@{
+    if (Request.QueryString["userspace"] != null)
+    {
+        Browse.SetUserSpace(Request.QueryString["userspace"]);
+    }
+
+    if (Request.QueryString["leftmenu"] != null)
+    {
+        IES.Service.Common.Browse.SetLeftMenu(Request.QueryString["leftmenu"]);
+
+    }
+
+
+    string userspace = Browse.UserSpace;
+
+    string topmenu = IES.Service.Common.Browse.TopMenu;
+    string leftmenu = IES.Service.Common.Browse.LeftMenu;
+    if (topmenu.ToUpper().StartsWith("D") || leftmenu.ToUpper().StartsWith("D"))
+    {
+        topmenu = "D";
+        IES.Service.Common.Browse.SetTopMenu(topmenu);
+    }
+
+
+    List<Menu> Menulist = new List<Menu>();
+    string spacename = "教师端";
+    string titlespace = "点击切换学生端";
+    string spaceurl = Browse.appPatch + "/Home/StudentIndex?userspace=3";
+    if (!UserService.IsTeacher && userspace != "3")
+    {
+        userspace = "3";
+        Browse.SetUserSpace(userspace);
+        //如果处于教师空间的栏目，则默认切换到学生空间
+        if (topmenu.Substring(0, 1) == "B")
+        {
+            topmenu = "C1";
+        }
+
+    }
+
+    if (userspace == "2")
+    {
+        Menulist = AuService.Menu_Left_List(topmenu, Int32.Parse(userspace));
+    }
+
+    if (userspace == "3")
+    {
+        Menulist = AuService.Menu_Left_List(topmenu, Int32.Parse(userspace));
+        if (UserService.IsTeacher)
+        {
+            spacename = "学生端";
+            titlespace = "点击切换教师端";
+            spaceurl = Browse.appPatch + "/Home/index?userspace=2";
+        }
+        else
+        {
+            spacename = "学生端";
+            titlespace = string.Empty;
+            spaceurl = string.Empty;
+        }
+    }
+}
+@{
+    int Stat = IES.Service.UserService.Traffic(1);
+    int userid = int.Parse(IES.Security.IESCookie.GetCookieValue("ies"));
+    if (userid > 0)
+    {
+        if (Session["AccessRole"] == null)
+        {
+            Stat = Stat + 1;
+            new IES.G2S.Portal.BLL.PortalBLL().SysClicks_Add(1, Stat);
+            Session["AccessRole"] = userid.ToString();
+        }
+    }
+    else
+    {
+        string userip = IES.Service.UserService.IP;
+        if (Session["AccessRole"] == null)
+        {
+            Stat = Stat + 1;
+            new IES.G2S.Portal.BLL.PortalBLL().SysClicks_Add(1, Stat);
+            Session["AccessRole"] = userip.ToString();
+        }
+    }
+}
+
+<div class='side_left' ng-controller="UserPermissionLeftController ">
+    <div class='user'>
+        <img src=@UserService.CurrentUserIMG width='110' height='110' />
+        <a class='teacher_name' href='#'>@UserService.CurrentUser.UserName</a>
+        <a class='switch_btn' target="_self" title="@titlespace" href="@spaceurl">@spacename<i class='icon icon_arrow'></i></a>
+        <span class='icon_24 icon_user'></span>
+    </div>
+
+    <div class='side_box'>
+        <ul class='side_nav' style="height:auto;">
+            @for (int i = 0; i < Menulist.Count; i++)
+            {
+                var menu = Menulist[i];
+                if (menu.MenuID == @Browse.LeftMenu)
+                {
+                    <li class="active"><a target="_self" href=@gethref( @menu.URL, @menu.MenuID )>@menu.Title</a></li>
+                }
+                else
+                {
+                    <li><a target="_self" href=@gethref( @menu.URL, @menu.MenuID )>@menu.Title</a></li>
+                }
+            }
+
+        </ul>
+    </div>
+</div>
+@*在线客服*@
+@{
+    string HelpUrl = Browse.appPatch + "/Views/Help/index";
+    string OnlineUrl = "http://v1.live800.com/live800/chatClient/chatbox.jsp?companyID=496937&configID=41705&jid=5578562966&enterurl=&info=userId%3D";
+    try
+    {
+        int UserID = UserService.CurrentUser.UserID;
+        string UserName = UserService.CurrentUser.UserName;
+        if (UserID != null && UserName != "")
+        {
+            OnlineUrl = "http://v1.live800.com/live800/chatClient/chatbox.jsp?companyID=496937&configID=41705&jid=5578562966&enterurl=&info=userId%3D" + UserID + "%26name%3D" + UserName + "%26+memo+%3D%E6%9C%AA%E5%BC%80%E5%8F%91%E5%85%B6%E5%AE%83%E4%BF%A1%E6%81%AF";
+        }
+    }
+    catch { };
+}
+<div class="onlinebox" title="点我展开服务工具栏">
+    在线客服
+</div>
+<div class="onlinediv">
+    <span title="点我隐藏" class="onlineclose">—</span>
+    <ul>
+        <li style="border-bottom:2px solid #CDCDCD;">
+            <a style="display:block;" href="@OnlineUrl" target="_blank">
+                <div class="onlinekif" style="width:60px;height:50px;"></div>
+                <span style="display:block;height:20px;line-height:20px;">在线客服</span>
+            </a>
+            <div class="curstrbox" style="padding-top:17px">
+                <span style="font-size:16px;font-weight:bold;line-height:20px;">课程中心在线客服</span><br />
+                <span style="line-height:20px;">服务时间:8:30~20:30</span>
+            </div>
+        </li>
+        <li style="border-bottom:2px solid #CDCDCD;">
+            <a style="display:block;" href="javascript:;">
+                <div class="onlinephone" style="width:60px;height:50px;"></div>
+                <span style="display:block;height:20px;line-height:20px;">电话</span>
+            </a>
+            <div class="curstrbox" style="padding-top:17px">
+                <span style="font-size:16px;font-weight:bold;line-height:20px;">400-820-3579 转3</span><br />
+                <span style="line-height:20px">服务时间:8:30~20:30</span>
+            </div>
+        </li>
+        <li>
+            <a style="display:block;" href="@HelpUrl" target="_blank">
+                <div class="onlinehelp" style="width:60px;height:50px;"></div>
+                <span style="display:block;height:20px;line-height:20px;">帮助</span>
+            </a>
+        </li>
+    </ul>
+</div>

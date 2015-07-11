@@ -1,0 +1,109 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout9.cshtml";
+}
+@{
+    bool IsTeacher = IES.Service.UserService.IsTeacher;
+}
+
+<link href="~/Views/User/AddressBook.css" rel="stylesheet" />
+
+<div style="width:1000px;">
+    <div class="daohang_div">
+        <div class="daohang_box">
+            <a target="_self" href="AddressBook?leftmenu=D">我的联系人</a>
+            <a class="active" target="_self" href="MyGroup?leftmenu=D">我的联系组</a>
+            @if (IsTeacher)
+            {
+                 <a target="_self" href="Histcontacts?leftmenu=D">我的历史学生</a>
+            }          
+        </div>
+    </div>
+    <div class="top_div">
+        <div style="float:right;width:125px">
+            <select name="pagesize" onchange="SizeChange()" style="width:60px;height:25px;line-height:30px;float:right;margin-left:10px;margin-top:2px">
+                <option value="5" selected>5行</option>
+                <option value="10">10行</option>
+                <option value="20">20行</option>
+                <option value="50">50行</option>
+                <option value="100">100行</option>
+            </select>
+            <span style="float: right; line-height: 30px; color: #666;">每页显示</span>
+        </div>
+        <div class="exercise_btn" style="height: 30px; line-height: 30px; margin-right: 0px;width:115px">
+            <a style="margin-top: 3px;" href="javascript:PageFenzu(0,0)"><i class="u26_btn" style="float:left"></i><span style="float:right">新增分组</span></a>
+        </div>
+        <div class="exercise_btn" style="height: 30px; line-height: 30px; margin-right: 0px;width:115px">
+            <a style="margin-top: 3px;" href="javascript:sendUserIDS()"><i class="u24_btn" style="float:left"></i><span style="float:right">发送消息</span></a>
+        </div>
+        <div style="float: right; width: 210px; position: relative; overflow: hidden; zoom: 1;">
+            <input type="text" id="Key" placeholder="请输入组名" style="height:30px;width:176px;float:right;line-height:30px;padding-right:24px" />
+            <a href="javascript:searchKey();" class="u14_btn" style="position:absolute;margin-left:185px"></a>
+        </div>
+    </div>
+
+    <div id="GroupFenzu" class="content_div">
+        
+    </div>
+
+    <div id="div_page_wrap" style="float:left;width:930px;height:50px;"></div>
+
+    <div id="NewFenzu" style="width: 800px; height: 500px; border: 1px solid #ccc; display: none;float:left">
+        <div style="width: 100%; height: 40px; background: #1E5975; border-bottom: 1px solid #ccc; color: #fff; ">
+            <span style="font-size: 16px; font-weight: 600; line-height: 40px; margin-left: 10px">分组</span>
+            <a class="u216_btn" href="javascript:ClosePage();" id="pagebtn1" style="float:right;margin:14px 8px 0 0"></a>
+        </div>
+        <div style="width:760px;float:left;height:50px;line-height:40px;padding:10px 20px 0px 20px">
+            <span style="color:red;float:left;line-height:45px;">*</span><span style="font-size:13px;width:47px;float:left">组名:</span>
+            <input type="text" onblur="GroupIsNull()" name="GroupName" style="float: left; width: 440px; height: 30px; margin-top: 5px; line-height: 30px" />
+            <span id="nameYz" style="float:left;color:red;display:none;margin-left:20px;line-height:43px">分组名不能为空!</span>
+        </div>
+        <div style="float:left; width: 492px; height: 301px; margin-left: 20px; border: 1px solid #ccc;">
+            <div style="width: 492px; float: left; background: #ccc; height: 30px;line-height:30px; ">
+                <span style="margin-left: 10px; float: left;">选择联系人</span>
+                <div style="float:right;position:relative">
+                    <input type="text" id="tabKey" placeholder="请输入姓名" style="height:20px;width:176px;float:right;margin-top:4px;margin-right:12px;padding-right:24px" />
+                    <a style="position:relative;float:right" href="javascript:searchKey2();"><i class="u14_btn"></i></a>
+                </div>
+            </div>
+            <div style="float:left;width:492px;height:270px;">
+                <table>
+                    <tr style="text-align:left;height:30px;border-bottom:1px solid #ccc">
+                        <th style="width:30px;height:30px"><div style="height:13px;width:13px;margin-left:7px;margin-bottom:6px"><input type="checkbox" id="chkAll" name="chkAll" onclick="selectAll()" /></div></th>
+                        <th style="width:90px;height:30px">
+                            <select name='role2' onchange='PageUserList()' style="width:80px;height:24px">
+                                <option value="0">全部身份</option>
+                                <option value="8">教师</option>
+                                <option value="4">学生</option>
+                            </select>
+                        </th>
+                        <th style="width: 90px; height: 30px; font-size: 13px; font-weight: 500">姓名</th>
+                        <th style="width:280px;height:30px">
+                            <div id="dropClassName" onclick="dropShow()" style="text-align:left;width: 270px; height: 22px; position: absolute; margin-top: -12px; border: 1px solid #ccc; font-weight: 500; background: url(../../Images/u77.png) no-repeat;background-position:253px 3px "></div>
+                            <select name="classdrop" onmouseover="changeSh(this,1)" onmouseout="changeSh(this,2)" onchange="PageUserList()" size="10" style="width: 272px;position:absolute;z-index:999;margin-top:11px;float:left "></select>
+                        </th>
+                    </tr>
+                </table>
+                <table id="pageUserList" class="tabtable"></table>
+            </div>
+        </div>
+        <div style="width:58px;height:300px;float:left">
+            <a class="u276_img" href="javascript:chkUser()"></a>
+        </div>
+        <div style="float: left;  width:202px; border:1px solid #ccc;">
+            <div style="float: left; width: 100%; height: 30px;line-height:30px; background: #ccc">
+                <span id="readyUser" style="margin-left:10px">已选择名单(0)</span>
+            </div>
+            <div style="width: 100%; height: 270px; overflow-y: scroll; color: #666">
+                <table id="seledUserList">
+                </table>
+            </div>
+        </div>
+        <div id="div_page2" style="width: 492px; height: 50px;float:left;margin-left:20px">
+        </div>
+        <div style="height:44px;width:100%;float:left;line-height:44px">
+            <a class="wod_btn" href="javascript:AddGroup()" style="margin-left:320px;">确定</a>
+            <a id="pagebtn2" class="wrt_btn" href="javascript:ClosePage();" style="margin-left: 10px;">取消</a>
+        </div>
+    </div>
+</div>
+<script src="~/Views/User/MyGroup.js"></script>

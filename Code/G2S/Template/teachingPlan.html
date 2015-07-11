@@ -1,0 +1,79 @@
+﻿<div class="main_content">
+    <div class="main_all">
+        <div class="teaching_plan">
+            <div class="plan_box">
+                <div class="plan_detail" ng-repeat="Chapter in ChapterList|MoocFilter:'ParentID':'=':0|orderBy:'Orde'" on-offline-get>
+                    <div class="step_box">
+                        <p>第{{$index+1}}阶段 {{Chapter.PlanDay}}天</p>
+                        <span class="line"></span>
+                        <i class="icon_24 icon_node"></i>
+                    </div>
+                    <div class="online_box">
+                        <div class="step_detail">
+                            <div class="chapt_box">
+                                <span class="learning_style online_learning">在线学习</span>
+                                <h4>第{{$index+1}}章：{{Chapter.Title}}<b>（{{Chapter.MinHour}}学时）</b></h4>
+                                <div class="chapt_detail">
+                                    <a href="javascript:void(0);"><i class="icon_con icon_test" title="测试"></i>{{Chapter.TestNumTotal}}</a>
+                                    <a href="javascript:void(0);"><i class="icon_con icon_know" title="知识点"></i>{{Chapter.KenNumTotal}}</a>
+                                    <a href="javascript:void(0);"><i class="icon_con icon_discuss" title="讨论"></i>{{Chapter.TopicNum}}</a>
+                                    <a href="javascript:void(0);"><i class="icon_con icon_txt" title="资料"></i>{{Chapter.FileNumTotal}}</a>
+                                    <a href="javascript:void(0);"><i class="icon_con icon_video" title="视频"></i>{{Chapter.VideoNumTotal}}</a>
+                                </div>
+                            </div>
+                            <ul class="chapt_list">
+                                <li ng-repeat="Chapter2 in ChapterList|MoocFilter:'ParentID':'=':Chapter.ChapterID|orderBy:'Orde'">
+                                    {{$index+1}}:{{Chapter2.Title}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="step_detail" ng-repeat=" OCMoocOffline in OCMoocOfflineList|MoocFilter:'ChapterID':'=':Chapter.ChapterID">
+                            <div class=" chapt_box">
+                                <span class="learning_style off_learning">见面课</span>
+                                <h4>{{OCMoocOffline.Title}}<b>（{{OCMoocOffline.Hours}}学时）</b></h4>
+                                <div class="group_discuss">
+                                    <span>小组讨论 | {{OCMoocOffline.UserName}}</span>
+                                    <a href="javascript:void(0);">[展开]</a>
+                                </div>
+                            </div>
+                            <ul class="discuss_question" style="display:none;">
+                                <li>
+                                    <b>本次见面课的目的</b>
+                                    <p ng-bind-html="OCMoocOffline.Purpose|toHtml"></p>
+
+                                </li>
+                                <li>
+                                    <b>教师要点说明</b>
+                                    <p ng-bind-html="OCMoocOffline.Points|toHtml"></p>
+                                </li>
+                                <li>
+                                    <b>学生组织说明</b>
+                                    <p ng-bind-html="OCMoocOffline.Grouping|toHtml"></p>
+                                </li>
+                                <li>
+                                    <b>评价与成绩说明</b>
+                                    <p ng-bind-html="OCMoocOffline.Score|toHtml"></p>
+                                </li>
+                                <li>
+                                    <b>配套资源说明</b>
+                                    <p ng-bind-html="OCMoocOffline.Resource|toHtml"></p>
+                                </li>
+                                <li>
+                                    <b>考核方式</b>
+                                    <p ng-bind-html="OCMoocOffline.Assess|toHtml"></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="plan_detail">
+                    <div class="step_box">
+                        <p>结业考试</p>
+                        <span class="line"></span>
+                        <i class="icon_24 icon_end"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

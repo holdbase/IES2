@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+}
+
+@{
+    var ua = this.Request.UserAgent;
+    var isIE = ua.Contains("MSIE") || ua.Contains("Trident");
+}
+<script>
+        var applicationPath = "@(Href("~")=="/"?"":Href("~"))";
+</script>
+<!--[if lt IE 8]>
+    @Scripts.Render("~/Frameworks/BDUpload/lib/json2.js")
+<![endif]-->
+<!--[if lt IE 9]>
+    @Scripts.Render("~/Frameworks/BDUpload/lib/html5.js")
+<![endif]-->
+@if (isIE)
+{
+    <script src="~/Frameworks/JQuery/jquery-1.11.1.js"></script>
+}
+else
+{
+    <script src="~/Frameworks/JQuery/jquery-2.1.1.js"></script>
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文件上传测试</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <link href="~/Frameworks/BDUpload/webuploader/webuploader.css" rel="stylesheet" />
+    <script src="~/Frameworks/BDUpload/webuploader/webuploader.js"></script>
+    <script src="~/Frameworks/BDUpload/powerWebUpload.js"></script>
+</head>
+<body>
+    <form action="/" method="post">
+        <div id="uploader">
+
+        </div>
+        <p>123</p>
+        <div id="uploader2">
+
+        </div>
+        <input type="hidden" name="uploadhidden" id="uploadhidden" />
+        <input type="hidden" name="uploadhidden2" id="uploadhidden2" />
+
+        <input type="submit" name="提交" value="submit" />
+    </form>
+    </body>
+</html>
+<script>
+    $(function () {
+        $("#uploader").powerWebUpload({
+            hiddenInputId: "uploadhidden"
+        });
+        $("#uploader2").powerWebUpload({
+            hiddenInputId: "uploadhidden2",
+            PostbackHold: true,
+            ShowDownload: true
+        });
+    })
+</script>

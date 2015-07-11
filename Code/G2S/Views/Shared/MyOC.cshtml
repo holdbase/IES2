@@ -1,0 +1,132 @@
+﻿@using IES.Cache;
+@using IES.Security;
+@using IES.JW.Model;
+@using IES.G2S.JW.BLL;
+@using IES.Service;
+@using IES.CC.OC.Model;
+@using IES.Service.Common;
+@{
+    string userid = IESCookie.GetCookieValue("ies");
+    IES.JW.Model.User user = new IES.JW.Model.User { UserID = Int32.Parse(userid) };
+    user = UserService.User_Get(user);
+    user.CurrentUserSpace = Browse.UserSpace;
+    //
+
+    List<OC> oclist = UserService.OC_Simple_List(user);
+
+    if (Request.QueryString["currentoc"] != null)
+    {
+        Browse.SetCurrentOC(Request.QueryString["currentoc"]);
+    }
+    if (Browse.CurrentOC == "0")
+    {
+        if (oclist.Count > 0)
+        {
+            Browse.SetCurrentOC(oclist[0].OCID.ToString());
+        }
+    }
+
+}
+
+@helper gethref(string ocid)
+{
+    var result = Request.Path + "?currentoc=" + ocid;
+    @result
+
+}
+
+@helper getmorehref(string ocid)
+{
+    var result = "#?currentoc=" + ocid;
+    @result
+}
+
+@helper getclass(bool active)
+{
+    var result = "";
+    if (active)
+    {
+        result = "active";
+    }
+    @result
+}
+
+
+
+@helper getOCName(List<OC> oclist)
+{
+    var result = "";
+    for (int j = 3; j < oclist.Count; j++)
+    {
+        OC oc = oclist[j];
+        if (oc.OCID.ToString() == Browse.CurrentOC)
+        {
+            result = @oc.Name;
+            break;
+        }
+        else
+        {
+            result = "查看更多";
+        }
+    }
+    @result
+}
+
+
+<div class="exercise_nav">
+    <ul class="exercise_nav_list">
+        @if (oclist.Count < 3)
+        {
+            for (int i = 0; i < oclist.Count; i++)
+            {
+                OC oc = oclist[i];
+                if (oc.OCID.ToString() == Browse.CurrentOC)
+                {
+                    <li class="active"><a target="_self" class="first_nav" href=@gethref(@oc.OCID.ToString())>@oc.Name</a></li>
+                }
+                else
+                {
+                    <li><a target="_self" class="first_nav" href=@gethref(@oc.OCID.ToString())>@oc.Name</a></li>
+                }
+            }
+        }
+        else
+        {
+            bool addactive = true;
+            for (int i = 0; i < 3; i++)
+            {
+                OC oc = oclist[i];
+                if (oc.OCID.ToString() == Browse.CurrentOC)
+                {
+                    <li class="active"><a target="_self" class="first_nav" href=@gethref(@oc.OCID.ToString())>@oc.Name</a></li>
+                    addactive = false;
+                }
+                else
+                {
+                    <li><a target="_self" class="first_nav" href=@gethref(@oc.OCID.ToString())>@oc.Name</a></li>
+                }
+
+            }
+            <li class="@getclass(addactive)">
+                <a class="first_nav" href="@getmorehref(Browse.CurrentOC.ToString())">@getOCName(oclist)<i class="icon"></i></a>
+                <div class="second_nav" style="display: none;">
+                    @for (int j = 3; j < oclist.Count; j++)
+                    {
+                        OC oc = oclist[j];
+                        if (oc.OCID.ToString() == Browse.CurrentOC)
+                        {
+                            //class="active"
+                            <a target="_self"  href=@gethref(@oc.OCID.ToString())>@oc.Name</a>
+                        }
+                        else
+                        {
+                            <a target="_self" href=@gethref(@oc.OCID.ToString())>@oc.Name</a>
+                        }
+                    }
+                </div>
+
+            </li>
+        }
+
+    </ul>
+</div>

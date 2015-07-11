@@ -1,0 +1,569 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout2.cshtml";
+    PageData["title"] = "课程网站";
+}
+<link href="~/Css/construction.css" rel="stylesheet" />
+<script src="~/Frameworks/jwplay/jwplayer.js"></script>
+<!DOCTYPE html>
+<div ng-controller="SiteController">
+    <div class="construction_box">
+        <div class="construction_header">
+            <div class="construction_tit" style="position: static;">
+                <h2 style=" color: white; "></h2>
+                @*<ul class="pattern_box" >
+                <li ng-class="{'active':BuildModetrue,'inactive':BuildModefalse}"><a href="#">本站建设模式</a><i class="icon_24 icon_right"></i></li>
+                <li ng-class="{'active':BuildModefalse,'inactive':BuildModetrue}"><a role="button" data-toggle="modal" data-backdrop="static" href="#myconstruction">外部链接模式</a><i class="icon_24 icon_right"></i></li>
+            </ul>*@
+                <div class="btn_box">
+                    <a class="save" href="javascript:;" ng-click="OCSite_IsPublish_Upd(1)">发布</a>
+                    <a href="javascript:void(0);" class="save" ng-click="OCSite_IsPublish_Upd(2)">门户展示</a>
+                    <a class="preview" href="javascript:;" ng-click="preview()">预览</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="side_left across_nav  " id="side_top">
+            <div class="version_box">
+                <a class="version_btn" href="#">更换版面<i class="icon_con"></i></a>
+                <div class="change_version">
+                    <ul class="version_list">
+                        <li id="active_1" ng-click="chickbanmian(1)">
+
+                            <img src="~/Images/banmian1.jpg" width="149" height="149" alt="">
+                            <i class="icon_24 icon_right"></i>
+                            <i class="icon_24 icon_eye"></i>
+                        </li>
+                        <li id="active_2" ng-click="chickbanmian(2)">
+                            <img src="~/Images/banmian2.jpg" width="149" height="149" alt="">
+                            <i class="icon_24 icon_right"></i>
+                            <i class="icon_24 icon_eye"></i>
+                        </li>
+                        <li id="active_3" ng-click="chickbanmian(3)">
+                            <img src="~/Images/banmian3.jpg" width="149" height="149" alt="">
+                            <i class="icon_24 icon_right"></i>
+                            <i class="icon_24 icon_eye"></i>
+                        </li>
+                    </ul>
+                    <div class="language_box">
+                        <p>选择网站栏目<br>显示语言</p>
+                        <a class="chinese" id="Language_1" ng-click="OCSite_Language_Upd(1)" href="#">中文</a>
+                        <a class="english" id="Language_0" ng-click="OCSite_Language_Upd(0)" href="#">English</a>
+                    </div>
+                </div>
+            </div>
+            <div class="column_box">
+                <a class="add_columns" role="button" data-toggle="modal" ng-click="addColumn(-1);" data-backdrop="static" style=" cursor:pointer;" >新增主栏目</a>
+                <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                    <h4 id="myModalLabel">新建栏目</h4>
+                    <i class="icon icon_close" aria-hidden="true" data-dismiss="modal"></i>
+                    <div style='padding:10px 18px;overflow:hidden; zoom:1;'>
+                        <div class='section_list'>
+                            <label style=" width:40px;">名称<span style="color:red; margin-left:3px;">*</span>:</label>
+                            <input class='column_name' ng-model="txt_column_name" required type='text' placeholder=''>
+                        </div>
+                        <div class='section_list'>
+                            <label style=" width:40px;">内容：</label>
+                            <div class='column_content'>
+                                <div class='column_style'>
+                                    <span><input type='radio' name='rad_addcolumns' ng-model="rad_addcolumns" ng-value="0">富文本编辑器</span>
+                                    <p>（适用于内容自由编排，支持word排版后导入）</p>
+                                </div>
+                                <div class='column_style'>
+                                    <span><input type='radio' ng-model="rad_addcolumns" ng-value="3" name='rad_addcolumns'>列表形式</span>
+                                    <p>（适用于新闻等版面，以列表样式一条条呈现）</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bootstrapbtn_box">
+                        <a class="save" style=" cursor:pointer;" ng-click="OCSiteColumn_Edit()">保存</a>
+                        <a class="cancel" style="cursor:pointer;" data-dismiss="modal" aria-hidden="true" ng-click="closecolumn()">关闭</a>
+                    </div>
+                </div>
+                <ul class="column_list">
+                    <li ng-repeat="Column in ColumnList" on-column-get>
+                        <a href="#">
+                            <input ng-if="Column.ContentType>10" ng-checked="Column.IsShow" ng-model="Column.IsShow" ng-click="OCSite_Field_Upd(Column.ContentType)" type="checkbox"><span ng-if="Column.IsShow" ng-click="OCSiteColumnByClick(Column.ContentType,Column.Title,Column.ColumnID,0)"><i ng-show="Column.ContentType==0 && Column.Conten==null" class="icon_con filling"></i><i ng-show="Column.ContentType==0 && Column.Conten!=null" class="icon_con filled"></i><i ng-show="Column.ContentType==3" class="icon_con icon_list"></i>{{Column.Title}}   <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column.HasChild}}]"></em></span><span style="color:#cccccc;" ng-if="!Column.IsShow" ng-click="OCSiteColumnByClick(Column.ContentType,Column.Title,Column.ColumnID,0)"><i ng-show="Column.ContentType==0 && Column.Conten==null" class="icon_con filling"></i><i ng-show="Column.ContentType==0 && Column.Conten!=null" class="icon_con filled"></i><i ng-show="Column.ContentType==3" class="icon_con icon_list"></i>{{Column.Title}}<em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column.HasChild}}]"></em></span>
+                            <div class="column_btn multi_column">
+                                <span></span>
+                                <p>
+                                    <i class="icon_con icon_add" ng-show="Column.ContentType<10" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column.ColumnID,Column.ContentType)"></i>
+                                    <i class="icon icon_rewrite" ng-show="Column.ContentType<10" title="编辑" ng-click="sinEdit(Column.ColumnID,Column.ParentID,Column.ContentType)"></i>
+                                    <i class="icon_con icon_up_white" title="上移" ng-click="OCSiteColumn_Move(Column.ColumnID,'orderup')"></i>
+                                    <i class="icon_con icon_down" title="下移" ng-click="OCSiteColumn_Move(Column.ColumnID,'orderdown')"></i>
+                                    <i class="icon_con icon_rightmove" ng-show="Column.ContentType<10" ng-click="OCSiteColumn_Move(Column.ColumnID,'leveldown')" title="下一级"></i>
+                                    <i class="icon icon_delete" ng-show="Column.ContentType<10" title="删除" ng-click="OCSiteColumn_Del(Column.ColumnID)"></i>
+                                </p>
+                            </div>
+                        </a>
+
+                        <ul class="second_nav" ng-if="Column.HasChild==1">
+                            <li ng-repeat="Column1 in Column.Children" ng-model="Column.ContentType">
+                                <a href="#">
+                                    <span ng-click="OCSiteColumnByClick(Column1.ContentType,Column1.Title,Column1.ColumnID,1)"> <i ng-show="Column1.ContentType==0 && Column1.Conten==null" class="icon_con filling"></i><i ng-show="Column1.ContentType==0 && Column1.Conten!=null" class="icon_con filled"></i><i ng-show="Column1.ContentType==3" class="icon_con icon_list"></i>{{Column1.Title}} <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column1.HasChild}}]"></em></span>
+                                    <div class="column_btn multi_column">
+                                        <span></span>
+                                        <p>
+                                            <i class="icon_con icon_add" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column1.ColumnID,Column1.ContentType)"></i>
+                                            <i class="icon icon_rewrite" title="编辑" ng-click="sinEdit(Column1.ColumnID,Column1.ParentID,Column1.ContentType)"></i>
+                                            <i class="icon_con icon_up_white" ng-click="OCSiteColumn_Move(Column1.ColumnID,'orderup')" title="上移"></i>
+                                            <i class="icon_con icon_down" ng-click="OCSiteColumn_Move(Column1.ColumnID,'orderdown')" title="下移"></i>
+                                            <i class="icon_con icon_leftmove" ng-click="OCSiteColumn_Move(Column1.ColumnID,'levelup')" title="上一级"></i>
+                                            <i class="icon_con icon_rightmove" ng-click="OCSiteColumn_Move(Column1.ColumnID,'leveldown')" title="下一级"></i>
+                                            <i class="icon icon_delete" title="删除" ng-click="OCSiteColumn_Del(Column1.ColumnID)"></i>
+                                        </p>
+                                    </div>
+                                </a>
+                                <ul ng-if="Column1.HasChild==1">
+                                    <li ng-repeat="Column2 in Column1.Children" ng-model="Column.ContentType">
+                                        <a href="#">
+                                            <span ng-click="OCSiteColumnByClick(Column2.ContentType,Column2.Title,Column2.ColumnID,1)">
+                                                <i ng-show="Column2.ContentType==0 && Column2.Conten==null" class="icon_con filling"></i><i ng-show="Column2.ContentType==0 && Column2.Conten!=null" class="icon_con filled"></i><i ng-show="Column2.ContentType==3" class="icon_con icon_list"></i>{{Column2.Title}} <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column2.HasChild}}]"></em>
+                                            </span>
+                                            <div class="column_btn multi_column">
+                                                <span></span>
+                                                <p>
+                                                    <i class="icon_con icon_add" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column2.ColumnID,Column2.ContentType)"></i>
+                                                    <i class="icon icon_rewrite" ng-click="sinEdit(Column2.ColumnID,Column2.ParentID,Column2.ContentType)" title="编辑"></i>
+                                                    <i class="icon_con icon_up_white" ng-click="OCSiteColumn_Move(Column2.ColumnID,'orderup')" title="上移"></i>
+                                                    <i class="icon_con icon_down" ng-click="OCSiteColumn_Move(Column2.ColumnID,'orderdown')" title="下移"></i>
+                                                    <i class="icon_con icon_leftmove" ng-click="OCSiteColumn_Move(Column2.ColumnID,'levelup')" title="上一级"></i>
+                                                    <i class="icon_con icon_rightmove" ng-click="OCSiteColumn_Move(Column2.ColumnID,'leveldown')" title="下一级"></i>
+                                                    <i class="icon icon_delete" title="删除" ng-click="OCSiteColumn_Del(Column2.ColumnID)"></i>
+                                                </p>
+                                            </div>
+                                        </a>
+                                        <ul ng-if="Column2.HasChild==1">
+                                            <li ng-repeat="Column3 in Column2.Children" ng-model="Column.ContentType">
+                                                <a href="#">
+                                                    <span ng-click="OCSiteColumnByClick(Column3.ContentType,Column3.Title,Column3.ColumnID,1)">
+                                                        <i ng-show="Column3.ContentType==0 && Column3.Conten==null" class="icon_con filling"></i><i ng-show="Column3.ContentType==0 && Column3.Conten!=null" class="icon_con filled"></i><i ng-show="Column3.ContentType==3" class="icon_con icon_list"></i>{{Column3.Title}} <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column3.HasChild}}]"></em>
+                                                    </span>
+                                                    <div class="column_btn multi_column">
+                                                        <span></span>
+                                                        <p>
+                                                            <i class="icon_con icon_add" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column3.ColumnID,Column3.ContentType)"></i>
+                                                            <i class="icon icon_rewrite" ng-click="sinEdit(Column3.ColumnID,Column3.ParentID,Column3.ContentType)" title="编辑"></i>
+                                                            <i class="icon_con icon_up_white" ng-click="OCSiteColumn_Move(Column3.ColumnID,'orderup')" title="上移"></i>
+                                                            <i class="icon_con icon_down" ng-click="OCSiteColumn_Move(Column3.ColumnID,'orderdown')" title="下移"></i>
+                                                            <i class="icon_con icon_leftmove" ng-click="OCSiteColumn_Move(Column3.ColumnID,'levelup')" title="上一级"></i>
+                                                            <i class="icon_con icon_rightmove" ng-click="OCSiteColumn_Move(Column3.ColumnID,'leveldown')" title="下一级"></i>
+                                                            <i class="icon icon_delete" title="删除" ng-click="OCSiteColumn_Del(Column3.ColumnID)"></i>
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                                <ul ng-if="Column3.HasChild==1">
+                                                    <li ng-repeat="Column4 in Column3.Children" ng-model="Column.ContentType">
+                                                        <a href="#">
+                                                            <span ng-click="OCSiteColumnByClick(Column4.ContentType,Column4.Title,Column4.ColumnID,1)">
+                                                                <i ng-show="Column4.ContentType==0 && Column4.Conten==null" class="icon_con filling"></i><i ng-show="Column4.ContentType==0 && Column4.Conten!=null" class="icon_con filled"></i><i ng-show="Column4.ContentType==3" class="icon_con icon_list"></i>{{Column4.Title}} <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column4.HasChild}}]"></em>
+                                                            </span>
+                                                            <div class="column_btn multi_column">
+                                                                <span></span>
+                                                                <p>
+                                                                    <i class="icon_con icon_add" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column4.ColumnID,Column4.ContentType)"></i>
+                                                                    <i class="icon icon_rewrite" ng-click="sinEdit(Column4.ColumnID,Column4.ParentID,Column4.ContentType)" title="编辑"></i>
+                                                                    <i class="icon_con icon_up_white" ng-click="OCSiteColumn_Move(Column4.ColumnID,'orderup')" title="上移"></i>
+                                                                    <i class="icon_con icon_down" ng-click="OCSiteColumn_Move(Column4.ColumnID,'orderdown')" title="下移"></i>
+                                                                    <i class="icon_con icon_leftmove" ng-click="OCSiteColumn_Move(Column4.ColumnID,'levelup')" title="上一级"></i>
+                                                                    <i class="icon_con icon_rightmove" ng-click="OCSiteColumn_Move(Column4.ColumnID,'leveldown')" title="下一级"></i>
+                                                                    <i class="icon icon_delete" title="删除" ng-click="OCSiteColumn_Del(Column4.ColumnID)"></i>
+                                                                </p>
+                                                            </div>
+                                                        </a>
+                                                        <ul ng-if="Column4.HasChild==1">
+                                                            <li ng-repeat="Column5 in Column4.Children" ng-model="Column.ContentType">
+                                                                <a href="#">
+                                                                    <span ng-click="OCSiteColumnByClick(Column5.ContentType,Column5.Title,Column5.ColumnID,1)">
+                                                                        <i ng-show="Column5.ContentType==0 && Column5.Conten==null" class="icon_con filling"></i><i ng-show="Column5.ContentType==0 && Column5.Conten!=null" class="icon_con filled"></i><i ng-show="Column5.ContentType==3" class="icon_con icon_list"></i>{{Column5.Title}} <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column5.HasChild}}]"></em>
+                                                                    </span>
+                                                                    <div class="column_btn multi_column">
+                                                                        <span></span>
+                                                                        <p>
+                                                                            <i class="icon_con icon_add" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column5.ColumnID,Column5.ContentType)"></i>
+                                                                            <i class="icon icon_rewrite" ng-click="sinEdit(Column5.ColumnID,Column5.ParentID,Column5.ContentType)" title="编辑"></i>
+                                                                            <i class="icon_con icon_up_white" ng-click="OCSiteColumn_Move(Column5.ColumnID,'orderup')" title="上移"></i>
+                                                                            <i class="icon_con icon_down" ng-click="OCSiteColumn_Move(Column5.ColumnID,'orderdown')" title="下移"></i>
+                                                                            <i class="icon_con icon_leftmove" ng-click="OCSiteColumn_Move(Column5.ColumnID,'levelup')" title="上一级"></i>
+                                                                            <i class="icon_con icon_rightmove" ng-click="OCSiteColumn_Move(Column5.ColumnID,'leveldown')" title="下一级"></i>
+                                                                            <i class="icon icon_delete" title="删除" ng-click="OCSiteColumn_Del(Column5.ColumnID)"></i>
+                                                                        </p>
+                                                                    </div>
+                                                                </a>
+                                                                <ul ng-if="Column5.HasChild==1">
+                                                                    <li ng-repeat="Column6 in Column5.Children" ng-model="Column.ContentType">
+                                                                        <a href="#">
+                                                                            <span ng-click="OCSiteColumnByClick(Column6.ContentType,Column6.Title,Column6.ColumnID,1)">
+                                                                                <i ng-show="Column6.ContentType==0 && Column6.Conten==null" class="icon_con filling"></i><i ng-show="Column6.ContentType==0 && Column6.Conten!=null" class="icon_con filled"></i><i ng-show="Column6.ContentType==3" class="icon_con icon_list"></i>{{Column6.Title}} <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column6.HasChild}}]"></em>
+                                                                            </span>
+                                                                            <div class="column_btn multi_column">
+                                                                                <span></span>
+                                                                                <p>
+                                                                                    <i class="icon_con icon_add" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column6.ColumnID,Column6.ContentType)"></i>
+                                                                                    <i class="icon icon_rewrite" ng-click="sinEdit(Column6.ColumnID,Column6.ParentID,Column6.ContentType)" title="编辑"></i>
+                                                                                    <i class="icon_con icon_up_white" ng-click="OCSiteColumn_Move(Column6.ColumnID,'orderup')" title="上移"></i>
+                                                                                    <i class="icon_con icon_down" ng-click="OCSiteColumn_Move(Column6.ColumnID,'orderdown')" title="下移"></i>
+                                                                                    <i class="icon_con icon_leftmove" ng-click="OCSiteColumn_Move(Column6.ColumnID,'levelup')" title="上一级"></i>
+                                                                                    <i class="icon_con icon_rightmove" ng-click="OCSiteColumn_Move(Column6.ColumnID,'leveldown')" title="下一级"></i>
+                                                                                    <i class="icon icon_delete" title="删除" ng-click="OCSiteColumn_Del(Column6.ColumnID)"></i>
+                                                                                </p>
+                                                                            </div>
+                                                                        </a>
+                                                                        <ul ng-if="Column6.HasChild==1">
+                                                                            <li ng-repeat="Column7 in Column6.Children" ng-model="Column.ContentType">
+                                                                                <a href="#">
+                                                                                    <span ng-click="OCSiteColumnByClick(Column7.ContentType,Column7.Title,Column7.ColumnID,1)">
+                                                                                        <i ng-show="Column7.ContentType==0 && Column7.Conten==null" class="icon_con filling"></i><i ng-show="Column7.ContentType==0 && Column7.Conten!=null" class="icon_con filled"></i><i ng-show="Column7.ContentType==3" class="icon_con icon_list"></i>{{Column7.Title}} <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column7.HasChild}}]"></em>
+                                                                                    </span>
+                                                                                    <div class="column_btn multi_column">
+                                                                                        <span></span>
+                                                                                        <p>
+                                                                                            <i class="icon_con icon_add" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column7.ColumnID,Column7.ContentType)"></i>
+                                                                                            <i class="icon icon_rewrite" ng-click="sinEdit(Column7.ColumnID,Column7.ParentID,Column7.ContentType)" title="编辑"></i>
+                                                                                            <i class="icon_con icon_up_white" ng-click="OCSiteColumn_Move(Column7.ColumnID,'orderup')" title="上移"></i>
+                                                                                            <i class="icon_con icon_down" ng-click="OCSiteColumn_Move(Column7.ColumnID,'orderdown')" title="下移"></i>
+                                                                                            <i class="icon_con icon_leftmove" ng-click="OCSiteColumn_Move(Column7.ColumnID,'levelup')" title="上一级"></i>
+                                                                                            <i class="icon_con icon_rightmove" ng-click="OCSiteColumn_Move(Column7.ColumnID,'leveldown')" title="下一级"></i>
+                                                                                            <i class="icon icon_delete" title="删除" ng-click="OCSiteColumn_Del(Column7.ColumnID)"></i>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </a>
+                                                                                <ul ng-if="Column7.HasChild==1">
+                                                                                    <li ng-repeat="Column8 in Column7.Children" ng-model="Column.ContentType">
+                                                                                        <a href="#">
+                                                                                            <span ng-click="OCSiteColumnByClick(Column8.ContentType,Column8.Title,Column8.ColumnID,1)">
+                                                                                                <i ng-show="Column8.ContentType==0 && Column8.Conten==null" class="icon_con filling"></i><i ng-show="Column8.ContentType==0 && Column8.Conten!=null" class="icon_con filled"></i><i ng-show="Column8.ContentType==3" class="icon_con icon_list"></i>{{Column8.Title}} <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column8.HasChild}}]"></em>
+                                                                                            </span>
+                                                                                            <div class="column_btn multi_column">
+                                                                                                <span></span>
+                                                                                                <p>
+                                                                                                    <i class="icon_con icon_add" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column8.ColumnID,Column8.ContentType)"></i>
+                                                                                                    <i class="icon icon_rewrite" ng-click="sinEdit(Column8.ColumnID,Column8.ParentID,Column8.ContentType)" title="编辑"></i>
+                                                                                                    <i class="icon_con icon_up_white" ng-click="OCSiteColumn_Move(Column8.ColumnID,'orderup')" title="上移"></i>
+                                                                                                    <i class="icon_con icon_down" ng-click="OCSiteColumn_Move(Column8.ColumnID,'orderdown')" title="下移"></i>
+                                                                                                    <i class="icon_con icon_leftmove" ng-click="OCSiteColumn_Move(Column8.ColumnID,'levelup')" title="上一级"></i>
+                                                                                                    <i class="icon_con icon_rightmove" ng-click="OCSiteColumn_Move(Column8.ColumnID,'leveldown')" title="下一级"></i>
+                                                                                                    <i class="icon icon_delete" title="删除" ng-click="OCSiteColumn_Del(Column8.ColumnID)"></i>
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        </a>
+                                                                                        <ul ng-if="Column8.HasChild==1">
+                                                                                            <li ng-repeat="Column9 in Column8.Children" ng-model="Column.ContentType">
+                                                                                                <a href="#">
+                                                                                                    <span ng-click="OCSiteColumnByClick(Column9.ContentType,Column9.Title,Column9.ColumnID,1)">
+                                                                                                        <i ng-show="Column9.ContentType==0 && Column9.Conten==null" class="icon_con filling"></i><i ng-show="Column9.ContentType==0 && Column9.Conten!=null" class="icon_con filled"></i><i ng-show="Column9.ContentType==3" class="icon_con icon_list"></i>{{Column9.Title}} <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column9.HasChild}}]"></em>
+                                                                                                    </span>
+                                                                                                    <div class="column_btn multi_column">
+                                                                                                        <span></span>
+                                                                                                        <p>
+                                                                                                            <i class="icon_con icon_add" data-toggle="modal" data-backdrop="static" title="新增" ng-click="SonAdd(Column9.ColumnID,Column9.ContentType)"></i>
+                                                                                                            <i class="icon icon_rewrite" ng-click="sinEdit(Column9.ColumnID,Column9.ParentID,Column9.ContentType)" title="编辑"></i>
+                                                                                                            <i class="icon_con icon_up_white" ng-click="OCSiteColumn_Move(Column9.ColumnID,'orderup')" title="上移"></i>
+                                                                                                            <i class="icon_con icon_down" ng-click="OCSiteColumn_Move(Column9.ColumnID,'orderdown')" title="下移"></i>
+                                                                                                            <i class="icon_con icon_leftmove" ng-click="OCSiteColumn_Move(Column9.ColumnID,'levelup')" title="上一级"></i>
+                                                                                                            <i class="icon_con icon_rightmove" ng-click="OCSiteColumn_Move(Column9.ColumnID,'leveldown')" title="下一级"></i>
+                                                                                                            <i class="icon icon_delete" title="删除" ng-click="OCSiteColumn_Del(Column9.ColumnID)"></i>
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main_content">
+            <div class="banner_box">
+                <img src="../../OCTheme/{{ThemeNO}}/banner.jpg" width="1000" height="200" alt="" />
+                <a href="#mytemplate" role="button" data-backdrop="static" data-toggle="modal"></a>
+                <div id="mytemplate" style=" width:600px; height:450px;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mytemplateLabel" aria-hidden="true">
+
+                    <h4 id="myModalLabel">课程主页风格设置</h4>
+                    <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+                    <div class="style_box">
+                        <div style=" margin-left:302px;">
+                            <select style="width:120px;height:25px;" ng-change="SelectThemeListBysubject(subject)" ng-model="subject">
+                                <option value="">全部</option>
+                                <option ng-repeat="octheme in OCTheme_ListBysubject" ng-value="octheme.Subject">{{octheme.Subject}}</option>
+                            </select>
+                            <select style="width: 120px; height: 25px; margin-left: 5px;" ng-change="SelectThemeListBycolor(color)" ng-model="color">
+                                <option value="">全部</option>
+                                <option ng-repeat="octheme in OCTheme_ListBycolor" ng-value="octheme.Color">{{octheme.Color}}</option>
+                            </select>
+                        </div>
+                        <div class="img_box">
+                            @*<div class="preview_box">
+                                    <img src="../../OCTheme/fx_black_1_280px/back.jpg" width="290" height="250" alt="" />
+                                </div>*@
+                            <ul class="img_list" style=" height:330px; min-height:330px; overflow:hidden;">
+                                <li ng-show="octheme.IsShow==1" ng-repeat="octheme in OCTheme_List" ng-click="OCSite_TemplateID_Upd(octheme.ID,octheme.ThemeNO)" ng-class="{'active':octheme.IsActive==1}">
+                                    <img src="../../OCTheme/{{octheme.ThemeNO}}/skin.jpg" width="90" height="90" alt="" />
+                                    <div class="style_descript">
+                                        <p>{{octheme.Title}}</p>
+                                    </div>
+                                </li>
+                                <div ng-show="OCThemeCount==0" class="course_content">
+                                    <img src="~/Images/expression.png" width="96" height="96" alt="">
+                                    <p>没有找到任何内容</p>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="item_list">
+                            <span ng-click="OCThemePageClick(rowcount.rownum)" ng-class="{'active':rowcount.IsPageActive==1}" ng-repeat="rowcount in OCTheme_List|OCTheme_ListCount"></span>
+                        </div>
+                        @*<div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                                关闭
+                            </button>
+                            <button class="btn btn-primary" data-dismiss="modal">保存</button>
+                        </div>*@
+                    </div>
+                    <div class="modal-footer bootstrapbtn_box">
+                        <a class="save" data-dismiss="modal" href="javascript:;">确定</a>
+                        <a class="cancel" style=" display:none;" data-dismiss="modal" aria-hidden="true" href="javascript:;">取消</a>
+                    </div>
+                </div>
+            </div>
+            <h2>{{indexTitle}}<span>（最后更新时间:{{Updatetime| dateFormatAll}}）</span>
+                <div ng-if="Column_Type==1" class="edit_btn">
+                    <a class="add_btn" href="javascript:;" style=" display:none;"><em><i class="icon icon_delete"></i></em><b>批量删除</b></a>
+                    <a class="delete_btn" href="javascript:;" ng-click="ContentTypeAdd(-1);"><em><i class="icon_con icon_added"></i></em><b>新增</b></a>
+                </div>
+            </h2>
+            <div id="div_indexhome" class="main_all">
+                <div class="main_l">
+                    <div class="add_course">
+                        <div class="upload_course">
+                            <img src="{{AttachmentOC.DownURL}}" width="280" height="150" alt="" />
+                            <p>
+                                <a href="javascript:;" ng-click="ShowBox(2)">上传</a>
+                                <b>*</b>
+                                <span>图片最佳尺寸280*150像素</span>
+                           </p>
+                        </div>
+                        <div class="course_detail">
+                            <div class="course_document">
+                                <h4>课程档案</h4>
+                                <a class="icon icon_write" href="javascript:;" ng-click="kcdaeditor()"></a>
+                            </div>
+                            <div class="text_box">
+                                <p>负 责 人：<span>{{principalname}}</span></p>
+                                <p>创建日期：<span>{{CreateTime| dateFormat}}</span></p>
+                                <p>所属分类：<span>{{SubjectName}}</span></p>
+                                <p>课程标签：<span>{{Tags}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add_course">
+                        <div class="course_document">
+                            <h4>课程负责人</h4>
+                            <a class="icon icon_write" href="javascript:;" ng-click="zjjseditor()"></a>
+                        </div>
+                        <div class="teacher_box" ng-repeat="octeam in OCTeam_List">
+                            <div class="teacher_name">
+                                <img src="" width="60" height="60" alt="" user-img userid="{{octeam.UserID}}" />
+                                <span>{{octeam.UserName}}<br>{{octeam.Ranks}}</span>
+                            </div>
+                            <p ng-bind-html="octeam.Brief|toHtml"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_r">
+                    <div class="upload_video">
+                        <div class="upload_course">
+                            <div class="tap_box">
+                                <img id="img_attach" src="{{AttachmentOCSite.Thumbnail}}" width="265" height="150" alt="" ng-click="videopre(AttachmentOCSite.ViewURL)" style=" cursor:pointer;" />
+                                <i class="broadcast" ng-click="videopre(AttachmentOCSite.ViewURL)"></i>
+                            </div>
+                            <p>
+                                <a href="javascript:;" ng-click="ShowBox(1)">上传</a>
+                                <b>*</b>
+                                <span>(上传片花)</span>
+                            </p>
+                        </div>
+                        <div class="course_recom">
+                            <h4>课程推荐词<span>*</span></h4>
+                            <textarea id="txt_name" ng-value="Brief" ng-model="site_brief" placeholder="建议不超过150字符"></textarea>
+                        </div>
+                    </div>
+                    <div class="upload_video">
+                        <div class="course_document">
+                            <h4>课程视频</h4>
+                            <span>（说明：如果创建了MOOC的进阶式教程，访问者可免费观看第一章视频）</span>
+                        </div>
+                        <div class="video_box">
+                            <div class="video_item">
+                                <ul class="video_list">
+                                    <li ng-repeat="Preview in PreviewMP4List" on-finish-render-filters>
+                                        <img src="{{Preview.Thumbnail}}" ng-model="Preview.ViewURL" width="180" height="100" alt="" ng-click="videopre(Preview.ViewURL)" style=" cursor:pointer;" />
+                                        <span class="broadcast" ng-click="videopre(Preview.ViewURL)"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a class="icon_con icon_l" href="javascript:;"></a>
+                            <a class="icon_con icon_r" href="javascript:;"></a>
+                        </div>
+                        <p class="video_upload" style=" display:none;">
+                            <a href="javascript:;">上传</a>
+                            <b>*</b>
+                        </p>
+                    </div>
+                    <div class="upload_video">
+                        <div class="course_document">
+                            <h4>课程通知</h4>
+                            <a class="issue_btn" href="javascript:;">
+                                <em><i class="icon"></i></em>
+                                <b ng-click="AddNotice(-1)">发布通知</b>
+                            </a>
+                        </div>
+                        <div ng-show="OCNoticeCount==0" class="course_content">
+                            <img src="~/Images/expression.png" width="96" height="96" alt="">
+                            <p>没有找到任何内容</p>
+                        </div>
+                        <div class="course_notice">
+                            <ul class="notice_list">
+                                <li ng-repeat="Notice in OCNotice_List" ng-if="Notice.IsShow==1">
+                                    <h4>{{Notice.Title}}</h4>
+                                    <p>{{Notice.Conten}}</p>
+                                    <div class="issue_detail">{{Notice.UpdateTime |dateFormat}}　来自: {{Notice.UserName}}　<a ng-click="Notice_Del(Notice.NoticeID)" style="text-decoration: underline; cursor: pointer; " ng-if="Notice.CanDelete==1">[删除]</a></div>
+                                </li>
+                            </ul>
+                            <div ng-show="OCNotice_List[0].Count>10" class="page_box">
+                                <a class="prev" href="javascript:;">前一页</a>
+                                <a href="#">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <span class="more">...</span>
+                                <a href="#">8</a>
+                                <a class="prev" href="javascript:;">后一页</a>
+                                <span>共229条，到第<input type="text">页</span>
+                                <a class="confirm" href="#">确认</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p ng-show="Column_NavCount>1" class="course_guide " style=" background-color: #fff; padding-left: 1px;"><a style="cursor: pointer; margin-left: 10px; text-decoration:none; " ng-repeat="Notice in NavnameList"><span ng-click="OCSiteColumnByClick(Notice.ContentType,Notice.Title,Notice.ColumnID,1)" ng-if="($index+1)!=Column_NavCount">{{Notice.Title}}</span><span ng-if="($index+1)==Column_NavCount">{{Notice.Title}}</span><span ng-if="($index+1)!=Column_NavCount">></span></a></p>
+            <div class="main_all" id="div_ewebeditor" style=" display:none;">
+                <div>
+                    <input type="hidden" name="oEditor1" id="oEditor1" ng-value="frmoEditor1" />
+                    <iframe id="frmoEditor1" src="~/Frameworks/eWebEditor/ewebeditor.htm?id=oEditor1&style=coolblue"
+                            frameborder="0" scrolling="no" width="1000" height="450" style="display: block;"></iframe>
+                </div>
+            </div>
+            <div class="knowledge_box" id="div_mainList" style=" display:none;">
+                
+                <table class="knowledge_list">
+                    <tr ng-repeat="Column in ColumnSonList" on-column-son-list>
+                        <td width="750"><p style=" cursor:pointer;" ng-click="OCSiteColumnByConten(Column.ContentType,Column.Title,Column.ColumnID,1)"> {{Column.Title}}</p></td>
+                        <td>
+                            {{Column.Updatetime|dateFormat}}
+                            <div class="modify_btn">
+                                <a class="icon icon_delete_gray" href="javascript:;" ng-click="OCSiteColumnContent_Del(Column.ColumnID)"></a>
+                                <a class="icon icon_write" href="javascript:;" ng-click="ContentTypeAdd(Column.ColumnID)"></a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="btn_box" style=" height:60px;">
+                <a href="javascript:;" class="preview_green" ng-click="preview()">预览</a>
+                <a href="javascript:void(0);" class="preview_green" ng-click="OCSite_IsPublish_Upd(0)">保存</a>
+               
+            </div>
+        </div>
+    </div>
+    <!--左侧导航-->
+
+    <input type="hidden" id="hid_sidemod" ng-model="hid_sidemod" value="1" />
+    <div id="box" style="display:none;">
+        <div ies-file-uploader id="eIesUploader"
+                           ocid="1"
+                           course-id="1"
+                           folder-obj="folderRelatiohn"
+                           filesize="FileSize" @*文件大小以M为单位*@
+                           filecount="1" @*允许上传的文件个数*@
+                           filesuffix="FileSuffix" @*文件类型*@
+                           fileuptype="2" @*1:资料上传,2:附件上传*@>
+        </div>
+    </div>
+
+    <div id="videopre" style=" display:none;">
+        <div ies-file-preview fileid="div_play" @*视频播放窗体主键 用于后续对视频的控制*@
+                          flash="/Frameworks/jwplay/pl.swf" @*播放器地址*@
+                          viewurl="viewurl" @*播放地址*@
+                          width="750" @*视频播放宽度*@
+                          height="400" @*视频播放高度*@
+                          autoplay="true" @*是否自动播放*@
+                          setmute="false" @*是否播放时候静音*@
+                          pageurl="palyurl" @*当前站点地址 (如:本地http://localhost:8080)*@
+                          filetype="1">
+
+        </div>
+    </div>
+
+    <div id="myAddNoticeModal" class="modal hide fade" data-backdrop="static" style="width: 600px; position: absolute; left: 50%; margin-left: -300px; top: 200px; background: #fff;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4 class="h4Title">发布通知</h4>
+        <span class="icon close_pop" data-dismiss="modal"></span>
+        <div class="inform_box">
+            <div class="inform_item">
+                <div class="issue_box">
+                    <input class="issue_tit" type="text" id="txt_title" placeholder="通知标题（可不填）">
+                    <div class="issue_content">
+                        <textarea id="noticeText"></textarea>
+
+                        <p class="inform_setting"><span><input style=" margin-right: 5px; margin: 0px 0 0; " type="checkbox" id="cb_istop">设为重要通知</span><em>已输入 0 字符</em></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bootstrapbtn_box">
+                <a class="save" href="javascript:;" ng-click="PublishNotice();">发布</a>
+                <a class="cancel" data-dismiss="modal" aria-hidden="true" href="javascript:;">取消</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="mySiteColumnTypeModal" class="modal hide fade" data-backdrop="static" style="width: 800px; position: absolute; left: 50%; margin-left: -300px; top: 100px; background: #fff;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4 class="h4Title">新建列表项</h4>
+        <span class="icon close_pop" data-dismiss="modal"></span>
+        <div class="inform_box">
+            <div class="inform_item">
+                <div class="issue_box">
+                    <input class="issue_tit" style=" width:740px;" type="text" ng-model="tabSiteColumntitle" id="txt_SiteColumntitle" placeholder="标题(必填)">
+                    <div class="issue_content">
+                        <input type="hidden" name="oEditor2" id="oEditor2" ng-value="frmoEditor2" />
+                        <iframe id="frmoEditor2" src="~/Frameworks/eWebEditor/ewebeditor.htm?id=oEditor2&style=coolblue"
+                                frameborder="0" scrolling="no" width="750" height="400" style="display: block;"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bootstrapbtn_box">
+                <a class="save" href="javascript:;" ng-click="OCSiteColumn_Content_Edit()">保存</a>
+                <a class="cancel" data-dismiss="modal" aria-hidden="true" href="javascript:;">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

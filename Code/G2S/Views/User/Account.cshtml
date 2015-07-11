@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout9.cshtml";
+}
+@using IES.Cache;
+@using IES.JW.Model;
+@using IES.G2S.JW.BLL;
+@using IES.Service;
+@{
+    IES.JW.Model.User user = new IES.JW.Model.User { UserID = UserService.CurrentUser.UserID };
+    IES.G2S.JW.BLL.UserBLL userbll = new IES.G2S.JW.BLL.UserBLL();
+    IES.JW.Model.User _user = userbll.UserTS_Get(user);
+    try {
+        if (_user.img == null) {
+            _user.img = "../Images/default/User_M.jpg";
+        }
+    }
+    catch { }
+}
+@{
+    IES.G2S.JW.BLL.ParmInfoBLL parmbll = new IES.G2S.JW.BLL.ParmInfoBLL();
+    List<Organization> orglist = parmbll.Organization_Get_List();
+}
+
+<link href="~/Views/User/AddressBook.css" rel="stylesheet" />
+<div style="width:1000px;">
+    <div class="daohang_div">
+        <div class="daohang_box">
+            <a class="active" target="_self" href="Account?leftmenu=D">个人资料</a>
+            <a target="_self" href="Accountsecurity?leftmenu=D">账号安全</a>
+        </div>
+    </div>
+    <div class="Acount_div">
+        <div class="atcont_div">
+            <div class="at_div">
+                <span>用户名:</span>
+                <label id="LoginName" style="float:left">@_user.LoginName</label>
+            </div>
+            <div class="at_div">
+                <span>教工号/学号:</span>
+                <label id="UserNo" style="float:left">@_user.UserNo</label>
+            </div>
+            <div class="at_div">
+                <span>姓&nbsp;&nbsp;&nbsp;名:</span>
+                <label id="UserName" style="float:left">@_user.UserName</label>
+            </div>
+            <div class="at_div">
+                <span>英文名:</span>
+                <input name="UserNameEn" type="text" value="@_user.UserNameEn" />
+            </div>
+            <div class="at_div">
+                <span>昵&nbsp;&nbsp;&nbsp;称:</span>
+                <input name="Nickname" type="text" value="@_user.Nickname" />
+            </div>
+            <div class="at_div">
+                <span>性&nbsp;&nbsp;&nbsp;别:</span>
+                @if (_user.Gender == 1)
+                {
+                        <input name="sex" type="radio" style="float:left;line-height:34px;height:34px" value="1" checked /><label style="float: left; line-height: 40px;margin-left:5px" for="sex">男</label>
+                        <input name="sex" type="radio" style="margin-left: 20px; float: left; line-height: 34px; height: 34px" value="0" /><label style="float: left; line-height: 40px; margin-left: 5px" for="sex">女</label>
+                }
+                else
+                {
+                        <input name="sex" type="radio" style="float: left; line-height: 34px; height: 34px" value="1" /><label style="float: left; line-height: 40px; margin-left: 5px" for="sex">男</label>
+                        <input name="sex" type="radio" style="margin-left: 20px; float: left; line-height: 34px; height: 34px" value="0" checked /><label style="float: left; line-height: 40px; margin-left: 5px" for="sex">女</label>
+                }
+
+            </div>
+            <div class="at_div">
+                <span>所属机构:</span>
+                    @for (var i = 0; i < orglist.Count; i++)
+                    {
+                        Organization org = orglist[i];
+                        if (_user.OrganizationID == org.OrganizationID)
+                        {
+                            <span style="text-align:left">@org.OrganizationName</span>
+                        }
+                    }
+               
+            </div>
+            <div class="at_div">
+                <span>固&nbsp;&nbsp;&nbsp;话:</span>
+                <input name="Tel" type="text" value="@_user.Tel" />
+            </div>           
+            <div class="at_div" style="width:410px">
+                <span>邮箱地址:</span>
+                <input name="Email" readonly="readonly" type="text" style="width:317px;" value="@_user.Email" />
+            </div>
+            <div class="at_div" style="width: 370px;">
+                <a style="width:70px;display:block;float:left;text-align:center;color:#000" target="_self" href="Accountsecurity" >更换绑定</a>
+            </div>
+            <div class="at_div" style="width: 410px">
+                <span>手&nbsp;&nbsp;&nbsp;机:</span>
+                <input name="Mobile" readonly="readonly" type="text" style="width:317px;" value="@_user.Mobile" />
+            </div>
+            <div class="at_div" style="width: 370px;">
+                <a style="width:70px;display:block;float:left;text-align:center;color:#000" target="_self" href="Accountsecurity">更换绑定</a>
+            </div>
+            <div class="at_div" style="width:750px;height:250px">
+                <span>用户简介:</span>
+                <input type="hidden" name="oEditor1" id="oEditor1" value="@_user.Brief" />
+                <iframe id="frmoEditor1" src="../Frameworks/ewebeditor/ewebeditor.htm?id=oEditor1&style=coolblue" frameborder="0" scrolling="no" width="590" height="270" style="display: block;"></iframe>
+            </div>
+        </div>
+        <div class="img_div">
+            <img id="imgyl" src="@_user.img" />          
+        </div>
+        <div style="float:left;width:160px;height:30px">
+            <a href="javascript:Img_Upd()" onclick="" style="line-height:20px;font-size: 13px; width: 60px; height: 20px; background: #284a51; color: #fff; padding: 3px 25px 3px 25px;display:block;text-align:center">更换头像</a>
+        </div>
+        <div style="display: none">
+            <input id="File1" name="File1" type="file" onchange="urlchange()" />
+        </div>
+    </div>
+    <div style="clear:both"></div>
+    <div style="width: 940px; border-top: 1px dashed #E4E4E4;height:100px;line-height:100px;margin-top:20px ">
+        <a class="Save_btn" style="margin-left:60px" href="javascript:User_Part_Upd();">保存</a>
+    </div>
+</div>
+<script src="~/js/Account.js"></script>
+

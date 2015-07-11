@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout9.cshtml";
+}
+@{
+    bool IsTeacher = IES.Service.UserService.IsTeacher;
+    if (!IsTeacher)
+    {
+        Response.Redirect("AddressBook");
+    }
+}
+<link href="~/Views/User/AddressBook.css" rel="stylesheet" />
+<div style="width:1000px;">
+    <div class="daohang_div">
+        <div class="daohang_box">
+            <a target="_self" href="AddressBook?leftmenu=D">我的联系人</a>
+            <a target="_self" href="MyGroup?leftmenu=D">我的联系组</a>
+            <a class="active" target="_self" href="Histcontacts?leftmenu=D">我的历史学生</a>
+        </div>
+    </div>
+    <div style="width:960px;margin:10px 20px;float:left">
+        <div style="height:40px;width:100%;float:left;line-height:40px">
+            <select name="term" onchange="TermChange()" style="height: 30px; width: 200px; margin-left: 10px; color: #999">
+                <option>2013-2014年第1学期</option>
+            </select>
+            <select name="teachingclass" onchange="TeachClassChange()" style="height: 30px; width: 200px; margin-left: 10px; color: #999">
+                
+            </select>
+            <div style="float:right;width:125px;line-height:40px;height:40px">
+                <select name="pagesize" onchange="SizeChange()" style="width:60px;height:25px;line-height:40px;float:right;margin-left:10px;margin-top:7px">
+                    <option value="20" selected>5行</option>
+                    <option value="40">10行</option>
+                    <option value="80">20行</option>
+                    <option value="200">50行</option>
+                    <option value="400">100行</option>
+                </select>
+                <span style="float: right; line-height: 40px; color: #666;">每页显示</span>
+            </div>
+            <div style="float:right;line-height:40px;height:40px;">
+                <input type="text" id="Key" placeholder="请输入姓名" style="height:30px;width:176px;float:right;margin-top:4px;padding-right:24px" />
+                <a href="javascript:searchKey();" style="height:30px;width:30px;margin-top:4px;padding:0px;display:block"><i class="u14_btn"></i></a>
+            </div>
+        </div>
+        <div id="Contacts" style="float:left;width:100%;">
+        </div>
+        <div id="div_page_wrap" style="float:right;width:100%;height:50px"></div>
+    </div>   
+</div>
+<script src="~/Views/User/Histcontacts.js"></script>

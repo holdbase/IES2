@@ -1,0 +1,50 @@
+﻿
+@using IES.Service.Common;
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @*<title ng-bind="title">@(PageData["title"] ?? "课程中心4.0")</title>*@
+    <title>@(PageData["title"] ?? "课程中心4.0")</title>
+    <meta name="description" content="@PageData["description"]">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!--[if lte IE 8]>
+       <script>
+         document.createElement('ng-include');
+         document.createElement('ng-pluralize');
+         document.createElement('ng-view');
+        document.createElement('ies-file-uploader');
+         // Optionally these for CSS
+         document.createElement('ng:include');
+         document.createElement('ng:pluralize');
+         document.createElement('ng:view');
+       </script>
+     <![endif]-->
+
+    <link href="~/Css/header.css" rel="stylesheet" />
+    <link href="~/Css/footer.css" rel="stylesheet" />
+    <link href="~/Css/common.css" rel="stylesheet" />
+    <link href="~/Css/survey.css" rel="stylesheet" />
+    <script>
+    //应用程序根目录-->  结果('/')||('/g2s')
+    window.appPatch = "@Request.ApplicationPath" == "/" ? "" : "@Request.ApplicationPath";
+    </script>
+</head>
+<body>
+
+    <div class="wrap">
+        <div>@RenderPage("Top.cshtml")</div>
+        @RenderBody()
+        <div>@RenderPage("Foot.cshtml")</div>
+        <a class='icon backto_top' href='#' onclick="$('body,html').animate({ scrollTop: 0 }, 300);"></a>
+    </div>
+    @Scripts.Render("~/js/framework")
+    @Scripts.Render("~/js/app")
+    <script src="~/js/jquery-1.8.3.min.js"></script>
+    <script src="~/js/G2S.js"></script>
+    <script src="~/js/common.js"></script>
+    <script src="~/js/survey.js"></script>
+</body>
+</html>

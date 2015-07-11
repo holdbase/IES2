@@ -1,0 +1,33 @@
+﻿@using IES.Cache;
+@using IES.Security;
+@using IES.JW.Model;
+@using IES.G2S.JW.BLL;
+@using IES.Service;
+@using IES.Service.Common;
+
+@helper getresourcehref(string url, string leftmenu)
+{
+    var result = url + leftmenu ;
+    @result
+}
+
+<div class='side_left' ng-controller="UserPermissionLeftController ">
+    <div class='user'>
+        <img src=@UserService.CurrentUserIMG width='110' height='100' />
+        <a class='teacher_name' href='#'>@UserService.CurrentUser.UserName</a>
+    </div>
+
+    <div class='side_box'>
+        <ul class='side_nav' style="height:160px;">
+            
+            <li ><a target="_self" href=@getresourcehref(@IES.Service.Common.ConfigService.ResourceURL, "#/content/resource")  >资料库</a></li>
+            <li ><a target="_self" href=@getresourcehref(@IES.Service.Common.ConfigService.ResourceURL, "#/content/exercise") >习题库</a></li>
+            <li class="active"><a target="_self" href="#">试卷库</a></li>
+            <li ><a target="_self" href=@getresourcehref(@IES.Service.Common.ConfigService.ResourceURL, "#/content/ken/topic/") >知识点</a></li>
+                
+        </ul>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,74 @@
+﻿@using IES.Cache;
+@using IES.Security;
+@using IES.JW.Model;
+@using IES.G2S.JW.BLL;
+@using IES.Service;
+@using IES.Service.Common;
+
+@helper getresourcehref(string url, string leftmenu)
+{
+    var result = url + leftmenu;
+    @result
+}
+
+<div class="right_side" ng-controller="HomeController">
+    <p class="item_tit">
+        @*<span ng-if="WaitingProcess.isShow">暂时没有任何待处理事项</span>*@
+        <span ng-bind-template="{{WaitingProcess.isShow?'您有'+WaitingProcess.WaitingNum+'个待处理事项':'暂时没有任何待处理事项'}}"></span>
+        <a class="icon item_icon" href="javascript:;" title="更新互动提醒" ng-click="GetWaitingProcessNoCache()"></a>
+    </p>
+    @*<div class="no_item" ng-hide="WaitingProcess.isShow">
+            <img src="../Images/smile3.gif" width="64" height="64" alt="">
+            <p>恭喜您，暂时没有任何待处理事项哦！</p>
+        </div>*@
+    <div ng-if="WaitingProcess.UserType==2">
+        <ul class="question_list" ng-show="WaitingProcess.WaitingNum>0">
+            <li ng-show="WaitingProcess.T_HomeworkNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.T_HomeworkNum}}"></span> 份新的待批作业</a></li>
+            <li ng-show="WaitingProcess.T_VoteNum>0"><a href="#">- 您发起的投票有 <span ng-bind-template="{{WaitingProcess.T_VoteNum}}"></span> 人参与了</a></li>
+            <li ng-show="WaitingProcess.T_ForumReplyNum>0"><a href="#">- 您的讨论有 <span ng-bind-template="{{WaitingProcess.T_ForumReplyNum}}"></span> 个新回复</a></li>
+            <li ng-show="WaitingProcess.T_ActivityNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.T_ActivityNum}}"></span> 份新的申请预约</a></li>
+        </ul>
+    </div>
+    <div ng-if="WaitingProcess.UserType==3">
+        <ul class="question_list" ng-show="WaitingProcess.WaitingNum>0">
+            <li ng-show="WaitingProcess.S_HomeworkNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.S_HomeworkNum}}"></span> 份新的作业</a></li>
+            <li ng-show="WaitingProcess.S_EachHomeworkNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.S_EachHomeworkNum}}"></span> 份新的互评作业</a></li>
+            <li ng-show="WaitingProcess.S_HomeworkScoreNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.S_HomeworkScoreNum}}"></span> 份新的作业成绩</a></li>
+            <li ng-show="WaitingProcess.S_ApplyBackNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.S_ApplyBackNum}}"></span> 份新的申请反馈结果</a></li>
+            <li ng-show="WaitingProcess.S_VoteNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.S_VoteNum}}"></span> 份新的投票</a></li>
+            <li ng-show="WaitingProcess.S_AppraiseNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.S_AppraiseNum}}"></span> 份新的评价任务</a></li>
+            <li ng-show="WaitingProcess.S_ForumReplyNum>0"><a href="#">- 您的讨论有 <span ng-bind-template="{{WaitingProcess.S_ForumReplyNum}}"></span> 个新回复</a></li>
+            <li ng-show="WaitingProcess.S_CourseScoreNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.S_CourseScoreNum}}"></span> 份新的课程成绩</a></li>
+            <li ng-show="WaitingProcess.S_ActivityNum>0"><a href="#">- 您有 <span ng-bind-template="{{WaitingProcess.S_ActivityNum}}"></span> 份新的培训活动</a></li>
+        </ul>
+    </div>
+
+    @*{{WaitingProcess|json}}*@
+    <div class="function_btn">
+        <a class="upload_data" href=@getresourcehref(@IES.Service.Common.ConfigService.ResourceURL, "#/content/resource") target="_self">上传资料</a>
+        <a ng-hide="WaitingProcess.UserType==3" class="add_exercise" href=@getresourcehref(@IES.Service.Common.ConfigService.ResourceURL, "#/content/exercise") target="_self">建设习题</a>
+        <a ng-hide="WaitingProcess.UserType==3" class="add_paper" href="../Resource/Paper/Index" target="_self">建设试卷</a>
+    </div>
+    <div class="question_box">
+        <p class="item_tit">常见问题</p>
+        <ul class="question_list">
+            <li ng-repeat="help in OcHelpList" ng-click="ShowHelpDetails(help)"><a>- <span style="cursor:pointer" ng-bind-template="{{help.Title}}"></span></a></li>
+        </ul>
+    </div>
+
+
+    <div id="showHelpModal" class="modal hide fade" tabindex="-1" style="width: 580px; margin-top: 30px;" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4>{{HelpDetails[0].Title}}</h4>
+        <i class="icon close_pop" aria-hidden="true" data-dismiss="modal"></i>
+        <div class="wrap_box" style="padding:10px; overflow-y:auto; max-height:400px;" ng-bind-html="HelpDetails[0].Content|toHtml">
+        </div>
+        <div class="modal-footer bootstrapbtn_box">
+            <a class="cancel" data-dismiss="modal" style="cursor:pointer" aria-hidden="true">关闭</a>
+        </div>
+    </div>
+
+    @*<div ng-controller="NoticesController">
+            <!--自己-->
+            <a ng-click="click()">click me</a>
+        </div>*@
+</div>

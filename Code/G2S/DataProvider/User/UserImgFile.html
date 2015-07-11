@@ -1,0 +1,101 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../js/jquery.form.js"></script>
+    <script>
+        var IsImg = false;
+        function successMsg() {
+            window.parent.CloseImg_Upd();
+        }
+        function CloseDialog() {
+            if (window.parent) {
+                var index = window.parent.GetImport;
+                parent.layer.close(index);
+            }
+        }
+
+        function CancelClick() {
+            if (window.parent) {
+                this.CloseDialog();
+            }
+        }
+        function Upload() {
+            document.getElementById("imgfile").click();
+        }
+        function urlchange() {
+            var imgsrc = document.getElementById("imgfile").value;
+            var point = imgsrc.lastIndexOf(".");
+            var hzm = imgsrc.substr(point);
+            if (hzm != ".jpg" && hzm != ".bmp" && hzm != ".png" && hzm != ".gif") {
+                alert("请选择jpg、bmp、png、gif格式的文件！");
+                IsImg = false;
+            }
+            else {
+                document.getElementById("xlsUrl").value = imgsrc;
+                IsImg = true;
+            }
+        }
+
+
+        function saveReport() {
+            if (!IsImg) {
+                return false;
+            }
+            try{
+                // jquery 表单提交
+                $("#form1").ajaxSubmit(function (message) {
+                    // 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
+                    if (message == "修改成功") {
+                        successMsg();
+                    } else {
+                        alert(message);
+                    }
+                });
+            }
+            catch(e){return false;}
+
+            return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+        }
+    </script>
+    <style>
+        .cont_box {width: 330px;height: 120px;margin: 0 auto;}
+        .top_box {width: 100%;height: 40px;float: left;}
+        .top_box span {line-height: 40px;margin-left: 20px;font-weight: bold;font-size: 16px;}
+        .main_box {width: 100%;height: 40px;float: left; }
+        .foot_box {width: 100%;height: 40px;float: left;line-height: 40px;}
+        .upload_box {width: 100%;height: 30px;line-height: 20px;float: left;}
+        .upload_box input[type=text] {width: 200px;height: 20px;line-height: 20px;float: left;margin-left: 20px;}
+        .upload_box a {float: left;font-size: 13px;margin-left: 10px;width: 50px;height: 20px;display: block;text-align: center;background: #284a51;color: #fff;padding: 2px 15px 2px 15px;text-decoration: none;}
+        .determine_btn {margin-left: 20px;padding:0;height: 30px;width: 60px;background: #284a51;line-height: 20px;color: #fff;text-align: center;border: 1px solid #ccc;text-decoration: none;float:left;cursor:pointer}
+        .determine_btn:hover {background: #233f45;}
+        .cancel_btn {margin-left: 10px;padding: 0;height: 28px;width: 60px;background: #f2f2f2;line-height: 28px;color: #333;text-align: center;border: 1px solid #ccc;text-decoration: none;float:left;font-size:14px}
+        .cancel_btn:hover {background: #f8f8f8;}
+    </style>
+</head>
+<body>
+    <form action="UserImgFile.ashx" method="post" enctype="multipart/form-data" id="form1" onsubmit="return saveReport()">
+        <div class="cont_box">
+            <div class="top_box">
+                <span>上传照片</span>
+            </div>
+            <div class="main_box">
+                <div class="upload_box">
+                    <input type="text" id="xlsUrl" readonly="readonly" />
+                    <a href="javascript:Upload();">浏览</a>
+                </div>
+                <div class="foot_box">
+                    <div style="height:10px;width:100%"></div>
+                    <input id="Button1" type="submit" class="determine_btn" value="确定" />
+                    <a class="cancel_btn" href="javascript:CancelClick();">取消</a>
+                </div>
+                <div style="display: none">
+                    <input id="imgfile" onchange="urlchange()" name="imgfile" type="file" />
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

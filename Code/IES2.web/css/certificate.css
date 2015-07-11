@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+
+.crumb_nav{ height:54px; line-height:54px; background:#374760; font-size:14px; font-weight:normal; color:#fff; padding-left:25px; overflow:hidden;}
+.certificate_box{ padding:20px 25px; overflow:hidden;}
+.tips{ color:#ff0000;}
+.certificate_tit{ margin-top:15px; height:25px; padding-bottom:5px; border-bottom:1px solid #666;}
+.certificate_tit h4{ display:inline-block; padding:0 15px; line-height:25px; padding-bottom:3px; border-bottom:3px solid #374760; font-size:16px; color:##2a3950;}
+
+.certificate_list{ overflow:hidden;}
+.certificate_list li{ float:left; margin:25px 0 0 30px; overflow:hidden;}
+.certificate_list li img{ display:block;}
+.img_box{ width:186px; height:262px; border:7px solid #bbc2c9; position:relative;}
+.mask_wrap{ display:table; position:absolute; top:-283px; left:-7px; width:200px; height:276px; background:#000; opacity:0.4; filter:alpha(opacity=40);}
+.mask_box{ display:table-cell; height:276px; vertical-align:middle; color:#fff;font-size:18px; font-weight:bold;}
+.mask_box span{ display:block; width:70px; height:70px; border:5px solid #fff; border-radius:40px; text-align:center; margin:0 auto; line-height:70px; }
+.mask_box p{ margin-top:10px; text-align:center;}
+.certificate_info{ padding:10px 15px 0; overflow:hidden;}
+.certificate_info span{ float:left; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:16px; color:#333;}
+.certificate_info p{ display:none; float:right;}
+.certificate_info p a{ float:right; width:16px; height:16px; margin:3px 0 0 9px; background:url(../Images/icon_certificate.png) no-repeat;}
+.certificate_info p a.icon_p{ background-position:0 -16px;}
+.certificate_info p a.icon_d{ background-position:0 0;}
+
+.no_content{ margin-top:120px; overflow:hidden; text-align:center;}
+.no_content p{ font-size:28px; color:#999; font-weight:bold; margin-top:20px; line-height:40px;}
+
+
+.certificate_wrap{ padding:32px; width:688px; margin:20px auto; background:#bbc2c9; overflow:hidden;}
+.certificate_wrap img{ display:block;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

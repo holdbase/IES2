@@ -1,0 +1,140 @@
+﻿<script src="~/js/jquery-1.8.3.min.js"></script>
+<link href="~/Css/face.css" rel="stylesheet" />
+<link href="~/Css/home.css" rel="stylesheet" />
+<script src="~/js/face.js"></script>
+<div class="message_box" ng-controller="NoticesController">
+    <ul class="message_nav">
+        <li ng-class="{true: 'active', false: ''}[NoticeModel.ModuleID==-1]" style="cursor:pointer" ng-click="ShowNotice(-1)"><a>全部通知</a></li>
+        <li ng-class="{true: 'active', false: ''}[NoticeModel.ModuleID==1]" style="cursor:pointer" ng-click="ShowNotice(1)"><a>课程通知</a></li>
+        <li ng-class="{true: 'active', false: ''}[NoticeModel.ModuleID==0]" style="cursor:pointer" ng-click="ShowNotice(0)"><a>系统通知</a></li>
+    </ul>
+    <div class="issue_notice" ng-if="UserSpce==2" style="cursor:pointer" ng-click="AddNotice()">
+        <a><em><i class="icon"></i></em><span>发布通知</span></a>
+    </div>
+    <div class="message_detail">
+        <div class="message_list" ng-repeat="Notice in  NoticeList" on-get-notice-list>
+            <div class="message_tit">
+                <i class="icon star" ng-show="Notice.IsTop"></i>
+                <h4 ng-bind-template="{{Notice.Title}}"></h4>
+            </div>
+            <p class="notice_content" ng-bind-template="{{Notice.Conten}}">
+
+            </p>
+            <div class="issue_detail">
+                <a class="comment_btn" id="comment_btn_{{Notice.NoticeID}}" loaded="true"><span id="cmt_text_{{Notice.NoticeID}}">收起</span>（<span ng-bind-template="{{Notice.ResponseCount}}"></span>）</a>
+                <a ng-if="Notice.IsCanDel" class="notice_btn_del" ng-click="Notice_Del(Notice.NoticeID)" id="notice_btn_del_{{Notice.NoticeID}}">[删除]</a>
+                <p>
+                    <span ng-bind-template="{{Notice.UpdateTime|dateFormat}}"></span>&nbsp;来自:<a href="#" ng-bind-template="{{Notice.UserName}}"></a>&nbsp;<span ng-bind-template="{{Notice.OCName}}"></span>
+                </p>
+            </div>
+            <div class="comment_box" id="comment_box_{{Notice.NoticeID}}" style="display:block">
+                <span class="triangle"></span>
+                <div class="comment_content" style="display: block;">
+                    <div class="chat_box">
+                        <input class="chat_detail" id="chat_detail_{{Notice.NoticeID}}" type="text" value="请输入评论内容">
+                        <textarea class="text_area" id="text_area_{{Notice.NoticeID}}" ng-model="Notice.RConten" style="display: none; border: 1px solid rgb(255, 55, 2);"></textarea>
+                    </div>
+                    <div class="expression" id="expression_{{Notice.NoticeID}}">
+                        <a class="biaoqing Face_a fl" id="biaoqing_{{Notice.NoticeID}}" href="javascript:;"><i class="icon"></i>表情</a>
+                        <a class="issue_comment" href="javascript:;" ng-click="ResponseNotice(Notice.NoticeID,Notice.RConten)">发表</a>
+                        <span class="talkCountTxt fr">
+                            还能输入<em>250</em>字
+                        </span>
+                    </div>
+                    <div class="comment_detail" id="comment_detail_{{Notice.NoticeID}}">
+                        <ul class="comment_list">
+                            <li ng-repeat="Response in Notice.NoticeResponse">
+                                <img class="reply_img" src="" width="30" height="30" user-img userid="{{Response.UserID}}" />
+                                <p>
+                                    <a ng-bind-template="{{Response.UserName}}"></a>:
+                                    <span ng-bind-html="Response.Conten|toHtml"></span>
+                                    <b>({{Response.ResponseTimeStr}})</b>
+                                </p>
+                            </li>
+                        </ul>
+                        <a ng-show="Notice.ShowMore" class="more_comment" href="javascript:;" ng-click="GetCommentShortDetail(Notice)">点击查看更多评论</a>
+                        <div ng-show="Notice.ShowPage" id="ResponcePages_{{Notice.NoticeID}}" style="float:right;margin-right:20px; margin-top:20px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="NoticePages" style="float:right;margin-right:20px; margin-top:10px;"></div>
+    </div>
+
+    <div id="myAddNoticeModal" class="modal hide fade" style="width: 600px; position: absolute; left: 50%; margin-left: -300px; top: 200px; background: #fff;" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4 class="h4Title">发布通知</h4>
+        <span class="icon close_pop" data-dismiss="modal"></span>
+        <div class="inform_box">
+            <div class="inform_item">
+                <p class="inform_style" ng-hide="true">
+                    <span><input type="checkbox" ng-model="NoticeModel.IsEmail">同时发送邮件</span>
+                    <span><input type="checkbox" ng-model="NoticeModel.IsSms">同时发送短信<em>（不得超过67字符，含标点符号、空格、签名）</em></span>
+                </p>
+                <div class="issue_box">
+                    <input class="issue_tit" type="text" ng-model="NoticeModel.Title" placeholder="通知标题（可不填）">
+                    <div class="issue_content">
+                        <textarea id="noticeText" ng-model="NoticeModel.Conten"></textarea>
+                        <span class="red red_label">*</span>
+                        <p class="inform_setting"><span><input type="checkbox" ng-model="NoticeModel.IsTop">设为重要通知</span><em>已输入 0 字符</em></p>
+                        <div class="attach_box" ng-hide="true">
+                            <a class="attach_btn" href="javascript:;">上传附件</a>
+                            <ul class="attach_list">
+                                <li><img src="http://placehold.it/76x60/cccccc" width="76" height="60" /></li>
+                                <li>
+                                    <div class="file_box">
+                                        <i class="icon_24 ppt"></i>
+                                        <p>关于爱国教育关于爱国教育</p>
+                                        <span><i class="icon throw_btn"></i></span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="inform_item inform_item2">
+                <div class="user_select user_select2">
+                    <div class="object_box object_box2">
+                        <div class="object_item">
+                            <a class="select_btn" ng-click="ShowClass()" href="javascript:;">选择班级</a>
+                            <div class="section_box">
+                                <span ng-repeat="OC in ClassList | listFilter4:'!=':'0'"><a href="javascript:;">{{OC.Name}}</a><i class="icon_admin remove_btn" ng-click="DelClass(OC)"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="issue_btn_box">
+                <a class="issue_btn" href="javascript:;" ng-click="PublishNotice()">发布</a>
+                <a class="cancel_btn" href="javascript:;" data-dismiss="modal">取消</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="mySelectClassModal" class="modal hide fade" style=" width:400px;position: absolute; left: 50%; margin-left: -200px; top: 200px; background: #fff; " tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4 class="h4Title">选择班级</h4>
+        <span class="icon close_pop" data-dismiss="modal"></span>
+        <div class="class_accord function_accord">
+            <div class="class_tit">
+                <p><input type="checkbox" ng-model="ClasCheckedAll.ClassAll" ng-click="ckb_Class_All()"><label>全选</label></p>
+            </div>
+            <div class="course_management" style="max-height: 360px; overflow-y: auto;">
+                <dl ng-repeat="OC in ClassList | listFilter3:'=':'0'">
+                    <dt><input type="checkbox" ng-click="ckb_OC_Single(OC)" ng-model="OC.IsSelected">{{OC.Name}}</dt>
+                    <dd>
+                        <div class="function_r">
+                            <p ng-if="(ClassList|listFilter3:'=':OC.ID).length<=0" style="display:block">&nbsp;</p>
+                            <p ng-repeat="class in ClassList| listFilter3:'=' :OC.ID"><input type="checkbox" ng-click="ckb_Class_Single(class)" ng-model="class.IsSelected">{{class.Name}}</p>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="class_btn_box" style="padding:20px 0px;">
+            <a class="issue_btn" href="javascript:;" ng-click="GetSelectClass()">确定</a>
+            <a class="cancel_btn" href="javascript:;" data-dismiss="modal">取消</a>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+@using IES.Cache;
+@using IES.CC.Model;
+@using IES.G2S.CourseLive.BLL;
+<script src="~/js/jquery-1.8.3.min.js"></script>
+<script src="~/js/MessageList.js"></script>
+<script src="~/js/Page.js"></script>
+<style>
+    .icon_admin { display: inline-block; width: 16px; height: 16px; }
+    .stg_tit { padding-bottom: 8px; margin-top: 10px; height: 22px; line-height: 22px; border-bottom: 1px solid #374760; font-weight: bold; }
+    .stg_tit span { margin-left: 30px; float: left; height: 21px; line-height: 33px; padding-bottom: 7px; font-size: 14px; color: #333; }
+    .stg_tit span a { color: #666666; }
+    .stg_tit span.action { border-bottom: 3px solid #366061; }
+    .stg_tit span.action a { font-weight: bold; color: #374760; }
+    .inp { float: right; margin-right: 30px; width: 200px; height: 25px; }
+    .Message { height: 35px; padding-top: 10px; padding-left: 25px; border-bottom: 1px solid #F2F2F2; background-color: #F3F9FF; }
+    table tr { height: 42px; }
+    .center { text-align: center;height:42px;}
+    .left { float: left;height:42px;line-height:42px }
+    a { color:#000000}
+    .u14_btn {display: inline-block;width: 16px;height: 16px;background: url(../../Images/u14.png) no-repeat;}
+</style>
+<input id="Count" style="display:none" value="1" />
+<div style=" width: 1000px; height: 41px; background: #374760">
+    <a href="Msg" target="_self" style="float:left;line-height:41px;font-size:16px;font-weight:bold;margin-left:25px;color:#fff">消息中心</a>
+</div>
+<div class="Message">
+    <a href="javascript:;" onclick="SendNews();" style="padding: 4px 18px 4px 18px; background: #475C7C; color:#FFF;">发送消息</a>
+    <a href="javascript:;" onclick="DelInfo();" style="margin-left:20px; padding: 4px 20px 4px 20px; background: #475C7C; color: #fff; ">删除</a>
+    <input class="inp" id="tchName" style="padding-right:24px" type="text" placeholder="请输入您要查找的消息主题" />
+    <a href="javascript:GetMsgList();" style="position: absolute; margin-left: 747px;margin-top:5px" class="u14_btn"></a>
+</div>
+<div class="stg_tit">
+    <span id="spaceitem1" class="action"><a href="javascript:shows(1)">我的消息</a><span id="Shu" style="float: right; margin-left: 5px;"> ( 0 ) </span></span>
+    <span id="spaceitem2"><a href="javascript:shows(2)">已发送的消息</a></span>
+</div>
+<div>
+    <div id="MessageList" style="float:left;">
+        
+    </div>
+</div>
+<div>
+    <div id="OutMessageList" style="float: left;">
+
+    </div>
+
+</div>
+<div id="div_page_wrap">
+
+</div>
+

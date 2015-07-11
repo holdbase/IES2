@@ -1,0 +1,394 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+.icon_vote{ display:inline-block; width:16px; height:16px; background:url(../Images/icon_vote.png) no-repeat;}
+/*-------------------------------教学调查-我创建的（无内容）-------------------------------------*/
+.operation_box{ padding:5px 25px; position:relative; height:30px; line-height:30px; border-bottom:1px solid #e4e4e4; background:#f2f2f2;}
+.term_select{ float:left; width:200px; height:28px; line-height:28px; border:1px solid #e4e4e4;}
+.operation_btn{ float:right; margin-left:30px; width:120px; position:relative;}
+.create_btn{ display:block; width:120px; height:30px; line-height:30px; text-align:center; background:#475c7c; font-size:13px; color:#fff; text-align:center;}
+.create_btn:hover{ background:#374760;}
+.create_btn i{ display:inline-block; margin-left:10px; vertical-align:middle;}
+.arrow_down{ background-position:-64px 0;}
+.operation_btn ul{ display:none; position:absolute; top:30px; left:0; width:118px; background:#fff; overflow:hidden; border:1px solid #e4e4e4;}
+.operation_btn ul li{ border-top:1px solid #e4e4e4; margin-top:-1px; overflow:hidden;}
+.operation_btn ul li a{ display:block; height:30px; line-height:30px; text-align:center; font-size:13px; color:#666;}
+.operation_btn ul li a:hover{ text-decoration:underline; color:#374760;}
+.button_box{ float:right; color:#374760;}
+.button_box i{ vertical-align:middle; margin-right:5px;}
+.part_btn{ background-position:0 0;}
+.survey_nav{ margin-top:10px; overflow:hidden;}
+.survey_nav_list{ height:22px; line-height:22px; padding:0 15px 8px; border-bottom:1px solid #374760;}
+.survey_nav_list li{ float:left; margin-right:10px;}
+.survey_nav_list li a{ display:block; padding:0 15px; height:22px; line-height:22px; padding-bottom:6px;  font-size:16px; color:#333;}
+.survey_nav_list li.active a{border-bottom:3px solid #374760; color:#374760;}
+.survey_table{ width:100%;}
+.survey_table tr th{ height:40px; line-height:40px; border-bottom:1px solid #e4e4e4; text-align:left; color:#333;}
+.no_content{ margin:100px 0; text-align:center; height:146px; overflow:hidden; font-size:20px; color:#333; font-weight:bold; }
+.no_content b{ display:inline-block;vertical-align:top; margin-top:40px;}
+
+
+
+/*-------------------------------教学调查-我创建的-问卷调查-------------------------------------*/
+.survey_list{ overflow:hidden;}
+.survey_list li:nth-child(odd){background:#f2f2f2}
+.survey_item{ padding:0 15px 0 25px; overflow:hidden; height:40px; line-height:40px; border-bottom:1px solid #e4e4e4;border-top:1px solid #e4e4e4; margin-top:-1px; color:#333;}
+.survey_item span{ float:left;}
+.wid275{ float:left; width:255px; height:40px;margin-right:20px}
+.wid80{ float:left;  width:80px; height:40px;}
+.wid115{ float:left;  width:115px; height:40px;}
+.wid100{ float:left;  width:100px; height:40px;}
+.wid130{ float:left;  width:130px; height:40px;}
+.wid165{ float:left;  width:165px; height:40px;}
+.survey_name{ float:left; color:#374760; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.survey_JoinUsers{ float:left; color:#374760;width:155px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.survey_name:hover{ text-decoration:underline;}
+.survey_status{ width:70px; height:25px; line-height:25px; margin-top:7px; text-align:center;}
+.surveying{ background:#14a4fa; color:#fff;}
+.paused{ background:#fe4e4d; color:#fff;}
+.completed{ background:#e4e4e4; color:#333;}
+.not_start{ background:#374760; color:#fff;}
+.progress_box{ width:100px; height:18px; line-height:18px; border:1px solid #999; margin-top:10px; position:relative; text-align:center;}
+.progress_box b{ display:block; height:18px; background:#14a4fa; width:0%; position:absolute; }
+.progress_box p{  position:relative; font-weight:bold; }
+.object_box{ overflow:hidden; height:40px;}
+.object_box a{ float:right; margin:12px 0 0 10px; cursor:pointer;}
+.fold_btn{ background-position:-64px -32px;}
+.delete_btn{ background-position:-16px -48px;}
+.detail_btn{ background-position:-16px -32px;}
+.pause_btn{background-position:-16px -16px;}
+.edit_btn{ background-position:-16px 0;}
+.start_btn{ background-position:-16px -64px;}
+.object_box p{ overflow:hidden;}
+.survey_box{ margin:10px 28px; overflow:hidden;}
+.guide_word{ font-size:14px; color:#333;}
+.questionnaire_box{ margin-top:20px; position:relative; overflow:hidden;}
+.num_box{width:913px; height:40px; margin:0 auto; position:relative;}
+.question_num{ width:9999px; border-left:1px solid #e4e4e4;  height:30px; position:absolute; top:10px; left:0;}
+.question_num li{ float:left; width:75px; height:30px; border:1px solid #e4e4e4; border-bottom:0; line-height:30px; text-align:center; color:#333; margin-left:-1px; overflow:hidden; border-radius:5px 5px 0 0; cursor:pointer;}
+.question_num li.active,.question_num li:hover{ height:40px; line-height:40px; font-weight:bold; margin-top:-10px; background:#fff;}
+.left_btn,.right_btn{ display:block; width:14px; height:30px; position:absolute; top:8px; z-index:3;}
+.left_btn{ left:0; background:url(../Images/switch_btn.gif) no-repeat 0 0;}
+.left_btn:hover{ background:url(../Images/switch_btn.gif) no-repeat 0 -30px;}
+.right_btn{ right:0;background:url(../Images/switch_btn.gif) no-repeat -14px 0;}
+.right_btn:hover{ background:url(../Images/switch_btn.gif) no-repeat -14px -30px;}
+.question_box{ padding:25px 20px; border:1px solid #c9c9c9; overflow:hidden; min-height:400px;}
+.question_list{ display:none; overflow:hidden; }
+.question_l{ float:left; width:540px; margin-right:30px; border-right:1px solid #c9c9c9; position:relative; padding-bottom:30px;}
+.question_l img{ display:block;}
+.single_img{ margin:20px 0 0 60px;}
+.involve_people{ font-size:14px; color:#333; font-weight:bold; position:absolute; bottom:0; left:0;}
+.question_r{ overflow:hidden;}
+.question_detail dt{ font-size:16px; color:#333; line-height:26px; margin-bottom:10px;word-wrap: break-word;}
+.question_label{ display:inline-block; padding:0 10px; height:26px; line-height:26px; text-align:center; background:#2a3950; font-size:14px; color:#fff;margin-left:10px}
+.question_detail dd{ color:#333; line-height:30px;}
+.multiple_img{ margin-left:10px;}
+.question_wrap{ overflow:hidden;}
+.rank_table{ width:100%; margin-top:15px; font-size:14px; color:#333;}
+.rank_table tr th,.rank_table tr td{ height:30px; line-height:30px; border:1px solid #e4e4e4;min-width:179px}
+.rank_table_f{ width:99%; margin-top:15px; font-size:14px; color:#333;border:1px solid #e4e4e4;}
+.rank_table_f tr th,.rank_table_f tr td{ height:30px; line-height:30px; border:1px solid #e4e4e4;}
+.paragraph{ padding:0 13px; width:870px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.blank_table tr td{ padding-left:10px;}
+.page_item{ float:right; height:20px; line-height:20px; margin:5px 13px 0 0;}
+.go_btn{ float:right; margin-left:5px; width:40px; height:20px; line-height:20px; text-align:center; background:#374760; color:#fff;}
+.go_btn:hover{ background:#475c7c;}
+.page_item input{ float:right; width:30px; height:18px; line-height:18px; border:1px solid #999; text-align:center; margin-left:8px;}
+.go_box{ float:right; margin-left:10px;}
+.go_box a{ float:right; width:30px; height:20px;}
+.next_page{ background:url(../Images/page_btn.gif) no-repeat -30px 0;}
+.next_page:hover{ background:url(../Images/page_btn.gif) no-repeat -30px -20px;}
+.prev_page{ background:url(../Images/page_btn.gif) no-repeat 0 0;}
+.prev_page:hover{ background:url(../Images/page_btn.gif) no-repeat 0 -20px;}
+.page_item p{ float:right; color:#333;}
+.warning_box{ margin:20px; overflow:hidden;}
+.warning_box img{ float:left; margin-right:10px;}
+.warning_box  p{ overflow:hidden; font-size:16px; color:#666;}
+.warning_box  p span{ display:block; font-size:12px; color:#374760;}
+
+
+
+
+
+
+
+
+/*----------------------查看详细---------------------*/
+.detail_box{ width:960px; margin:15px auto; background:#fff; min-height:800px;}
+.detail_box h3{ height:40px; line-height:40px; background:#374760; padding-left:10px; font-size:15px; color:#fff; font-weight:normal;}
+.questionnaire{ margin:10px;}
+.questionnaire .question_list{ display:block; margin-bottom:20px; padding:25px 20px; border:1px solid #c9c9c9; overflow:hidden;}
+.detail_operation{ margin-top:10px; overflow:hidden;}
+.detail_operation a{ float:right; margin-right:10px; width:80px; height:28px; line-height:28px; text-align:center; color:#fff; background:#2a3950; border:1px solid #475c7c; font-size:14px;}
+.detail_operation a:hover{background:#374760;}
+
+
+/*----------------------创建问卷调查---------------------*/
+.gray_bg .wrap{ background:#e4e4e4;}
+.create_wrap{ width:1000px; margin:0 auto; min-height:800px;}
+.create_wrap h3{ margin-top:30px; font-size:18px; color:#333;}
+.create_box{ margin-top:20px; min-height:800px; background:#fff; padding:0 29px 29px; border:1px solid #ccc; overflow:hidden;}
+.part_box{ margin-top:30px;}
+.part_box h4{ height:35px; line-height:35px; border-bottom:2px solid #374760; padding-left:20px; font-size:16px; color:#333;}
+.part_info{ margin-top:20px; overflow:hidden;}
+.part_info label{ float:left; margin-right:10px; width:90px; line-height:30px; text-align:right; color:#333;}
+.red{ color:#ff0000;}
+.name_input{ padding:3px 4px; width:810px; height:22px; line-height:22px; border:1px solid #e4e4e4; font-size:12px; color:#333;}
+.deadline_box{ display:block; overflow:hidden;}
+.deadline_box input{ float:left; margin-right:10px; padding:3px 4px; height:22px; line-height:22px; width:140px; border:1px solid #e4e4e4; font-size:12px;}
+.survey_descript{ overflow:hidden; padding:4px; border:1px solid #e4e4e4; width:810px; height:80px; resize:none;}
+.involve_box{ overflow:hidden; line-height:25px;}
+.involve_box p{ color:#333; overflow:hidden; height:25px; line-height:25px;}
+.involve_box p input{ float:left; margin-right:3px; height:25px; vertical-align:middle;}
+.involve_box p a{ display:inline-block; margin-left:20px; width:70px; height:25px; line-height:25px; text-align:center; background:#475c7c; color:#fff;}
+.involve_box p a:hover{ background:#374760;}
+
+.add_box{ margin-top:10px; overflow:hidden; }
+.type_box{ float:left; margin-right:20px; width:130px; padding:19px 9px; background:#f7f7f7; border:1px solid #e4e4e4; overflow:hidden;}
+.type_box li{ padding:6px 9px; margin-bottom:10px; border:1px solid #e4e4e4; background:#fff; height:16px; line-height:16px; overflow:hidden;}
+.type_box li a{ display:block; padding-left:4px; height:16px; line-height:16px; border-left:6px solid #374760; font-size:14px; color:#333; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.type_box li.active a,.type_box li a:hover{ color:#374760; font-weight:bold;}
+.topic_wrap{ float:left; width:748px; overflow:hidden; padding:15px 0; border:1px solid #e4e4e4; background:#f7f7f7;}
+.tips{ height:50px; line-height:50px; text-align:center; background:#fff5d9; color:#333; overflow:hidden;}
+.topic_box{ display:none; padding:0 14px; margin-top:25px; overflow:hidden; position:relative;}
+.subject_num{ margin:0 35px; height:34px; width:650px; overflow:hidden; position:relative;}
+.num_list{ position:absolute; top:0; left:0; width:9999px;}
+.num_list li{ float:left; margin-right:10px; height:34px; width:48px; border:1px solid #f7f7f7; position:relative;}
+.num_list li a{ display:block; width:48px; height:30px; line-height:30px; text-align:center; background:#374760; color:#fff; font-size:13px;}
+.num_list li a:hover{ background:#475c7c;}
+.num_list li span{ display:none; width:10px; height:10px; position:absolute; right:0; top:0; background:#e4e4e4; color:#374760; line-height:10px; text-align:center; cursor:pointer;}
+.num_list li.active{ background:#fff; border-color:#e4e4e4 #e4e4e4 #fff; border-style:solid; border-width:1px;}
+.num_list li.active a{ background:#fff; color:#333;}
+.num_list li.active span{ display:block;}
+.subject_box{ min-height:400px; background:#fff; border:1px solid #e4e4e4; padding:9px; margin-top:-1px;}
+.subject_list{ display:none; overflow:hidden;}
+.subject_list h5{ font-size:14px; color:#333; padding-left:5px;}
+.subject_detail{ margin-top:15px; overflow:hidden;}
+.subject_detail label{ float:left; width:70px; margin-right:5px; line-height:30px; color:#333;}
+.subject_tit{ padding:4px; width:540px; height:65px; border:1px solid #e4e4e4; resize:none; font-size:12px; color:#333;}
+.option_box{ overflow:hidden;}
+.option_list li{ height:30px; margin-bottom:10px; overflow:hidden;}
+.option_list li input{ float:left; margin-right:20px; padding:3px 9px; border:1px solid #e4e4e4; height:22px; line-height:22px; width:480px;}
+.option_list li i{ float:left; margin-top:7px; cursor:pointer;}
+.btn_delete{ background-position:-32px 0;}
+.function_btn{ overflow:hidden;}
+.function_btn a{ float:left; color:#475c7c;}
+.function_btn span{ float:right; margin-right:125px; color:#333;}
+.function_btn span input{ height:22px; vertical-align:middle; margin-right:3px;}
+.icon_left,.icon_right{ position:absolute; top:9px;}
+.icon_left{ left:23px; background-position:-32px -48px;}
+.icon_right{ right:23px; background-position:-32px -32px;}
+.select_setting{ overflow:hidden; color:#333;}
+.select_setting select{ width:70px; height:28px; line-height:28px; border:1px solid #e4e4e4; margin:0 10px 0 5px;}
+.score_box{ overflow:hidden; height:30px; line-height:30px;}
+.score_box b{ float:left; font-size:14px; color:#475c7c;}
+.score_progress{ float:left; height:6px; margin:12px 5px 0; background:#e4e4e4; width:200px; border-radius:10px; position:relative;}
+.score_progress span{ position:absolute; left:0; top:0; width:40%; background:#475c7c; height:6px;}
+.score_progress i{ display:block; width:8px; height:18px; background:url(../Images/score_btn.gif) no-repeat; position:absolute; top:-6px; left:40%;}
+.score_num{ overflow:hidden; padding-left:20px; color:#666;}
+.brief_tit{ padding:4px; width:540px; height:280px; border:1px solid #e4e4e4; resize:none;}
+.array_box{ overflow:hidden; font-family:'Arial';}
+.tit_box{ float:left; width:189px; border:1px solid #e4e4e4; overflow:hidden;}
+.tit_list{ overflow:hidden;}
+.tit_list li{ height:29px; line-height:29px; border-bottom:1px solid #e4e4e4; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.operators{ height:22px; overflow:hidden;}
+.operators a{ float:left; width:94px; border-left:1px solid #e4e4e4; height:22px; margin-left:-1px; overflow:hidden; text-align:center; outline:none; hide-focus:expression(this.hideFocus=true);}
+.operators a i{ vertical-align:middle;}
+.add_btn{ background-position:-48px -48px;}
+.minus_btn{ background-position:-48px -64px;}
+.options_wrap{ float:left; width:361px; margin-left:-1px; overflow:auto;overflow-x:scroll;}
+.option_table{ width:100%;}
+.option_table tr th,.option_table tr td{ height:29px; line-height:29px; border:1px solid #e4e4e4; text-align:center; font-weight:normal; color:#333;}
+.option_table tr td{ min-width:58px; max-width:119px;}
+.option_table tr td input{ vertical-align:middle;}
+.option_operator{ float:left; margin-left:-1px; border:1px solid #e4e4e4;}
+.option_operator .operators{ height:29px;}
+.option_operator .operators a{ width:29px; height:29px;}
+.option_operator .operators a i{ vertical-align:bottom;}
+.blank_box{ height:29px; line-height:29px\9; min-width:58px; max-width:119px; text-align:center; border:none;}
+.rate_box{ width:140px; margin-left:4px; height:20px; background:url(../Images/score.png) no-repeat 0 0;}
+.rate_box span{ display:block; height:20px; background:url(../Images/score.png) no-repeat 0 -20px; width:40%;}
+.pentagram1{ display:block; height:20px; background:url(../Images/score.png) no-repeat 0 -20px; width:20%;float:left;}
+.pentagram2{ display:block; height:20px; background:url(../Images/score.png) no-repeat -28px -20px; width:20%;float:left;}
+.pentagram3{ display:block; height:20px; background:url(../Images/score.png) no-repeat -56px -20px; width:20%;float:left;}
+.pentagram4{ display:block; height:20px; background:url(../Images/score.png) no-repeat -84px -20px; width:20%;float:left;}
+.pentagram5{ display:block; height:20px; background:url(../Images/score.png) no-repeat -112px -20px; width:20%;float:left;}
+.nopentagram{ display:block; height:20px; background:url(../Images/score.png) no-repeat 0 -40px; width:20%;float:left;}
+.muban_tip{ margin:5px 0 0 190px; color:#333; overflow:hidden;}
+.muban_tip input{ float:left; height:22px; vertical-align:middle; margin-right:3px;}
+
+.search_box{ overflow:hidden; }
+.search_box a{ float:right; width:25px; height:25px; background:#ccc;border:1px solid #ccc;}
+.search_box a i{ margin:4px 0 0 4px;}
+.search_icon{ background-position:-48px -32px;}
+.search_box input{ float:right; width:155px; height:25px; line-height:25px\9; padding:0 7px; border:1px solid #ccc; font-size:12px; }
+.select_box{ margin-top:10px; border-top:1px solid #e4e4e4; overflow:hidden;}
+.grade_box{ float:left; width:180px; height:480px; overflow:auto; border-right:1px solid #e4e4e4; padding-right:10px;}
+.all_grade{ margin-top:4px; height:40px; line-height:40px; border-bottom:1px solid #e4e4e4; font-size:14px; color:#333; overflow:hidden;}
+.all_grade i{ float:left; margin:12px 8px 0 0; cursor:pointer;}
+.arrow_btn{ background-position:-48px 0;}
+.all_grade input{ float:left; height:40px; vertical-align:middle; margin-right:4px;}
+.grade_list li{ margin-top:4px; padding:0 10px 0 24px; height:40px; line-height:40px; border-bottom:1px solid #e4e4e4; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.grade_list li input{ float:left; height:40px; vertical-align:middle; margin-right:4px;}
+.grade_list li a{ font-size:14px; color:#333;}
+.grade_list li.active a,.grade_list li:hover a{ color:#fff;}
+.grade_list li.active,.grade_list li:hover{ background:#374760;}
+.stu_box{ overflow:hidden; }
+.stu_tit{ margin-top:15px;padding-left:15px; height:20px; line-height:20px; overflow:hidden;}
+.stu_tit h5{ float:left; font-size:14px; color:#333;}
+.stu_tit .page_item{ margin:0;}
+.stu_select{padding-left:15px; margin-top:5px; overflow:hidden;}
+.stu_select .class_box tr th,.stu_select .class_box tr td{ border:1px solid #e4e4e4;}
+.select_num{ margin-top:15px; padding:5px 0 0 15px; border-top:1px solid #e4e4e4; font-size:14px; color:#333;}
+
+
+/*----------------------教学调查-我参与的-问卷调查---------------------*/
+.ongoing{ color:#009900;}
+.vote_btn{ float:left; width:70px; height:25px; line-height:25px; text-align:center; color:#fff; background:#69ad95; margin-top:7px;}
+.vote_btn:hover{ background:#519b81;}
+.question_detail dd input[type=radio],.question_detail dd input[type=checkbox]{ float:left; margin-right:3px; height:30px; vertical-align:middle;}
+.finished{ color:#374760;}
+.other_status{ color:#333;}
+.object_box p.not_vote{ color:#999;}
+
+
+/*----------------------参与问卷调查---------------------*/
+.inquire_wrap{ width:950px; margin:0 auto; border:1px solid #ccc; overflow:hidden; position:relative;}
+.inquire_wrap h4{ height:39px; line-height:39px; background:#374760; border-bottom:1px solid #ccc; font-size:14px; color:#fff; padding-left:13px;}
+.inquire_box{ padding:24px; background:#fff; overflow:hidden;}
+.inquire_tit h5{ font-size:18px; color:#475c7c;}
+.inquire_tit p{ color:#333;}
+.description_box{ margin-top:30px; overflow:hidden;}
+.description_box b{ font-size:14px; color:#333;}
+.description_box p{ padding:5px; border:1px solid #e4e4e4; font-size:14px; color:#333;}
+.issue_list{ margin-top:20px; overflow:hidden;}
+.issue_list dt{ font-size:16px; color:#475c7c;word-wrap: break-word;}
+.issue_list dd{ color:#666; margin-top:10px; overflow:hidden;line-height:22px}
+.issue_list dd input[type=radio],.issue_list dd input[type=checkbox]{ float:left; height:22px; vertical-align:middle; margin-right:3px;}
+.text_area{ width:890px; padding:4px; height:90px; border:1px solid #e4e4e4; resize:none;}
+.rank_detail{ overflow:hidden;}
+.rank_detail select{ float:right; margin:0 400px 0 10px; width:100px; height:28px; border:1px solid #e4e4e4;}
+.rank_detail span{ overflow:hidden;}
+.issue_list dd .rank_table input[type=radio],.issue_list dd .rank_table input[type=checkbox]{ float:none; margin:0; height:30px;}
+.issue_list dd .rank_table input[type=text]{ width:150px; padding:4px 0; height:22px; line-height:22px; border:0; text-align:center;}
+.star_box{ margin-left:4px; width:95px; height:15px; background:url(../Images/star.png) no-repeat 0 0; position:relative;}
+.star_box span{ display:block; height:15px; width:40%; background:url(../Images/star.png) no-repeat 0 -15px; position:absolute; top:0; left:0;}
+.xwjxa1{ display:block; height:15px; width:20%; background:url(../Images/star.png) no-repeat 0 -15px; float:left}
+.xwjxa2{ display:block; height:15px; width:20%; background:url(../Images/star.png) no-repeat -19px -15px; float:left}
+.xwjxa3{ display:block; height:15px; width:20%; background:url(../Images/star.png) no-repeat -38px -15px; float:left}
+.xwjxa4{ display:block; height:15px; width:20%; background:url(../Images/star.png) no-repeat -57px -15px;float:left}
+.xwjxa5{ display:block; height:15px; width:20%; background:url(../Images/star.png) no-repeat -76px -15px; float:left}
+.noxwjxa{ display:block; height:15px; width:20%; background:url(../Images/star.png) no-repeat 0 -30px; float:left}
+.evaluation_box{ margin-top:20px; overflow:hidden;}
+.evaluation_box b{ display:block; font-size:14px; color:#333;}
+.evaluation_table{ width:100%;}
+.evaluation_table tr th,.evaluation_table tr td{ height:29px; line-height:29px; border:1px solid #e4e4e4; text-align:center; color:#333; vertical-align:middle;}
+.evaluation_table tr td input{ vertical-align:middle; height:29px;}
+
+
+/*----------------------教学调查-我创建的-教学评价---------------------*/
+.evaluation_object{ font-size:16px; color:#333;}
+.object_img{ display:block; width:580px; margin:10px auto;}
+.involve_num{ display:block; padding-left:6px; font-size:14px; color:#333; text-align:left;}
+.step_nav{ margin-top:20px; overflow:hidden; padding-left:30px;}
+.step_nav li{ float:left; z-index:2; position:relative;}
+.step_nav li.active a,.step_nav li a:hover{ background:#990000; color:#fff;}
+.step_nav li.index1{ z-index:1;}
+.step_nav li.index2{ z-index:2;}
+.step_nav li.index3{ z-index:3;}
+.step_nav li a{ display:block; width:198px; height:30px; text-align:center; line-height:30px; background:#ccc; border-right:1px solid #fff; border-radius:30px; margin-left:-30px; font-size:13px; color:#333;}
+.step_nav li i{ display:block; width:20px; position:absolute; top:5px; right:10px;}
+.icon_mooc{ display:inline-block; width:16px; height:16px; background:url(../Images/icon_mooc.png) no-repeat;}
+.icon_filled{ background-position:-32px -64px;}
+.group_setting{ overflow:hidden; line-height:30px;}
+.group_setting select{ margin-left:10px; height:23px; line-height:23px; border:1px solid #e4e4e4; width:70px;}
+.group_setting a{ display:inline-block; margin-left:15px; width:70px; height:25px; line-height:25px; text-align:center; background:#475c7c; color:#fff;}
+.group_setting a:hover{ background:#374760;}
+.right_setting{ overflow:hidden; line-height:30px; color:#333;}
+.right_setting span{ float:left; margin-right:30px;}
+.right_setting span input{ float:left; margin-right:3px; height:30px; vertical-align:middle;}
+.result_setting{ overflow:hidden; line-height:30px; color:#666;}
+.result_setting span{ float:left; margin-right:30px;}
+.result_setting span input{ float:left; height:30px; vertical-align:middle; margin-right:3px;}
+.student_box{ width:640px; overflow:hidden;}
+.tip_box{ line-height:30px; overflow:hidden;}
+.tip_box p{ float:left; color:#333;}
+.tip_box p a{ color:#374760; text-decoration:underline;}
+.tip_box span{ float:right; width:210px; height:25px; line-height:25px; position:relative; }
+.tip_box span input{height:23px; line-height:23px\9; padding:0 24px 0 4px; border:1px solid #e4e4e4; width:180px; font-size:12px;}
+.tip_box span i{ position:absolute; top:4px; right:8px; cursor:pointer;}
+.icon_search{ background-position:0 -16px;}
+.student_box .questionnaire_box{ margin-top:10px;}
+.student_box .num_box{ width:609px;}
+.student_box .question_box{ padding:20px 10px; border:1px solid #e4e4e4; min-height:200px;}
+.group_tit{ overflow:hidden; }
+.btn_operation{ float:left;}
+.btn_operation select{ float:left; width:148px; height:20px; line-height:20px; border:1px solid #e4e4e4;}
+.btn_operation a{ float:left; margin-left:10px; color:#374760;}
+.group_tit .page_item{ margin:0;}
+.group_box{ margin-top:10px; overflow:hidden;}
+.group_box .class_box tr th,.group_box .class_box tr td{ border:1px solid #e4e4e4;}
+.second_grade .all_grade{ margin-left:15px;}
+.second_grade .grade_list li{ padding-left:55px;}
+.select_list{ padding-left:15px; margin-top:5px; overflow:hidden;}
+.select_list li{ float:left; margin-right:15px; color:#333;}
+.select_list li i{ vertical-align:text-top; margin-left:5px; cursor:pointer;}
+.throw_btn{ background-position:0 -32px;}
+
+.muban_nav{ width:600px; margin:30px auto 0; overflow:hidden; border:1px solid #e4e4e4;}
+.muban_nav li{ float:left;}
+.muban_nav li a{ display:block; height:28px; line-height:28px; width:300px; border-left:1px solid #e4e4e4; margin-left:-1px; overflow:hidden; text-align:center; font-size:14px; color:#333;}
+.muban_nav li.active a,.muban_nav li a:hover{ background:#374760; color:#fff;}
+.muban_box{ overflow:hidden;}
+.muban_select{ overflow:hidden;}
+.muban_select select{ float:left; margin-right:20px; width:575px; height:28px; line-height:28px; border:1px solid #e4e4e4;}
+.muban_select a{ display:block; overflow:hidden; width:80px; height:30px; text-align:center; line-height:30px; background:#475c7c; color:#fff; font-size:14px;}
+.muban_select a:hover{ background:#374760;}
+.muban_box p{ margin-top:5px; color:#333;}
+
+.rate_list{ overflow:hidden;}
+.rate_list li{ float:left; margin-right:30px;}
+.rate_list li a{ display:block; height:28px; line-height:28px; width:98px; text-align:center; border:1px solid #ccc; font-size:14px; color:#333;}
+.rate_list li a:hover,.rate_list li.active a{ background:#374760; border:1px solid #374760; color:#fff;}
+.degree_box{ width:659px; margin:40px auto 0;}
+.rating_box{ overflow:hidden; border:1px solid #ccc;}
+.rating_box li{ float:left; width:219px; text-align:center; height:28px; line-height:28px; border-left:1px solid #ccc; margin-left:-1px; overflow:hidden; color:#333;}
+.chapter_box{ margin-left:25px; margin-top:15px;}
+.chapter_box > li{ margin-top:15px;}
+.chapter_box li{ position:relative; overflow:hidden}
+.chapter_detail{ float:left; width:168px; height:28px; line-height:28px; border:1px solid #ccc; overflow:hidden; border-radius:5px;}
+.chapter_detail b{ float:left; height:28px; width:49px; border-right:1px solid #ccc; text-align:center; background:#a1a1a1; color:#fff; border-radius:0 5px 5px 0;}
+.chapter_detail input{ float:left; padding:3px; height:22px; line-height:22px; width:112px; border:0; font-size:12px;}
+.chapter_box ul{ float:left; margin-top:-15px;  overflow:hidden;}
+.chapter_box ul li{ margin-top:15px;}
+.line{ float:left; width:25px; height:1px; background:#999; margin-top:14px;}
+.vertical_line{ width:1px; background:#999; height:50px; position:absolute; left:194px; top:14px;}
+.second_chapter .vertical_line{ left:219px;}
+/*.detail_wrap{ float:left; width:170px; height:30px; position:relative;}
+.move_btn{ padding-left:13px; height:28px; border:1px solid #ccc; background:#f2f2f2; overflow:hidden; position:absolute; top:-30px; right:4px;}
+.move_btn a{ float:left; margin:6px 13px 0 0;}
+.up_btn{ background-position:0 -64px;}
+.down_btn{background-position:0 -48px;}*/
+.grading_box{ overflow:hidden;}
+.table_wrap{ width:600px; margin-top:20px; overflow:hidden;}
+.rate_table{ width:100%;}
+.rate_table tr th,.rate_table tr td{ height:30px; line-height:30px; border:1px solid #e4e4e4; text-align:center; font-weight:normal; color:#333; font-family:'Arial';}
+.rate_table tr td input{ vertical-align:middle;}
+.rate_tip{ margin:20px 0 0 105px; color:#333; overflow:hidden;}
+.rate_tip input{ float:left; height:22px; vertical-align:middle; margin-right:3px;}
+.rate_tit{ height:35px; line-height:35px; border-bottom:2px solid #374760;}
+.rate_tit h4{ float:left;}
+.explaination_box{ float:left; margin-left:10px; position:relative;}
+.rate_detail{ display:none; padding:20px 15px; width:640px; position:absolute; top:25px; left:0; background:#5f5f5f; border:1px solid #797979; overflow:hidden;}
+.grading_table{ width:100%;}
+.grading_table tr td{ height:24px; line-height:24px; vertical-align:middle; color:#fff; border:1px solid #fff; text-align:center;}
+
+
+
+
+.input_box{ float:left; height:20px; position:relative; }
+.input_box input{height:18px; line-height:18px; border:1px solid #e4e4e4; padding:0 24px 0 4px; width:180px; font-size:12px;}
+.input_box i{ position:absolute; top:2px; right:8px; cursor:pointer;}
+
+
+

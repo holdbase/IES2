@@ -1,0 +1,172 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.icon_score{ display:inline-block; width:16px; height:16px; background:url(../Images/icon_score.png) no-repeat;}
+
+.score_btn{ float:right; margin-right:25px;}
+.score_btn a{ float:right; margin-left:20px; color:#374760;}
+.score_btn a i{ float:left; margin:4px 5px 0 0;}
+.sort_btn{ background-position:0 -32px;}
+.setting_btn{ background-position:0 -16px;}
+.circle_btn{ background-position:0 0;}
+.sort_item{ height:27px; padding:10px 25px; border-bottom:1px solid #ccc; overflow:hidden;}
+.sort_item select{ float:left; margin-right:10px; height:25px; line-height:25px; border:1px solid #ccc;}
+.term_select{ width:180px;}
+.class_select{ width:150px;}
+.data_num{ float:left; color:#666;}
+.data_num b{ color:#374760; padding:0 5px;}
+.fr{ float:right; margin-left:20px; width:105px; height:25px; line-height:25px; background:url(../Images/add_bg.gif) no-repeat; overflow:hidden; color:#fff;}
+.fr:hover{ background:url(../Images/add_bg_hover.gif) no-repeat;}
+.fr em{ float:left; width:25px; height:25px;}
+.fr em i{ margin:4px 0 0 4px;}
+.fr span{ float:left; width:80px; text-align:center;}
+.export_btn{ background-position:-16px 0;}
+.search_box{ float:right; overflow:hidden;}
+.search_box input{ float:left; padding:4px; height:16px; line-height:16px; width:150px; border:1px solid #ccc; border-right:0;}
+.search_box a{ float:left; height:26px; width:26px; background:#ccc; }
+.search_box a i{ margin:5px 0 0 5px;}
+.search_icon{ background-position:-16px -16px;}
+.table_box{ margin:20px 25px; overflow:auto;}
+.score_table{}
+.score_table tr th,.score_table tr td{height:30px; line-height:30px; font-size:13px; border:1px solid #e4e4e4;}
+.score_table tr th{ background:#b5bfc4; color:#fff; font-weight:normal;}
+.score_table tr td{ text-align:center; color:#333;}
+.score_table tr th i{ vertical-align:text-bottom; margin-left:5px;}
+.forbid_btn{ background-position:0 -48px;}
+.select_btn{ background-position:0 -64px;}
+.reward_score{ width:50px; padding:3px 0; height:18px; line-height:18px; border:1px solid #ccc; text-align:center;}
+.sort_item .score_btn{ margin-right:0;}
+
+/*成绩管理*/
+.management_table{ width:100%;}
+.management_table tr th,.management_table tr td{ height:40px; line-height:40px; border-bottom:1px solid #ccc;}
+.management_table tr th{ text-align:left; font-weight:normal; color:#666;}
+.management_table tr th select{ width:150px; height:25px; line-height:25px; border:1px solid #ccc;}
+.management_table tr td{ color:#333;}
+.score_name{ width:370px; overflow:hidden;}
+.score_name i{ display:none; float:right; margin:12px 10px 0; cursor:pointer;}
+.delete_btn{ background-position:-16px -64px;}
+.record_btn{ background-position:-16px -48px;}
+.edit_btn{ background-position:-16px -32px;}
+.score_name a{ display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#333;}
+.score_name a:hover{ color:#475c7c;}
+.record_box{ padding:20px 50px; overflow:hidden; border:1px solid #ccc;}
+.record_box h5{ font-size:16px; color:#333; line-height:30px; margin-top:10px; border-bottom:1px solid #374760;}
+.record_info{ margin-left:30px; overflow:hidden;}
+.label_box{ margin-top:20px; overflow:hidden; line-height:30px;}
+.label_box label{ float:left; margin-right:20px; color:#666;}
+.name_input{ padding:4px; width:390px; height:20px; line-height:20px; border:1px solid #ccc;}
+.term_box{ width:400px; height:28px; line-height:28px; border:1px solid #ccc;}
+.record_type{ display:block; overflow:hidden;}
+.record_type span{ display:block; height:30px; line-height:30px; color:#666;}
+.record_type span input{ height:30px; vertical-align:middle; margin-right:3px;}
+.record_type span select{ width:120px; height:28px; line-height:28px; border:1px solid #ccc; margin-left:25px;}
+.object_box{ margin:20px 0 0 30px; overflow:hidden;}
+.object_box span{ display:block; height:25px; line-height:25px; color:#666; overflow:hidden;}
+.object_box span input{ float:left; height:25px; vertical-align:middle; margin-right:3px;}
+.object_box span a{ display:inline-block; margin-left:15px; width:70px; height:25px; line-height:25px; text-align:center; color:#fff; background:#475c7c;}
+.object_box span a:hover{ background:#374760;}
+.stu_box{ width:620px; margin:15px auto 0; border:1px solid #e4e4e4; overflow:hidden;}
+.stu_tit{ height:30px; line-height:30px; padding:0 10px; border-bottom:1px solid #e4e4e4; overflow:hidden;}
+.stu_tit b{ font-size:14px; color:#333;}
+.stu_tit b span{ color:#ff0000;}
+.stu_tit i{ float:right; margin:7px 20px 0 0; cursor:pointer;}
+.refresh_btn{ background-position:-32px -32px;}
+.add_btn{ background-position:-32px 0;}
+.mode_box{ padding:10px 10px 0; height:341px; overflow:auto;}
+.stu_table{ width:100%;}
+.stu_table tr th,.stu_table tr td{ height:30px; line-height:30px; border:1px solid #e4e4e4; padding-left:10px;}
+.stu_table tr th{ font-size:14px; color:#333; text-align:left;  background:#ccc;}
+.stu_table tr th input[type=checkbox],.stu_table tr td input[type=checkbox]{ display:block; height:30px; vertical-align:middle;}
+.stu_table tr td input[type=text]{ width:70px; height:20px; line-height:20px; border:1px solid #e4e4e4;}
+.student_box{ border:1px solid #ccc; overflow:hidden;}
+.grade_box{ float:left; width:180px; padding:10px 15px; height:410px; border-right:1px solid #ccc; overflow:hidden; position:relative;}
+.class_list{ overflow:hidden;}
+.class_list li{ margin-top:5px; height:40px; line-height:40px; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border-bottom:1px solid #e4e4e4; font-size:14px; cursor:pointer;}
+.class_list li input{ height:40px; vertical-align:middle; margin-right:5px;}
+.class_list li:hover,.class_list li.active{ background:#374760; color:#fff;}
+.select_num{ position:absolute; bottom:10px; left:15px; font-size:14px; color:#374760;}
+.select_num b{ color:#ff0000;}
+.class_detail{ padding:15px; overflow:hidden;}
+.class_tit{ display:block; font-size:14px; color:#333;}
+.stu_wrap{ margin-top:10px; height:342px; overflow:auto;}
+.enter_btn{ background-position:-48px 0;}
+
+
+
+/*查看详细*/
+.icon_search{ float:right; margin:3px 25px 0 15px; background-position:-32px -64px;}
+.return_box{ float:left; margin-left:25px; color:#374760;}
+.return_box i{ float:left; margin:3px 5px 0 0;}
+.return_btn{ background-position:-32px -48px;}
+.management_table tr th input,.management_table tr td input{ height:40px; vertical-align:middle; margin-right:5px;}
+
+
+/*类别管理*/
+.category_tit{ height:40px; line-height:40px; padding:0 30px; overflow:hidden; color:#374760;}
+.category_tit span{ float:left;}
+.wid360{ width:360px;}
+.wid125{ width:125px;}
+.wid345{ width:345px;}
+.item_box,.item_box li{ overflow:hidden;}
+.category_item{ overflow:hidden; padding:0 30px; height:40px; line-height:40px; background:#f2f2f2; border-top:1px solid #ccc;}
+.item_name{ float:left; font-size:14px; color:#374760; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.category_item span{ float:left; color:#374760; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.operation_btn{ overflow:hidden;}
+.operation_btn i{ float:left; margin:12px 10px 0 0; cursor:pointer;}
+.ban_btn{ background-position:-32px -16px;}
+.item_list{ overflow:hidden; border-top:1px solid #ccc;}
+.item_list li{border-top:1px dotted #e4e4e4; margin:-1px 30px 0; overflow:hidden;}
+.item_list .category_item{ padding:0 15px; height:28px; line-height:28px;  background:#fff; border:0;}
+.item_list .operation_btn i{ margin-top:7px;}
+.btn_open{ background-position:0 -64px;}
+
+
+/*查看成绩与排名*/
+.detail_btn{ display:block; width:70px; height:25px; line-height:25px; text-align:center; color:#fff; background:#f44f4f;}
+.detail_btn:hover{ background:#e13e3e;}
+.rank_btn{ float:right; margin-left:15px; width:70px; height:25px; line-height:25px; text-align:center; color:#fff; background:#475c7c;}
+.rank_btn:hover{ background:#374760;}
+.rank_num{ float:right; color:#666;}
+.rank_box{ padding:20px; overflow:hidden; border:1px solid #ccc;}
+.rank_tit{ display:block; font-size:14px; color:#333;}
+.rank_tit span{ color:#008000;}
+.stu_table tr.my_rank td{ color:#008000; font-weight:bold;}
+
+
+/*加权设置弹出框*/
+.warning_box{ overflow:hidden; padding:10px;}
+.warning_box img{ float:left; margin:0 10px 0 20px;}
+.warning_box p{ font-size:16px; color:#666;}
+.weight_box{ padding:10px; overflow:hidden;}
+.weight_tip{ height:40px; line-height:40px; background:#fff5d9; color:#333; text-align:center;}
+.weight_wrap{ margin-top:5px; padding:15px 25px; overflow:hidden; border:1px solid #ccc;}
+.weight_table{ width:100%;}
+.weight_table tr th{ height:30px; line-height:30px; color:#fff; text-align:left; background:#ccc; border:1px solid #f2f2f2; padding-left:10px; font-size:13px; font-weight:normal;}
+.weight_table tr td{ height:36px; line-height:36px; border:1px solid #f2f2f2; padding-left:10px; color:#666;}
+.weight_table tr td input{ width:100px; height:22px; line-height:22px; padding:3px 0; border:1px solid #ccc; text-align:center;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,224 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Css/class.css" rel="stylesheet" />
+<div class="coursesite_box" ng-controller="CourseIndexController">
+    <h4>课程建设</h4>
+    <div class="create_step">
+        <h5>step1.设置课程基本属性</h5>
+        <div class="add_course">
+            <div class="course_photo">
+                <img src="{{OCAttachModelTemp.DownURL}}" width="280" height="150" />
+                <p><a href="javascript:;" ng-click="ShowBox()">上传</a><b>*</b><span>图片最佳尺寸280*150像素</span></p>
+            </div>
+            <div class="add_property">
+                <dl>
+                    <dt><b class="red">*</b>课程名称：</dt>
+                    <dd>
+                        <input type="text" placeholder="" ng-model="CourseNew.Name" value="{{CourseNew.Name}}" maxlength="50"><a class="select_user" ng-if="ocID==-1" style="margin-left:10px;" ng-click="ShowSelectDialog(1,null)">[选择课程]</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><b class="red">*</b>所属分类：</dt>
+                    <dd>
+                        <div class="assort_box">
+                            <div class="assort_item">
+                                <input class="course_sort" ng-mousedown="ShowSpecialtyType()" value="{{CourseNew.SelectValue}}" type="text">
+                                <span class="select_btn" ng-click="ShowSpecialtyType()">+</span>
+                            </div>
+                            <div class="select_box" ng-show="ShowType" ng-mouseleave="ShowSpecialtyType()">
+                                <select size="7" ng-model="ParentSpecialtyType" ng-change="ShowSelectInfo(0)" ng-options="m.SpecialtyTypeName for m in SpecialtyType|listFilter5:'=':0">
+                                    <option value="">请选择</option>
+                                </select>
+                                <select size="7" ng-model="ChildSpecialtyType" ng-change="ShowSelectInfo(1)" ng-click="ShowSpecialtyType()" ng-options="m.SpecialtyTypeName for m in SpecialtyType|listFilter5:'=':ParentSpecialtyType.SpecialtyTypeID">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><b style="visibility:hidden">*</b>课程标签：</dt>
+                    <dd>
+                        <input type="text" ng-model="CourseNew.Tags" ng-bind="CourseNew.CourseLabe">
+                        <p class="tips">多个标签间请用“，”隔开</p>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="add_course course_set" ng-repeat="Team in TeamList|listTeamFilter:'!=':2">
+            <b ng-if="$first" class="set_tit">课程负责人</b>
+            <div ng-if="$first" class="course_photo">
+                <img src="" width="150" height="150" user-img userid="{{Team.UserID}}" />
+            </div>
+            <div ng-if="!$first" class="course_photo" style="top:20px;">
+                <img src="" width="150" height="150" user-img userid="{{Team.UserID}}" />
+            </div>
+            <div class="add_property">
+                <dl>
+                    <dt>姓名：</dt>
+                    <dd>
+                        <input type="text" disabled="disabled" ng-model="Team.UserName" placeholder=""><a ng-if="Team.IsAdd==0" class="select_user" style="margin-left:10px;" ng-click="ShowSelectDialog(0,Team)">[选择站内用户]</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>职称：</dt>
+                    <dd>
+                        <input type="text" disabled="disabled" ng-model="Team.Ranks" placeholder="" />
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>简介：</dt>
+                    <dd>
+                        <textarea ng-disabled="CurrentUserRole.Role>=2" class="brief" ng-model="Team.Brief" ng-maxlength="200" placeholder="建议不超过200字以内"></textarea>
+                    </dd>
+                </dl>
+            </div>
+            <span ng-if="CurrentUserRole.Role<=1" class="close_btn" ng-click="RemoveTeam(Team)" title="移除课程负责人">X</span>
+        </div>
+
+        @*<div ng-if="CurrentUserRole.Role<=1" ng-show="showAddTeacher" class="add_course course_set" style="min-height:167px;">
+                <div class="course_photo" style="top:20px;">
+                    <img src="{{OCTeamNew.OcTeam.UserImgUrl}}" width="150" height="150" />
+                </div>
+                <div class="add_property">
+                    <dl>
+                        <dt><b class="red">*</b>姓名：</dt>
+                        <dd>
+                            <input type="text" ng-click="ShowSelectDialog(0)" placeholder="" ng-model="OCTeamNew.OcTeam.UserName" value="{{OCTeamNew.OcTeam.UserName}}"><a class="select_user" style="margin-left:10px;" ng-click="ShowSelectDialog(0)">[选择站内用户]</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><b style="visibility:hidden">*</b>职称：</dt>
+                        <dd>
+                            <input disabled="disabled" ng-model="OCTeamNew.OcTeam.Ranks" value="{{OCTeamNew.OcTeam.Ranks}}" type="text">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><b style="visibility:hidden">*</b>简介：</dt>
+                        <dd>
+                            <textarea class="brief" placeholder="建议不超过200字以内" ng-maxlength="200" ng-model="OCTeamNew.OcTeam.Brief" ng-bind="OcTeam.Brief"></textarea>
+                        </dd>
+                    </dl>
+                </div>
+            </div>*@
+        <a ng-if="CurrentUserRole.Role<=1" class="add_teacher" ng-click="AddTeam()" style="margin-top:20px;">+&nbsp;添加课程负责人</a>
+        @*<a class="add_teacher" ng-click="AddTeamUser()" ng-if="OCTeamNew.OcTeam.UserID!=null&&CurrentUserRole.Role<=1">确定</a>*@
+    </div>
+    <div class="create_step" ng-if="CurrentUserRole.Role<=1">
+        <h5>step2.选择下一步建设目标</h5>
+        <ul class="goal_list">
+            <li style="cursor:pointer" ng-click="CreateCourse(1)"><a class="goal1"></a> </li>
+            <li style="cursor:pointer" ng-click="CreateCourse(2)"><a class="goal2"></a></li>
+            <li style="cursor:pointer" ng-click="CreateCourse(3)"><a class="goal3"></a></li>
+            <li style="cursor:pointer" ng-click="CreateCourse(4)"><a class="goal4"></a></li>
+        </ul>
+    </div>
+    <div class="btn_box btn_box2">
+        <a class="save" ng-if="CurrentUserRole.Role<=1" style="cursor:pointer" ng-disabled="SureBtn" ng-click="CreateCourse(-1)">保存并返回</a>
+        <a class="cancel" style="cursor:pointer" target="_self" href="../Home/index">取消</a>
+    </div>
+    <div id="myAddTeacherModal" class="modal hide fade" style="width:600px" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4>选择站内用户</h4>
+        <span class="icon close_pop" ng-click="CloseDialog(0)" data-dismiss="modal"></span>
+        <div class="form_box">
+            <div class="user_search" style=" margin-bottom:10px;">
+                <input type="text" ng-model="TeacherModel.Key" placeholder='请输入工号、姓名'>
+                <b>*</b>
+                <a ng-click="SearchUserList()" style="cursor:pointer">搜索</a>
+            </div>
+            <table class="class_box">
+                <tr>
+                    <th width="20"></th>
+                    <th width="120">工号</th>
+                    <th width="150">姓名</th>
+                    <th>所属机构</th>
+                </tr>
+                <tr ng-repeat="Teacher in TeacherList" ng-class="{even:!$even,odd:!$odd,active:isActive}" ng-mousemove="isActive=true" ng-mouseleave="isActive=false">
+                    <td ><input type="radio" ng-disabled="Teacher.IsSelected" style="cursor:pointer" name="rad_addUser" ng-click="RadiorClicked(Teacher)"></td>
+                    <td title="{{Teacher.UserNo}}" ng-bind="Teacher.UserNo" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 120px; "></td>
+                    <td title="{{Teacher.UserName}}"><p ng-bind="Teacher.UserName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 150px; "></p></td>
+                    <td title="{{Teacher.OrganizationName}}"><p ng-bind="Teacher.OrganizationName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 200px; "></p></td>
+                </tr>
+            </table>
+            <div id="TeamPage" style="float:right;margin-right:20px; margin-top:10px;"></div>
+            <div class="btn_box">
+                <a class="save" style="cursor:pointer" ng-show="TeacherModel.UserID!=-1" ng-click="GetSelectUser()" data-dismiss="modal">选择</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="myCourseModal" class="modal hide fade" style="width:600px" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4>选择课程</h4>
+        <span class="icon close_pop" ng-click="CloseDialog(1)" data-dismiss="modal"></span>
+        <div class="form_box">
+            <div class="user_search" style=" margin-bottom:10px;">
+                <input type="text" ng-model="CourseModel.Key" placeholder='请输入课程代码或名称！'>
+                <b>*</b>
+                <a ng-click="SearchCourseList()" style="cursor:pointer">搜索</a>
+            </div>
+            <table class="class_box">
+                <tr>
+                    <th width="20"></th>
+                    <th width="120">课程编号</th>
+                    <th width="180">课程名称</th>
+                    <th>所属机构</th>
+                </tr>
+                <tr ng-repeat="Course in CourseList" ng-class="{even:!$even,odd:!$odd,active:isActive}" ng-mousemove="isActive=true" ng-mouseleave="isActive=false">
+                    <td><input type="radio" style="cursor:pointer" name="rad_addUser" ng-model="CourseModel.CourseID" ng-value="{{Course.CourseID}}" ng-bind="Course.CourseNo"></td>
+                    <td ng-bind="Course.CourseNo"></td>
+                    <td title="{{Course.CourseName}}"><p ng-bind="Course.CourseName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 180px; "></p></td>
+                    <td title="{{Course.OrganizationName}}"><p ng-bind="Course.OrganizationName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 200px; "></p></td>
+                </tr>
+            </table>
+            <div id="CoursePage" style="float:right;margin-right:20px; margin-top:10px;"></div>
+            <div class="btn_box">
+                <a class="save" style="cursor:pointer" ng-show="CourseModel.CourseID!=-1" ng-click="GetSelectCourse()" data-dismiss="modal">选择</a>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="mySpecifiedModal" data-backdrop="static" style="width:600px" class="modal hide fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4>指定课程</h4>
+        @*<span class="icon close_pop" ng-click="NoSelectCourse()" data-dismiss="modal"></span>*@
+        <div class="form_box">
+            <div class="user_search" style=" margin-bottom:10px;">
+                您输入的课程名称，在系统内的同名课程有 {{SpecifiedList.length}} 条，您可以请选择一门进行指定，便于后期进行数据分析和
+                统计，若没有适合课程，也可以不进行指定。
+            </div>
+            <table class="class_box">
+                <tr>
+                    <th width="20"></th>
+                    <th width="120">课程编号</th>
+                    <th width="180">课程名称</th>
+                    <th>授课教师</th>
+                </tr>
+                <tr ng-repeat="Course in SpecifiedList" ng-class="{even:!$even,odd:!$odd,active:isActive}" ng-mousemove="isActive=true" ng-mouseleave="isActive=false">
+                    <td><input type="radio" style="cursor:pointer" name="rad_addUser" ng-model="CourseModel.CourseID" ng-value="{{Course.CourseID}}" ng-bind="Course.CourseNo"></td>
+                    <td ng-bind="Course.CourseNo"></td>
+                    <td title="{{Course.CourseName}}"><p ng-bind="Course.CourseName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 180px; "></p></td>
+                    <td title="{{Course.Team}}"><p ng-bind="Course.Team" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 200px; "></p></td>
+                </tr>
+            </table>
+            <div class="btn_box">
+                <a class="save" style="cursor:pointer" ng-show="CourseModel.CourseID!=-1" ng-click="SelectedSpecifiedCourse()" data-dismiss="modal">指定课程</a>
+                <a class="save" style="cursor:pointer" data-dismiss="modal" ng-click="NoSelectCourse()">不指定新建课程</a>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="box" style="display:none;">
+        <div ies-excel-uploader id="eIesUploader"
+             fileuptype="2"
+             filesize="50" @*文件大小以M为单位*@
+             filecount="1" @*允许上传的文件个数*@
+             filesuffix="filesuffix" @*文件类型*@
+             @*upload-url="/DataProvider/FileUpload.ashx?action=AttachmentUpload"*@>
+        </div>
+    </div>
+
+</div>

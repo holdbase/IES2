@@ -1,0 +1,214 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Css/class.css" rel="stylesheet" />
+<!--右侧主题内容开始-->
+<div class="main_content">
+    <div class="coursesite_box" ng-controller="ClassController">
+        @*<div class="wrap_box" ng-hide="!RegStudentList.length">
+                <div class="check_info">
+                    <p>您有<b ng-bind="RegStudentList.length"></b>条新的学生申请</p>
+                    <div class="apply_box">
+                        <a class="apply_btn" href="javascript:;">[申请审核]</a>
+                        <a class="batch_btn" ng-click="BatchExamine()" href="javascript:;"><em><i class="icon batch_icon"></i></em><span>批量审核</span></a>
+                    </div>
+                    <div style="max-height:200px; overflow-y:auto;">
+                        <table class="class_box">
+                            <tr>
+                                <th width="25"><input type="checkbox" ng-click="ckb_Reg_All()" ng-model="SelectRegAll"></th>
+                                <th width="85">学号</th>
+                                <th width="75">姓名</th>
+                                <th width="155">专业</th>
+                                <th width="155">行政班</th>
+                                <th width="95">注册日期</th>
+                                <th>申请注册教学班{{SelectRegAll}}</th>
+                            </tr>
+                            <tr ng-repeat="regStudent in RegStudentList|orderBy:'RegDate'" ng-class="{even:!$even,odd:!$odd,active:isActive}" ng-mousemove="isActive=true" ng-mouseleave="isActive=false">
+                                <td><input type="checkbox" ng-click="ckb_Reg_Single()" ng-model="regStudent.IsSelected"></td>
+                                <td ng-bind="regStudent.UserNo"></td>
+                                <td ng-bind="regStudent.UserName"></td>
+                                <td ng-bind="regStudent.SpecialtyName"></td>
+                                <td ng-bind="regStudent.ClassName"></td>
+                                <td ng-bind="regStudent.RegDate | dateFormat"></td>
+                                <td>{{regStudent.TeachingClassName}}<i class="icon edit_btn" style="cursor:pointer" ng-click="SingleExamine(regStudent)"></i></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>*@
+
+        <div class="class_item">
+            <div class="item_box">
+                <ul class="class_item_list">
+                    <li title="在读教学班" ng-class="{true: '', false: 'active'}[OCClass.IsHistroy]" style="cursor:pointer"><a ng-click="ShowHistroyOCClass(false)">在读教学班</a></li>
+                    <li title="结业教学班" ng-class="{true: 'active', false: ''}[OCClass.IsHistroy]" style="cursor:pointer"><a ng-click="ShowHistroyOCClass(true)">结业教学班</a></li>
+                    <li title="网络招生班级"><a target="_self" href="OnlineClass" style="cursor:pointer">网络招生班级</a></li>
+                </ul>
+                <div class="class_operation" ng-hide="OCClass.IsHistroy">
+                    <a title="导出全部班级" href="javascript:;" ng-click="OCClass_InputOutAll(-1)"><em><i class="icon download_btn"></i></em><span>导出全部班级</span></a>
+                    <a title="新增教学班" target="_self" href="../class/AddTeachingClass"><em><i class="icon icon_add"></i></em><span>新增教学班</span></a>
+                </div>
+            </div>
+            <div class="class_tip">
+                <p ng-hide="OCClass.IsHistroy">说明：以学年学期为时间段，整班全体学生学习时间与进度要求一致，适用于学期课程和在校学生</p>
+                <div class="class_tip" ng-show="OCClass.IsHistroy">
+                    <select class="term_select" ng-hide="true">
+                        <option>全部学期</option>
+                        <option>第一学期</option>
+                        <option>第二学期</option>
+                    </select>
+                    <span class="class_search"><input type="text" ng-model="OCClass.Key" placeholder="{{OCClass.Key}}"><i class="icon search_icon" style="cursor:pointer" ng-click="SearchClassList()"></i></span>
+                </div>
+                <span class="class_search"><input type="text" ng-model="OCClass.Key" placeholder="{{OCClass.Key}}"><i class="icon search_icon" style="cursor:pointer" ng-click="SearchClassList()"></i></span>
+            </div>
+            <table class="class_table">
+                <tr>
+                    <th width="30"></th>
+                    <th width="215">教学班名称</th>
+                    <th width="180">教学运行时间</th>
+                    <th width="60">学生数</th>
+                    <th width="150">授课教师</th>
+                    <th width="170">其他教学团队</th>
+                    <th width="60" ng-hide="OCClass.IsHistroy">注册码</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="occlass in OCClassList" ng-class="{true: 'oddbg', false: ''}[$even]" ng-mouseover="Show_btn=true" ng-mouseleave="Show_btn=false">
+                    <td></td>
+                    <td title="{{occlass.TeachingClassName}}" ng-bind="occlass.TeachingClassName |limitTo:20"></td>
+                    <td ng-bind-template="{{occlass.StartDate| dateFormat}}~{{occlass.EndDate| dateFormat}}"></td>
+                    <td ng-bind="occlass.StudentCount" ng-click="OCClassStudent_List(occlass)" style="cursor:pointer" title="查看详细"></td>
+                    <td title="{{occlass.TeacherInfo}}" ng-bind="occlass.TeacherInfo|limitTo:14"></td>
+                    <td title="{{occlass.Teaminfo}}" ng-bind="occlass.Teaminfo |limitTo:14"></td>
+                    <td ng-hide="OCClass.IsHistroy" style="cursor:pointer" ng-click="RegNum_Upd(occlass)">
+                        <div class="register_item">
+                            <a class="code_btn" ng-bind-template="{{occlass.RegStatus==0?'未启用':occlass.RegNum}}"></a>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-if="!OCClass.IsHistroy" class="register_btn" ng-class="{true: 'register_btns', false: 'register_btn'}[Show_btn]">
+                            <span class="icon icon_throw" style="cursor: pointer; margin-top: 6px;" ng-click="OCClass_Del(occlass)" ng-mouseover="Show_del=true" ng-mouseleave="Show_del=false">
+                                <div class="icon_explain" ng-class="{true: 'icon_explain block', false: 'icon_explain none'}[Show_del]">删除</div>
+                            </span>
+                            <span style="cursor: pointer; margin-top: 6px;" class="icon import_btn_gray" ng-mouseover="Show_imput=true" ng-mouseleave="Show_imput=false">
+                                <div class="icon_explain" ng-class="{true: 'block icon_explain ', false: 'none icon_explain'}[Show_imput]">
+                                    <a target="_blank" ng-click="ShowBox(occlass.OCClassID)">导入学生</a>
+                                    <a target="_blank" href="~/ImportExport/StudentImport.xls">[下载导入表格]</a>
+                                </div>
+                            </span>
+                            <span class="icon jieye_btn" style="cursor: pointer; margin-top: 6px; " ng-click="OCClass_IsHistroy_Upd(occlass)" ng-mouseover="Show_IsHistroy=true" ng-mouseleave="Show_IsHistroy=false">
+                                <div class="icon_explain" ng-class="{true: 'icon_explain block', false: 'icon_explain none'}[Show_IsHistroy]">设为结业</div>
+                            </span>
+                            <span class="icon code_edit" style="cursor: pointer; margin-top: 6px;" ng-click="Edit_OCClass(occlass)" ng-mouseover="Show_edit=true" ng-mouseleave="Show_edit=false">
+                                <div class="icon_explain" ng-class="{true: 'block icon_explain ', false: 'none icon_explain'}[Show_edit]">编辑</div>
+                            </span>
+                        </div>
+                        <div ng-if="OCClass.IsHistroy" class="register_btn" ng-class="{true: 'register_btns', false: 'register_btn'}[Show_btn]">
+                            <span class="icon icon_throw" style="cursor: pointer; margin-top: 6px;" ng-click="OCClass_Del(occlass)" ng-mouseover="Show_del=true" ng-mouseleave="Show_del=false">
+                                <div class="icon_explain" ng-class="{true: 'icon_explain block', false: 'icon_explain none'}[Show_del]">删除</div>
+                            </span>
+                            <span class="icon export_btn" style="cursor: pointer; margin-top: 6px;" ng-click="OCClass_InputOutAll(occlass.TeachingClassID)" ng-mouseover="Show_input=true" ng-mouseleave="Show_input=false">
+                                <div class="icon_explain" ng-class="{true: 'icon_explain block', false: 'icon_explain none'}[Show_input]">导出学生</div>
+                            </span>
+
+                            <span class="icon detail_btn" style="cursor: pointer; margin-top: 6px;" ng-click="OCClassStudent_List(occlass)" ng-mouseover="Show_detail=true" ng-mouseleave="Show_detail=false">
+                                <div class="icon_explain" ng-class="{true: 'icon_explain block', false: 'icon_explain none'}[Show_detail]">查看详细</div>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="ClassPage" style="margin:20px;float:right"></div>
+
+
+
+
+
+        <div id="myRegNumModal" class="modal hide fade" style="width:400px;" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+            <h4>注册码</h4>
+            <span class="icon close_pop" data-dismiss="modal"></span>
+            <div class="form_box">
+                <div class="register_box">
+                    注册码：<input type="checkbox" ng-model="OCClass_Upd.RegStatus" ng-checked="OCClass_Upd.RegStatus"><span>启用</span><input class="register_code" type="text" ng-disabled="!OCClass_Upd.RegStatus" ng-model="OCClass_Upd.RegNum" value="{{OCClass_Upd.RegNum}}">
+                    <p class="code_tip" style="margin-top:10px">你需要将注册码，通过其他方式告知你的学生</p>
+                </div>
+                <div class="btn_box">
+                    <a class="save" ng-click="OCClass_RegNum_Upd()" data-dismiss="modal">确定</a>
+                    <a class="cancel" style="cursor:pointer" data-dismiss="modal" aria-hidden="true">取消</a>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div id="myExamineModal" class="modal hide fade" style="width:400px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <h4>审核</h4>
+                <span class="icon close_pop" data-dismiss="modal"></span>
+                <div class="pop_wrap">
+                    <dl class="check_box">
+                        <dt>审核结果：</dt>
+                        <dd>
+                            <div class="check_result">
+                                <p><input type="radio" name="Examine" value="1" ng-model="ExamineModel.ReviewStatus">通过</p>
+                                <p><input type="radio" name="Examine" value="2" ng-model="ExamineModel.ReviewStatus">驳回</p>
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl class="check_box">
+                        <dt>驳回理由：</dt>
+                        <dd>
+                            <textarea class="check_reason" ng-model="ExamineModel.Reason"></textarea>
+                        </dd>
+                    </dl>
+                    <div class="btn_box">
+                        <a class="save" ng-click="SaveExamine()" href="javascript:;">保存</a>
+                        <a class="cancel" style="cursor:pointer" data-dismiss="modal" aria-hidden="true">取消</a>
+                    </div>
+                </div>
+            </div>*@
+
+        <div id="myDetailsModal" class="modal hide fade" style="width: 800px; background: none repeat scroll 0 0 fff;" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+            <h4>查看详细</h4>
+            <span class="icon close_pop" data-dismiss="modal" aria-hidden="true"></span>
+            <div class="pop_wrap">
+                <div class="detail_tit">
+                    <h5>{{Class_Details.TeachingClassName}}<span>（{{Class_Details.StudentCount}}学生）</span></h5>
+                    <a href="javascript:;" ng-click="OCClass_InputOutAll(Class_Details.TeachingClassID)"><em><i class="icon download_btn"></i></em><span>导出学生</span></a>
+                </div>
+                <table class="class_box">
+                    <tr>
+                        <th width="25"></th>
+                        <th width="120">学号</th>
+                        <th width="150">姓名</th>
+                        <th width="150">专业</th>
+                        <th width="150">行政班</th>
+                        <th>年级</th>
+                    </tr>
+                    <tr ng-class="{true: 'oddbg', false: 'evenbg'}[$odd]" ng-repeat="OCClassStudent in OCClassStudentList">
+                        <td></td>
+                        <td ng-bind="OCClassStudent.UserNo"></td>
+                        <td title="{{OCClassStudent.UserName}}"><p ng-bind="OCClassStudent.UserName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 150px; "></p></td>
+                        <td title="{{OCClassStudent.SpecialtyName}}"><p ng-bind="OCClassStudent.SpecialtyName" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 150px; "></p></td>
+                        <td title="{{OCClassStudent.ClassName}}"><p ng-bind="OCClassStudent.ClassName" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 150px; "></p></td>
+                        <td ng-bind="OCClassStudent.EntryDate"></td>
+                    </tr>
+                </table>
+                <div id="StudentPage" style="margin:10px; float:right;margin-right:10px;"></div>
+                <div class="btn_box">
+                    <a class="cancel" style="cursor:pointer" data-dismiss="modal" aria-hidden="true">取消</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="box" style="display:none;">
+
+            <div ies-excel-uploader  id="eIesUploader"
+                                fileuptype="3"
+                                filesize="20" @*文件大小以M为单位*@
+                                filecount="1" @*允许上传的文件个数*@
+                                filesuffix="filesuffix" @*文件类型*@>
+            </div>
+        </div>
+    </div>
+</div>
+<!--右侧主题内容结束-->

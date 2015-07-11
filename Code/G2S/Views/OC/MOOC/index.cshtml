@@ -1,0 +1,847 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout2.cshtml";
+}
+
+<link href="~/Css/mooc.css" rel="stylesheet" />
+<link href="~/Css/ico.css" rel="stylesheet" />
+<script src="~/js/jquery-1.8.3.min.js"></script>
+<script src="~/js/jquery-ui-1.9.2.custom.min.js"></script>
+
+<div ng-controller="MOOCController">
+    <div class="wrap">
+        <div class="main_all">
+            <h2>{{OcMooc.Name}} MOOC > 设计向导</h2>
+            <div class="step_nav_box">
+                <ul class="step_nav">
+                    <li ng-class="Step==1?'index3 active':'index3'" ng-click="ChangeStep(1)">
+                        <a href="#">1.进阶式教程设计</a>
+                        <i ng-show="Step1Status==1" class="icon_mooc icon_filled"></i>
+                    </li>
+                    <li ng-class="Step==2?'index2 active':'index2'" ng-click="ChangeStep(2)">
+                        <a href="#">2.见面课设计</a>
+                        <i ng-show="Step2Status==1" class="icon_mooc icon_filled"></i>
+                    </li>
+                    <li ng-class="Step==3?'index1 active':'index1'" ng-click="ChangeStep(3)">
+                        <a href="#">3.发布与招生</a>
+                        <i ng-show="Step3Status ==1" class="icon_mooc icon_filled"></i>
+                    </li>
+                </ul>
+                <div class="create_box">
+                    @*<a href="#">如何创建MOOC课程？</a>*@
+                    <a class="icon_24 icon_home" title="课程首页" target="_blank" href="../Site/index?currentoc={{OCID}}"></a>
+                    @*<a class="icon_24 icon_eye" title="资料完整度检查" ng-click="ViewCheckResult();" href="javascript:void(0)"></a>*@
+                    <a class="icon_24 icon_plan" title="教学计划" ng-click="TeachingPlan();" href="javascript:void(0)"></a>
+                </div>
+            </div>
+            <div ng-show="Step==1" class="main_content">
+                @*进阶式教程设计*@
+                <p class="text_box">
+                    • 进阶式教程能帮助教师有效的组织教学内容，同时也帮助学生快速的进行自主学习。<br>
+                    • 设计进阶式教程需要至少1章内容，每一章内容至少需要1个小节。<br>
+                    • 每一小节教学内容，必须包含一段视频或资料内容，最适宜自主学习的长度为3-10分钟。<br>
+                    • 在每章内容之后，还需要为学生提供评估测试或作业部分，每一份教程最后都需要有一个总结考试。<br>
+                </p>
+                <p class="tips">
+                    <i class="icon_mooc icon_light"></i>您可以将资料批量上传，然后在上传等待过程中可以编辑章节目录，最后在【课程资料】标签中，把资料批量关联到每小节中
+                </p>
+                <div class="course_box">
+                    <div class="course_nav_box">
+                        <ul class="course_nav">
+                            <li ng-class="{'active':type==1}"><a href="javascript:void(0);" ng-click="ChangeType(1)">课程目录</a></li>
+                            <li ng-class="{'active':type==2}"><a href="javascript:void(0);" ng-click="ChangeType(2)">课程资料</a></li>
+                            <li ng-class="{'active':type==3}"><a href="javascript:void(0);" ng-click="ChangeType(3)">课程测试</a></li>
+                        </ul>
+                    </div>
+                    <div class="tip_text" ng-show="type==1&&titleHide!=true">
+                        <span ng-click="titleHide=true"></span>
+                    </div>
+                    <div class="course_detail" ng-show="type==1">
+                        <div class="setting_box">
+                            <div class="setting_list">
+                                <p><input ng-model="OcMooc.IsShowFirstChapter" type="checkbox">创建绪论</p>
+                                <p>
+                                    <input type="checkbox" ng-model="OcMooc.IsCross"><span>{{OcMooc.IsCross?'关闭跨章学习':'开启跨章学习'}}</span>
+                                    <span class="tip_box">
+                                        <i ng-mouseover="titleShow=true" ng-mouseleave="titleShow=false" class="icon_mooc tip_icon"></i>
+                                        <span ng-show="titleShow" class="text_tip">
+                                            <span></span>
+                                            {{OcMooc.IsCross?'您开启了跨章学习，学生可以任意章节之间跳跃学习':'您关闭了跨章学习，学生必须按照顺序学习各章'}}
+                                        </span>
+
+                                    </span>
+                                </p>
+                            </div>
+                            <span class="set_item">视频观看<input type="text" key-up-check mul="0" ng-model="OcMooc.VideoNeedRate">%以上才算完成</span>
+                            <span ng-mouseover="titleShow2=true" ng-mouseleave="titleShow2=false" class="set_item">
+                                <input ng-checked="OcMooc.PopTime>0?true:false" type="checkbox">间隔<input key-up-check mul="0" ng-model="OcMooc.PopTime" type="text">分钟弹出学习提示
+                            </span>
+                            <div ng-show="titleShow2" class="open_tip">
+                                <span></span>选择该项后，系统会根据设置好的时间，在学生学习资料时弹出学习提示，学生确定后，才会继续计时，避免学生混学习时间。
+                            </div>
+
+                        </div>
+
+                        <div class="function_item">
+                            <p><b>章节</b>（ 选中章或节，按回车可新增章节）</p>
+                            <ul class="icon_name">
+                                <li>简介</li>
+                                <li>资料</li>
+                                <li>讨论</li>
+                                <li>测试</li>
+                                <li>知识点</li>
+                                <li>启用</li>
+                            </ul>
+                        </div>
+
+                        <ul class="chapter_box">
+                            <li ng-repeat="Chapter in ChapterList|MoocFilter:'ParentID':'=':0|orderBy:'Orde'"  >
+                                <div ng-class="{'first_chapter background1':Chapter.ShowOperation==true,'first_chapter background2':Chapter.ShowOperation!=true}" ng-mouseover="Chapter_MouseOver(Chapter);" ng-mouseleave="Chapter_MouseLeave(Chapter)">
+                                    @*Chapter.active=true(编辑状态)*@
+                                    <div class="chapter_tit">
+                                        <p ng-show="Chapter.active!=true" ng-click="Chapter.active=true" class="first_chapter_name">{{Index=$index+1}} {{Chapter.Title}}</p>
+                                        <p ng-show="Chapter.active==true" class="first_chapter_name">{{Index=$index+1}}<input ng-blur="Chapter_Title_Upd(Chapter)" class="first_chapter_input" type="text" ng-model="Chapter.Title" focus-me="{{Chapter.active}}" /></p>
+                                        <div class="operation_btn first_operation" ng-show="Chapter.ShowOperation==true">
+                                            <a title="章上移" ng-click="Chapter_Move(Chapter,'1')" href="javascript:void(0)"></a>
+                                            <a title="章下移" ng-click="Chapter_Move(Chapter,'2')" href="javascript:void(0)"></a>
+                                            <a title="章删除" ng-click="Chapter_Del(Chapter)" href="javascript:void(0)"></a>
+                                        </div>
+                                    </div>
+                                    <div class="chapter_btn">
+                                        <a title="章简介" class="j_brief" ng-click="ChapterDetail(Chapter)" href="javascript:void(0)" role="button" data-backdrop="static" data-toggle="modal"><i ng-class="Chapter.Brief==''?'pos_nolight ico_info':'pos_highlight ico_info'"></i></a>
+                                        <a class="j_data" href="javascript:void(0)"></a>
+                                        <a title="章讨论" ng-click="PartDiscussion(Chapter)" class="j_discuss" href="javascript:void(0)"><i ng-class="Chapter.TopicNum<=0?'pos_nolight ico_discuss':'pos_highlight ico_discuss'"></i></a>
+                                        <a title="章测试" href="javascript:void(0)" ng-click="HomeWorkAdd_Chapter(Chapter)"><i class="icon_mooc icon_ceshi"></i></a>
+                                        <a title="知识点" ng-click="PartKnowledge(Chapter)" class="j_know" href="javascript:void(0)"><i ng-class="Chapter.KenNum<=0?'pos_nolight ico_knowledge':'pos_highlight ico_knowledge'"></i></a>
+                                        <a title="章启用" ng-click="PartStatus(Chapter)" href="javascript:void(0)"><i ng-class="Chapter.MoocStatus==0?'pos_nolight ico_star':'pos_highlight ico_star'"></i></a>
+
+                                      
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li ng-repeat="Chapter2 in ChapterList|MoocFilter:'ParentID':'=':Chapter.ChapterID|orderBy:'Orde'">
+                                        <div ng-class="{'first_chapter background1':Chapter2.ShowOperation==true,'first_chapter background2':Chapter2.ShowOperation!=true}" class="first_chapter" ng-mouseover="Chapter_MouseOver(Chapter2)" ng-mouseleave="Chapter_MouseLeave(Chapter2)">
+                                            <div class="chapter_tit">
+                                                <p ng-show="Chapter2.active!=true;" class="second_chapter_name" ng-click="Chapter2.active=true">{{Index}}.{{$index+1}} {{Chapter2.Title}}</p>
+                                                <p ng-show="Chapter2.active==true;" class="second_chapter_name">{{Index}}.{{$index+1}}<input ng-blur="Chapter_Title_Upd(Chapter2)" class="second_chapter_input" type="text" ng-model="Chapter2.Title" focus-me="{{Chapter2.active}}" /></p>
+                                                <div class="operation_btn first_operation" ng-show="Chapter2.ShowOperation==true">
+                                                    <a title="节上移" ng-click="Chapter_Move(Chapter2,'1')" href="javascript:void(0)"></a>
+                                                    <a title="节下移" ng-click="Chapter_Move(Chapter2,'2')" href="javascript:void(0)"></a>
+                                                    <a title="节删除" ng-click="Chapter_Del(Chapter2)" href="javascript:void(0)"></a>
+                                                </div>
+                                            </div>
+                                            <div class="chapter_btn">
+                                                <a title="节简介" ng-click="PartDetail(Chapter2)" class="j_brief" href="javascript:void(0)" role="button" data-backdrop="static" data-toggle="modal"><i ng-class="Chapter2.Brief==''?'pos_nolight ico_info':'pos_highlight ico_info'"></i></a>
+                                                <a title="节资料" ng-click="PartFile(Chapter2)" class="j_data" href="javascript:void(0)" role="button" data-backdrop="static" data-toggle="modal"><i ng-class="Chapter2.FileNum<=0?'pos_nolight ico_data':'pos_highlight ico_data'"></i></a>
+                                                <a class="j_discuss" href="javascript:void(0)"></a>
+                                                <a ng-click="PartVideo(Chapter2)" href="javascript:void(0)"><i class="pos_highlight ico_problem"></i><span>小节视频弹题</span></a>
+                                                <a title="知识点" ng-click="PartKnowledge(Chapter2)" class="j_know" href="javascript:void(0)"><i ng-class="Chapter2.KenNum<=0?'pos_nolight ico_knowledge':'pos_highlight ico_knowledge'"></i></a>
+                                                <a title="节启用" ng-click="PartStatus(Chapter2)" href="javascript:void(0)"><i ng-class="Chapter2.MoocStatus==0?'pos_nolight ico_star':'pos_highlight ico_star'"></i></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div ng-class="{'first_chapter background1':OcMooc.ShowOperation==true,'first_chapter background2':OcMooc.ShowOperation!=true}" ng-mouseover="OcMooc.ShowOperation=true" ng-mouseleave="OcMooc.ShowOperation=false">
+
+                                    <div class="chapter_tit">
+                                        <p class="first_chapter_name">课程结业考试</p>
+
+                                    </div>
+                                    <div class="chapter_btn">
+                                        <a class="j_brief" href="javascript:void(0)"></a>
+                                        <a class="j_data" href="javascript:void(0)"></a>
+                                        <a class="j_discuss" href="javascript:void(0)"></a>
+                                        <a title="课程结业考试" href="javascript:void(0)" ng-click="HomeWorkAdd_MOOC()">
+                                            <i class="icon_mooc icon_ceshi"></i>
+                                        </a>
+                                        <a class="j_know" href="javascript:void(0)"></a>
+                                        <a href="javascript:void(0)"></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div ng-show="type==2">
+                        <p class="batch_operation">
+                            <a ng-click="UploadFiles(true)" class="upload_data" href="javascript:;">上传资料</a>
+                            <a ng-click="MyFiles(true)" class="select_data" href="javascript:;">从资料库选择</a>
+                        </p>
+                        <table class="data_table">
+                            <tr>
+                                <th width="400"><p class="table_tit"><input ng-model="TT" ng-click="FileSelect_TT()" type="checkbox">文件名称<a class="icon icon_rank" href="javascript:void(0)"></a></p></th>
+                                <th width="100">上传日期<a class="icon icon_rank" href="javascript:void(0)"></a></th>
+                                <th width="105">学习时长</th>
+                                <th width="250">
+                                    <div class="connect_chapter">
+                                        <select ng-change="OCMoocFile_Batch_Edit()" ng-model="selectedChapterID" ng-options="m.ChapterID as m.Title for m in ChapterList|MoocFilter:'ParentID':'>':0"></select>
+                                    </div>
+                                </th>
+                                <th><a ng-click="OCMoocFile_Batch_Del()" class="batch_delete" href="javascript:;">批量删除</a></th>
+                            </tr>
+                            <tr ng-repeat="OCMoocFile in OCMoocFileList|orderBy:'Orde'" ng-class-even="'background1'">
+                                <td>
+                                    <p class="table_file">
+                                        <input ng-model="OCMoocFile.checked" type="checkbox">
+                                        <i file-ext ext="{{OCMoocFile.Ext}}" class="icon_24"></i>
+                                        {{OCMoocFile.FileTitle}}
+                                    </p>
+                                </td>
+                                <td>{{OCMoocFile.UploadTimeCopy|dateFormat }}</td>
+                                <td ng-switch on="OCMoocFile.FileType == 1 || OCMoocFile.FileType == 7">
+                                    @*1,2为视频文件和音频文件*@
+                                    <span ng-switch-when="true" class="learning_time">{{OCMoocFile.TimeLength|FormatSeconds }}</span>
+                                    <span ng-switch-when="false" class="learning_time">
+                                        <input type="text" key-up-check mul="0" ng-model="OCMoocFile.TimelimitMin" />（分钟）
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="connect_chapter">
+                                        <select ng-model="OCMoocFile.ChapterID" ng-options="m.ChapterID as m.Title for m in ChapterList|MoocFilter:'ParentID':'>':0"></select>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="connect_chapter">
+
+                                        <i title="资料删除" ng-click="OCMoocFile_Del(OCMoocFile)" class="icon icon_delete"></i>
+                                        <i title="资料设置必读" ng-click="OCMoocFile.IsMust=!OCMoocFile.IsMust" ng-class="{'icon_mooc icon_flag':OCMoocFile.IsMust==0,'icon_mooc icon_flag2':OCMoocFile.IsMust==1}"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div ng-show="type==3">
+                        <table class="data_table">
+                            <tr>
+                                <th width="370"><p class="table_tit">作业名称<a class="icon icon_rank" href="javascript:void(0)"></a></p></th>
+                                <th width="50"><a class="icon " href="javascript:void(0)"></a></th>
+                                <th width="105">已提交人数</th>
+                                <th width="300">关联章</th>
+                                <th></th>
+                            </tr>
+                            <tr ng-repeat="OCMoocLiveTest in OCMoocLiveTestList|orderBy:'Orde'" ng-class-even="'background1'">
+                                <td>
+                                    <p class="table_file">
+                                        {{OCMoocLiveTest.TestTitle}} {{OCMoocLiveTest.ChapterID==0?"[课程结业考试]":""}}
+                                    </p>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <span class="learning_time">
+                                        {{OCMoocLiveTest.SubmitStudentCount}}（人）
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="connect_chapter">
+                                        {{OCMoocLiveTest.ChapterID==0?"--":OCMoocLiveTest.Title}}
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="connect_chapter">
+                                        <i title="作业编辑" ng-click="Test_Upd(OCMoocLiveTest)" class="icon_mooc icon_ceshi"></i>
+                                        <i title="设为历史" ng-click="Test_IsHistroy_Upd(OCMoocLiveTest)" class="icon_pro ico_history"></i>
+                                        <i title="作业删除" ng-click="OCMoocLiveTest_Del(OCMoocLiveTest)" class="icon icon_delete"></i>                                    
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                    <div class="btn_box">
+                        <a target="_blank" class="cancel" href="Preview?OCID={{OCID}}">预览</a>
+                        <a ng-click="OCMoocSave_Step1(1)" class="keep" href="javascript:void(0)">保存</a>
+                        <a ng-click="OCMoocSave_Step1(2)" class="save" href="javascript:void(0)">保存进入下一步</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div ng-show="Step==2" class="main_content">
+                @*见面课设计*@
+                <p class="text_box">
+                    • 见面课适用于【统一开课】的招生模式，教师定制好本课程的运行时间，在固定时间组织学生参与面授、答疑、讨论课<br>
+                    • 若课程只是在线视频教学，可以跳过本步骤<a ng-click="Step=3" href="#">跳过进入下一步</a>
+                </p>
+                <div class="create_course">
+                    <a href="javascript:void(0)" ng-click="OCMoocOffline_Add()">创建见面课</a>
+                </div>
+                <table class="curri_table">
+                    <tr>
+                        <th width="10"></th>
+                        <th width="340">主题</th>
+                        <th width="100">任务类型</th>
+                        <th width="150">教师</th>
+                        <th width="60">学时</th>
+                        <th>建议授课章节</th>
+                    </tr>
+                    <tr ng-mouseover="titleShow=true" ng-mouseleave="titleShow=false" ng-repeat=" OCMoocOffline in OCMoocOfflineList" ng-class-even="'background1'">
+                        <td></td>
+                        <td>{{OCMoocOffline.Title}}</td>
+                        <td>{{OCMoocOffline.TaskType}}</td>
+                        <td>{{OCMoocOffline.TeacherNames}}</td>
+                        <td>{{OCMoocOffline.Hours}}</td>
+                        <td>
+                            <div class="recom_chapter">
+                                <div ng-show="titleShow" class="edit_btn ng-hide">
+                                    <i title="删除" ng-click="OCMoocOffline_Del(OCMoocOffline)" class="icon icon_delete"></i>
+                                    <i title="编辑" ng-click="OCMoocOffline_Edit(OCMoocOffline) " role="button" data-backdrop="static" data-toggle="modal" class="icon icon_pen"></i>
+                                </div>
+                                <p>{{OCMoocOffline.ChapterName}}</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="btn_box">
+                    @*<a class="keep" ng-click="OCMoocSave_Step2(1)" href="javascript:void(0)">保存</a>*@
+                    <a class="save" ng-click="Step=3" href="javascript:void(0)">下一步</a>
+                </div>
+
+            </div>
+
+            <div ng-show="Step==3" class="main_content">
+                <div class="check_wrap">
+                    <div class="check_result" ng-switch on="Incomplete>0">
+                        <p ng-switch-when="true"><img src="~/images/cry.png" width="36" height="36" alt="">至少还有<span>{{Incomplete}}</span>处资料没有准备好，继续加油！</p>
+                        <p ng-switch-when="false"><img src="~/Images/smile.png" width="36" height="36" alt="">恭喜您！通过了课程资料完整度检查！</p>
+                        <a class="check_again" ng-click="CompleteCheck(1);" href="#"><i class="icon_mooc icon_check"></i>重新检查</a>
+                    </div>
+                    <div class="complete_box">
+                        <p class="complete_tip"><span>点击</span><i class="icon_mooc icon_warning"></i><span>即可完善空缺的内容</span></p>
+                        <ul class="item_box">
+                            <li ng-repeat="Chapter in ChapterList|MoocFilter:'ParentID':'=':0|orderBy:'Orde'">
+                                <div class="chapter_b chapter_item">
+                                    <b class="wid210">
+                                        <i ng-click="Chapter.active=true" ng-show="Chapter.Title==null||Chapter.Title==''" class="icon_mooc icon_warning">
+                                        </i><span>第{{Index2=$index+1}}章&nbsp;</span>
+                                        <span ng-show="Chapter.active!=true">{{Chapter.Title}}</span>
+                                        <input ng-show="Chapter.active==true" ng-blur="Chapter_Title_Upd(Chapter)" type="text" ng-model="Chapter.Title" focus-me="{{Chapter.active}}" />
+
+                                    </b>
+
+
+                                    <b class="wid100">计划天数<i ng-click="ChapterDetail(Chapter)" ng-show="Chapter.PlanDay==null||Chapter.PlanDay==0" class="icon_mooc icon_warning"></i>{{Chapter.PlanDay==0?'':Chapter.PlanDay}}</b>
+                                    <b class="wid125">最低学时<i ng-click="ChapterDetail(Chapter)" ng-show="Chapter.MinHour==null||Chapter.MinHour==0" class="icon_mooc icon_warning"></i>{{Chapter.MinHour==0?'':Chapter.MinHour}}</b>
+                                    <b class="wid80">简介</b>
+                                    <b class="wid80">资料</b>
+                                    <b class="wid80">讨论</b>
+                                    <b class="wid80">测试</b>
+                                    <b>知识点</b>
+                                </div>
+                                <ul class="second_section">
+                                    <li ng-repeat="Chapter2 in ChapterList|MoocFilter:'ParentID':'=':Chapter.ChapterID|orderBy:'Orde'">
+                                        <div class="chapter_item">
+                                            <span class="wid210">
+                                                <i ng-click="Chapter2.active=true" ng-show="Chapter2.Title==null||Chapter2.Title==''" class="icon_mooc icon_warning">
+                                                </i>
+                                                <span>{{Index2}}.{{$index+1}}</span>
+                                                <span ng-show="Chapter2.active!=true">{{Chapter2.Title}}</span>
+                                                <input ng-show="Chapter2.active==true" ng-blur="Chapter_Title_Upd(Chapter2)" type="text" ng-model="Chapter2.Title" focus-me="{{Chapter2.active}}" />
+                                            </span>
+                                            <span class="wid100"></span>
+                                            <span class="wid125"></span>
+                                            <span class="wid80" ng-switch on="Chapter2.Brief == null || Chapter2.Brief == ''">
+                                                <i ng-switch-when="false" class="icon_mooc icon_finish"></i>
+                                                <a ng-switch-when="true" ng-click="PartDetail(Chapter2)" role="button" data-backdrop="static" data-toggle="modal" class="num_show" href="javascript:void(0)">输入</a>
+                                            </span>
+
+                                            <span class="wid80" ng-switch on="Chapter2.FileNum == null || Chapter2.FileNum == 0">
+                                                <i ng-switch-when="true" ng-click="PartFile(Chapter2)" class="icon_mooc icon_warning"></i>
+                                                <span ng-switch-when="false" class="num_show">{{Chapter2.FileNum}}</span>
+                                            </span>
+                                            <span class="wid80"><a class="num_show" href="javascript:void(0);"></a></span>
+                                            <span class="wid80"><a class="num_show" href="javascript:void(0);"></a></span>
+
+                                            <span>{{Chapter2.KenNum}}</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="chapter_item">
+                                    <span class="wid210">章测试</span>
+                                    <span class="wid100"></span>
+                                    <span class="wid125"></span>
+                                    <span class="wid80"></span>
+                                    <span class="wid80"></span>
+                                    <span class="wid80" ng-switch on="Chapter.TopicNum == null || Chapter.TopicNum == 0">
+                                        <a ng-switch-when="true" ng-click="PartDiscussion(Chapter)" class="num_show">{{Chapter.TopicNum}}</a>
+                                        <a ng-switch-when="false" class="num_show">{{Chapter.TopicNum}}</a>
+                                    </span>
+                                    <span class="wid80">
+                                        <i ng-if="Chapter.TestNum == null || Chapter.TestNum == 0" ng-click="HomeWorkAdd_Chapter(Chapter)" class="icon_mooc icon_warning"></i>
+                                        <i ng-if="Chapter.TestNum>0" ng-click="HomeWorkAdd_Chapter(Chapter)" class="icon_mooc icon_finish"></i>                                     
+                                    </span>
+                                    <span>{{Chapter.KenNum}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="chapter_b chapter_item">
+                                    <b class="wid210">
+                                        课程结业考试
+                                    </b>
+                                    <b class="wid100"></b>
+                                    <b class="wid125"></b>
+                                    <b class="wid80"></b>
+                                    <b class="wid80"></b>
+                                    <b class="wid80"></b>
+                                    <b class="wid80">
+                                        测试
+                                        <i ng-if="OcMooc.TestID<0 ||OcMooc.TestID==null" ng-click="HomeWorkAdd_MOOC()" class="icon_mooc icon_warning"></i>
+                                    </b>
+                                    <b></b>
+                                </div>
+
+                            </li>
+                            <li>
+                                <div class="chapter_item">
+                                    <b class="wid210">
+                                        课程合计
+                                    </b>
+                                    <b class="wid100">{{OCMoocTotal.PlanDay}}天</b>
+                                    <b class="wid125">{{OCMoocTotal.MinHour}}时</b>
+                                    <b class="wid80"></b>
+                                    <b class="wid80">{{OCMoocTotal.VideoNum}}视频/{{OCMoocTotal.FileNum}}文档</b>
+                                    <b class="wid80">{{OCMoocTotal.TopicNum}}讨论</b>
+                                    <b class="wid80">{{OCMoocTotal.TestNum}}次</b>
+                                    <b>{{OCMoocTotal.KenNum}}知识点</b>
+                                </div>
+
+                            </li>
+
+                        </ul>
+
+                        <div class="btn_box">
+                            @*<a target="_blank" class="cancel" href="Preview?OCID={{OCID}}">预览</a>*@
+                            @*<a class="cancel" ng-click="TeachingPlan();" href="javascript:void(0);">预览</a>*@
+
+
+                            <a ng-show="OcMooc.PublishStatus==0||OcMooc.PublishStatus==3" class="issue" ng-click="MoocIssue();" href="javascript:void(0);">发布课程</a>
+                            @*<a ng-show="OcMooc.PublishStatus==1" class=" issue_ing" href="javascript:void(0);">发布审核中...</a>*@
+                            <a ng-show="OcMooc.PublishStatus==2||OcMooc.PublishStatus==1" class="issue_pass" href="javascript:void(0);">课程已发布</a>
+                            <span ng-show="OcMooc.PublishStatus==3">发布申请被驳回<a href="javascript:void(0)">[理由]</a></span>
+                        </div>
+                        @*<div class="btn_box"> 备注:课程发布后，需管理员进行审核，审核通过即可在[学生管理]模块进行公开招生</div>*@
+                    </div>
+                </div>
+            </div>
+
+            <a style="display:none;" class="icon backto_top" href="#"></a>
+        </div>
+        <!--弹出框-->
+
+
+        <div id="div_Chapter" data-backdrop="static" class="pop_400 modal hide fade" tabindex="0" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <h4 id="myModalLabel1">简介</h4>
+            <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+            <div class="wrap_box">
+                <div class="brief_box">
+                    <textarea placeholder="章简介（建议不超过500字）" ng-model="Chapter.Brief"></textarea>
+                    <p>计划天数：<input type="text" key-up-check mul="0" ng-model="Chapter.PlanDay"><span>*</span>　最低学时：<input type="text" key-up-check mul="0" ng-model="Chapter.MinHour"><span>*</span></p>
+                </div>
+                <div class="btn_box">
+                    <a class="keep btn btn-primary" ng-click="Chapter_Upd()" data-dismiss="modal" href="javascript:void(0)">保存</a>
+                    <a class="cancel btn" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">取消</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="div_Part" data-backdrop="static" class="pop_400 modal hide fade" tabindex="0" role="dialog" aria-hidden="true">
+            <h4>简介</h4>
+            <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+            <div class="wrap_box">
+                <div class="brief_box">
+                    <textarea placeholder="节简介（建议不超过500字）" ng-model="Chapter.Brief"></textarea>
+                </div>
+                <div class="btn_box">
+                    <a class="keep btn btn-primary" ng-click="Chapter_Upd()" data-dismiss="modal" href="javascript:void(0)">保存</a>
+                    <a class="cancel btn" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">取消</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="div_Discussion" data-backdrop="static" class="pop_600 modal hide fade" tabindex="0" role="dialog" aria-hidden="true">
+            <h4>讨论</h4>
+            <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+            <div class="wrap_box">
+                <div class="upload_btn">
+                    <a ng-click="OCMoocLiveDiscuss_Add()" href="javascript:void(0)"><em><i class="icon icon_add"></i></em><span>新增讨论主题</span></a>
+                </div>
+
+                <table class="data_table">
+                    <tr ng-mousemove="titleShow=true" ng-mouseleave="titleShow=false" ng-repeat="OCMoocLive in OCMoocLiveDiscussList|filter:fileFiter">
+                        <td ng-show="OCMoocLive.active!=true" width="495"><p class="theme">{{OCMoocLive.ForumTitle}}</p></td>
+                        <td ng-show="OCMoocLive.active!=true">
+                            <p class="edit_item" ng-show="titleShow">
+                                @*OCMoocLive.edit=true(编辑状态)*@
+                                <i title="编辑" ng-click="OCMoocLive.active=true;OCMoocLive.edit=true" class="icon_mooc icon_reedit"></i>
+                                <i title="删除" ng-click="OCMoocLiveDiscuss_Del(OCMoocLive)" class="icon_mooc delete_btn"></i>
+                            </p>
+                        </td>
+                        <td ng-show="OCMoocLive.active==true"><p class="theme"><input ng-model="OCMoocLive.ForumTitle" ng-blur="OCMoocLive.active=false" focus-me="{{OCMoocLive.active}}" type="text" placeholder="输入讨论主题"></p></td>
+                        <td ng-show="OCMoocLive.active==true"></td>
+                    </tr>
+                </table>
+                <div class="btn_box">
+                    <a class="keep btn btn-primary" ng-click="OCMoocLiveDiscuss_Upd()" href="javascript:void(0)">保存</a>
+                    <a class="cancel btn" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">取消</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="div_KnowledgePoint" data-backdrop="static" class="pop_600 modal hide fade" tabindex="0" role="dialog" aria-hidden="true">
+            <h4>知识点</h4>
+            <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+            <div class="wrap_box">
+                <div class="upload_btn">
+                    <a ng-click="Ken_Add()" href="javascript:void(0)"><em><i class="icon icon_add"></i></em><span>新增知识点</span></a>
+                </div>
+                <table class="data_table">
+                    <tr ng-mousemove="titleShow=true" ng-mouseleave="titleShow=false" ng-repeat="Ken in KenList|MoocFilter:'ChapterID':'=':Chapter.ChapterID">
+                        <td ng-show="Ken.active!=true" width="495"><p class="theme">{{Ken.Name}}</p></td>
+                        <td ng-show="Ken.active!=true">
+                            <p class="edit_item" ng-show="titleShow">
+                                <i ng-click="Ken.active=true;Ken.edit=true" class="icon_mooc icon_reedit"></i>
+                                <i ng-click="Ken_Del(Ken)" class="icon_mooc delete_btn"></i>
+                            </p>
+                        </td>
+                        <td ng-show="Ken.active==true"><p class="theme"><input ng-model="Ken.Name" ng-blur="Ken.active=false" focus-me="{{Ken.active}}" type="text" placeholder="输入知识点主题"></p></td>
+                        <td ng-show="Ken.active==true"></td>
+                    </tr>
+                </table>
+
+
+                @*<tr>
+                        <td width="400"><p class="know_name">知识点名字1</p></td>
+                        <td width="135"><p class="know_name">重要</p></td>
+                        <td><i class="icon icon_delete"></i></td>
+                    </tr>
+                    <tr>
+                        <td><p class="know_name"><input type="text" placeholder="输入知识点名称"><b>*</b></p></td>
+                        <td>
+                            <select class="important_degree">
+                                <option>重要程度</option>
+                                <option>重要程度</option>
+                                <option>重要程度</option>
+                            </select>
+                        </td>
+                        <td><i class="icon icon_delete"></i></td>
+                    </tr>*@
+
+
+                <div class="btn_box">
+                    <a class="keep btn btn-primary" ng-click="Ken_Edit()" href="javascript:void(0)">保存</a>
+                    <a class="cancel btn" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">取消</a>
+                </div>
+            </div>
+        </div>
+
+        <form name="form_OCMoocOffline">
+            <div id="div_OCMoocOffline" data-backdrop="static" class="pop_box modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+                <h4 id="myModalLabel3">创建见面课</h4>
+                <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+                <div class="meeting_box">
+                    <ul class="meeting_require">
+                        <li>
+                            <label>主题：</label>
+                            <div class="require_content">
+                                <input class="meeting_theme" type="text" ng-model="OCMoocOffline.Title" required>
+                                <b>*</b>
+                            </div>
+                        </li>
+                        <li>
+                            <label>任务类型：</label>
+                            <div class="require_content">
+                                <select class="task_type" ng-model="OCMoocOffline.TaskType" required>
+                                    <option>网络面授</option>
+                                    <option>实践实践</option>
+                                    <option>小组讨论</option>
+                                </select>
+                                <b>*</b>
+                            </div>
+                        </li>
+                        <li>
+                            <label>建议学时：</label>
+                            <div class="require_content">
+                                <input key-up-check mul="1" class="recom_time" type="text" ng-model="OCMoocOffline.Hours" required>
+                                <b>*</b>
+                            </div>
+                        </li>
+                        <li>
+                            <label>选择教师：</label>
+                            <div class="require_content">
+                                @*<select class="select_teacher" ng-model="OCMoocOffline.UserName" ng-options="m.UserID as m.UserName for m in OCTeamList"></select>*@
+
+                                <div ng-mouseleave="SelectShow=false" class="nav" id="nav">
+                                    <p class="set" ng-click="SelectShow=!SelectShow">{{UserNames==''?'点击选择教师':UserNames}}</p>
+                                    <ul ng-show="SelectShow" class="new">
+                                        <li ng-repeat="OCTeam in OCTeamList"><input type="checkbox" ng-checked="OCTeam.checked" ng-click="OCTeamSelected(OCTeam)" /> {{OCTeam.UserName}}</li>
+                                    </ul>
+                                </div>
+                                <div class="nav">
+                                    <input class="recom_teacher" ng-model="OCMoocOffline.Experts" placeholder="校外专家在此输入..." type="text">
+                                </div>
+                            </div>
+
+                        </li>
+                        <li>
+                            <label>建议授课章节：</label>
+                            <div class="require_content">
+                                <select class="recom_chapter" ng-model="OCMoocOffline.ChapterID" ng-options="m.ChapterID as m.order+m.Title for m in ChapterList|orderBy:'Orde'|MoocFilter:'ParentID':'=':0|index"></select>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="meeting_content">
+                        <ul class="meeting_point">
+                            <li ng-class="{'active':Data==1}"><a href="#" ng-click="OCMoocOffline_Bind(1)">本次见面课目的</a></li>
+                            <li ng-class="{'active':Data==2}"><a href="#" ng-click="OCMoocOffline_Bind(2)">教师要点说明</a></li>
+                            <li ng-class="{'active':Data==3}"><a href="#" ng-click="OCMoocOffline_Bind(3)">学生组织说明</a></li>
+                            <li ng-class="{'active':Data==4}"><a href="#" ng-click="OCMoocOffline_Bind(4)">评价与成绩说明</a></li>
+                            <li ng-class="{'active':Data==5}"><a href="#" ng-click="OCMoocOffline_Bind(5)">资源配套说明</a></li>
+                            <li ng-class="{'active':Data==6}"><a href="#" ng-click="OCMoocOffline_Bind(6)">考核方式</a></li>
+                        </ul>
+                        <div class="point_box">
+                            <p ng-show="Data==1">答疑课，讨论课的内容有哪些？以什么样的引导，鼓励学生走上讲台，促进学生能力提升？</p>
+                            <p ng-show="Data==2">在本次面授中的教师要用什么资料？教学组织中需要注意什么？</p>
+                            <p ng-show="Data==3">怎样组织学生才比较有效，比如怎样分组，每组多少人，组内学生特质均衡策略什么的？</p>
+                            <p ng-show="Data==4">本次面授是不是强调出勤，怎样评价每次面授成绩，成绩在总成绩中的占比如何？</p>
+                            <p ng-show="Data==5">需要什么样的教室，是不是要全程录像，需要什么其他教学资源？(比如过程性打印文件)</p>
+                            <p ng-show="Data==6">各种学习的成绩占比，作业占比，面授评价占比；期末考核时间，方法。</p>
+
+                            <input type="hidden" name="oEditor1" id="oEditor1" ng-value="" />
+                            <iframe ng-blur="MyBlur()" id="frmoEditor1" src="~/Frameworks/ewebeditor/ewebeditor.htm?id=oEditor1&style=mini" frameborder="0" scrolling="no" width="809" height="290" style="display: block;"></iframe>
+                            <div class="btn_box">
+                                <a ng-disabled="form_OCMoocOffline.$invalid" class="keep" href="javascript:void(0)" ng-click="OCMoocOffline_Upd()">保存</a>
+                                <a class="cancel" href="javascript:void(0)" data-dismiss="modal" aria-hidden="true">取消</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <div id="ChapterFile" data-backdrop="static" class="pop_600 modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <h4>资料设置</h4>
+            <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+            <div class="wrap_box">
+                <div class="upload_btn">
+                    <a ng-click="UploadFiles(false)" href="javascript:void(0)"><em><i class="icon_mooc icon_up"></i></em><span>上传新资料</span></a>
+                    <a ng-click="MyFiles(false)" href="javascript:void(0)"><em><i class="icon icon_add"></i></em><span>从资料库选择</span></a>
+                    仅支持mp4、word、ppt、pdf 文件上传
+                </div>
+                <table class="data_table">
+                    <tr ng-repeat="OCMoocFile in OCMoocFileList|filter : fileFiter|orderBy:'-UploadTime' ">
+                        <td width="360">
+                            <p class="data_name">
+                                <i file-ext ext="{{OCMoocFile.Ext}}" class="icon_24"></i>
+                                {{OCMoocFile.FileTitle}}
+                            </p>
+                        </td>
+                        <td ng-switch on="OCMoocFile.FileType == 1 || OCMoocFile.FileType == 7">
+                            @*1,2为视频文件和音频文件*@
+                            <p ng-switch-when="true" class="learning_time">{{OCMoocFile.TimeLength|FormatSeconds }}</p>
+                            <p ng-switch-when="false" class="learning_time">
+                                <input type="text" key-up-check mul="0" ng-model="OCMoocFile.TimelimitMin" />分钟
+                            </p>
+                        </td>
+                        <td>
+                            <p class="data_btn">
+                                <i title="资料设置必读" ng-click="OCMoocFileStatus(OCMoocFile)" ng-class="{'icon_mooc icon_flag':OCMoocFile.IsMust==0,'icon_mooc icon_flag2':OCMoocFile.IsMust==1}"></i>
+                                <i title="资料删除" ng-click="OCMoocFile_Del(OCMoocFile)" class="icon icon_delete"></i>
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="btn_box">
+                    <a class="keep" ng-click="ChapterFile_Upd();" data-dismiss="modal" href="javascript:void(0)">保存</a>
+                    <a class="cancel" data-dismiss="modal" href="javascript:void(0)">取消</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="div_TeachingPlan" data-backdrop="static" class="data_check modal hide fade" tabindex="0" role="dialog" aria-hidden="true">
+            <h4 class="pop_tit">教学计划</h4>
+            <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+            <div class="teaching_plan">
+                <div class="plan_box">
+                    <div class="plan_detail" ng-repeat="Chapter in ChapterList|MoocFilter:'ParentID':'=':0|orderBy:'Orde'" on-offline-get>
+                        <div class="step_box">
+                            <p>第{{$index+1}}阶段 {{Chapter.PlanDay}}天</p>
+                            <span class="line"></span>
+                            <i class="icon_24 icon_node"></i>
+                        </div>
+                        <div class="online_box">
+                            <div class="step_detail">
+                                <div class="chapt_box">
+                                    <span class="learning_style online_learning">在线学习</span>
+                                    <h4>第{{$index+1}}章：{{Chapter.Title}}<b>（{{Chapter.MinHour}}学时）</b></h4>
+                                    <div class="chapt_detail">
+                                        <a href="javascript:void(0);"><i class="icon_con icon_test" title="测试"></i>{{Chapter.TestNumTotal}}</a>
+                                        <a href="javascript:void(0);"><i class="icon_con icon_know" title="知识点"></i>{{Chapter.KenNumTotal}}</a>
+                                        <a href="javascript:void(0);"><i class="icon_con icon_discuss" title="讨论"></i>{{Chapter.TopicNum}}</a>
+                                        <a href="javascript:void(0);"><i class="icon_con icon_txt" title="资料"></i>{{Chapter.FileNumTotal}}</a>
+                                        <a href="javascript:void(0);"><i class="icon_con icon_video" title="视频"></i>{{Chapter.VideoNumTotal}}</a>
+                                    </div>
+                                </div>
+                                <ul class="chapt_list">
+                                    <li ng-repeat="Chapter2 in ChapterList|MoocFilter:'ParentID':'=':Chapter.ChapterID|orderBy:'Orde'">
+                                        {{$index+1}}:{{Chapter2.Title}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="step_detail" ng-repeat=" OCMoocOffline in OCMoocOfflineList|MoocFilter:'ChapterID':'=':Chapter.ChapterID">
+                                <div class=" chapt_box">
+                                    <span class="learning_style off_learning">见面课</span>
+                                    <h4>{{OCMoocOffline.Title}}<b>（{{OCMoocOffline.Hours}}学时）</b></h4>
+                                    <div class="group_discuss">
+                                        <span>{{OCMoocOffline.TaskType}}  | {{OCMoocOffline.TeacherNames}}</span>
+                                        <a href="javascript:void(0);">[展开]</a>
+                                    </div>
+                                </div>
+                                <ul class="discuss_question" style="display:none;">
+                                    <li>
+                                        <b>本次见面课的目的</b>
+                                        <p ng-bind-html="OCMoocOffline.Purpose|toHtml"></p>
+
+                                    </li>
+                                    <li>
+                                        <b>教师要点说明</b>
+                                        <p ng-bind-html="OCMoocOffline.Purpose|toHtml">{{OCMoocOffline.Points}}</p>
+                                    </li>
+                                    <li>
+                                        <b>学生组织说明</b>
+                                        <p ng-bind-html="OCMoocOffline.Grouping|toHtml">{{OCMoocOffline.Grouping}}</p>
+                                    </li>
+                                    <li>
+                                        <b>评价与成绩说明</b>
+                                        <p ng-bind-html="OCMoocOffline.Score|toHtml">{{OCMoocOffline.Score}}</p>
+                                    </li>
+                                    <li>
+                                        <b>配套资源说明</b>
+                                        <p ng-bind-html="OCMoocOffline.Resource|toHtml">{{OCMoocOffline.Resource}}</p>
+                                    </li>
+                                    <li>
+                                        <b>考核方式</b>
+                                        <p ng-bind-html="OCMoocOffline.Assess|toHtml">{{OCMoocOffline.Assess}}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plan_detail">
+                        <div class="step_box">
+                            <p>结业考试</p>
+                            <span class="line"></span>
+                            <i class="icon_24 icon_end"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn_box">
+                    <a class="cancel btn" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">关闭</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="MyFiles" data-backdrop="static" class="pop_600 modal hide fade" tabindex="0" role="dialog" aria-hidden="true">
+            <h4>资料设置</h4>
+            <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+            <div ng-controller="MyResourceController">
+                <div style="width:600px; background:#fff">
+                    <div class="wrap_box">
+                        <div class="search_box">
+                            <input type="text" ng-model="KeyWords" placeholder="输入搜索关键字">
+                            <a class="icon icon_search" ng-click="OCFile_List_New()" href="javascript:void(0);"></a>
+                        </div>
+                        <div class="course_data_box">
+                            <ul class="course_data_nav">
+                                <li ng-click="Files_Search(1)" ng-class="{'active':type==1,'':type==2}"><a href="#">课程资料</a></li>
+                                <li ng-click="Files_Search(2)" ng-class="{'':type==1,'active':type==2}"><a href="#">个人资料</a></li>
+                            </ul>
+                            <table class="data_table">
+                                <tr>
+                                    <td width="278"><p class="file_tit"><input ng-model="T" ng-click="FileSelect_All()" type="checkbox">文件名称</p></td>
+                                    <td width="67"><p class="file_tit">时长</p></td>
+                                    <td width="67"><p class="file_tit">大小</p></td>
+                                    <td><p class="file_tit">修改日期</p></td>
+                                </tr>
+                                <tr ng-repeat="OCMoocFile in OCFileList">
+                                    <td>
+                                        <p class="table_file">
+                                            <input ng-click="FileSelect_Single(OCMoocFile)" ng-checked="OCMoocFile.checked" type="checkbox" />
+                                            <i file-ext ext="{{OCMoocFile.Ext}}" class="icon_24"></i>
+
+                                            <span title="{{OCMoocFile.FileTitle}}" class="data_tit">{{OCMoocFile.FileTitle}}</span>
+
+                                        </p>
+                                    </td>
+                                    <td><span ng-if="OCMoocFile.FileType==1||OCMoocFile.FileType==7">{{OCMoocFile.TimeLength|FormatSeconds}}</span> </td>
+                                    <td><p class="file_name">{{OCMoocFile.FileSize}}</p></td>
+                                    <td><p class="file_name">{{OCMoocFile.UploadTime|dateFormat}}</p></td>
+                                </tr>
+
+                            </table>
+                            <div>
+                                <div class="operation_box" style="float:left">
+
+
+                                </div>
+                                <div ng-show="ShowPage" id="page_OCFile" style="float: right; margin-top:10px;">
+
+                                </div>
+
+                                <div style="clear:both">
+
+
+                                </div>
+                            </div>
+                            @*<a ng-click="ConfirmSelect()" class="select_btn" href="javascript:void(0);">选择</a>*@
+                        </div>
+                    </div>
+                    <div class="selected_box">
+                        <p class="selected_num">已选 {{SelectedFileList.length}}</p>
+                        <div class="btn_box">
+                            <a class="keep" ng-click="toParent()" href="javascript:void(0)">保存</a>
+                            <a class="cancel" data-dismiss="modal" href="javascript:void(0)">取消</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id="div_Warning" data-backdrop="static" class="pop_400 modal hide fade" tabindex="0" role="dialog" aria-hidden="true">
+            <h4>提示</h4>
+            <i class="icon icon_close" data-dismiss=" modal" aria-hidden="true"></i>
+            <div class="wrap_box">
+                <div class="brief_box">
+                    <span ng-show="Incomplete>0">您的MOOC课程还未全部建设完成，发布申请可能会被系统管理员驳回，您确定要发布吗？</span>
+                    <span ng-show="Incomplete==0">您的MOOC课程已全部建完，发布申请后需要由系统管理员进行审核，审核通过后才能进行招生，您确定要发布吗？</span>
+                </div>
+                <div class="btn_box">
+                    <a class="keep btn btn-primary" ng-click="MoocIssueConfirm()" href="javascript:void(0)">发布</a>
+                    <a class="cancel btn" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">取消</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="box" style="display:none;">
+            <div ies-file-uploader id="eIesUploader"
+                               ocid="OCID"
+                               course-id="1"
+                               filesize="512" @*文件大小以M为单位*@
+                               filecount="5" @*允许上传的文件个数*@
+                               filesuffix="filesuffix" @*文件类型*@
+                               fileuptype="1" @*1:资料上传,2:附件上传*@>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+

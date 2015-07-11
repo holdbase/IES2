@@ -1,0 +1,88 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout.cshtml";
+    PageData["title"] = "申请审核";
+}
+<link href="~/Css/check.css" rel="stylesheet" />
+<!--右侧主题内容开始-->
+<div class="main_content">
+    <div class="coursesite_box" ng-controller="AffairsController">
+
+        <div class="exercise_search">
+            <div class="select_condition">
+                <ul class="knowledge_sort">
+                    <li title="我审核的" ng-if="UserSpace==2" ng-class="{true: 'active', false: ''}[Affairs.Type==1]" ng-click="ChangeAffairsTab(1)"><a href="#">我审核的</a></li>
+                    <li title="我申请的" ng-class="{true: 'active', false: ''}[Affairs.Type==2]" ng-click="ChangeAffairsTab(2)"><a href="#">我申请的</a></li>
+                </ul>
+            </div>
+            <select class="item_box" ng-model="Affairs.DictID" ng-options="m.KeyValue as m.Name for m in DictList" ng-change="DictSelectChanged();">
+                <option value="">全部事务</option>
+            </select>
+            <a ng-if="UserSpace==2" ng-show="Affairs.Type==1" class="batch_box" href="javascript:;" ng-click="BatchEdit(2)"><em><i class="icon batch_icon"></i></em><span>批量同意</span></a>
+            <a ng-if="UserSpace==2" ng-show="Affairs.Type==1" class="batch_box" href="javascript:;" ng-click="BatchEdit(1)"><em><i class="icon refuse_icon"></i></em><span>批量拒绝</span></a>
+        </div>
+        <table ng-if="UserSpace==2" class="item_table" ng-show="Affairs.Type==1">
+            <tr>
+                <th width="15"></th>
+                <th width="25"><input type="checkbox" ng-model="CheckAll" ng-checked="CheckAll" ng-click="SelectAll()"></th>
+                <th width="100">申请人</th>
+                <th width="100">身份</th>
+                <th width="125">所属机构</th>
+                <th width="125">所属班级</th>
+                <th width="100">事务类型</th>
+                <th width="105">申请原因</th>
+                <th width="100">事务详细</th>
+                <th width="100">申请时间</th>
+                <th>操作</th>
+            </tr>
+            <tr ng-repeat="Affairs in AffairsList|orderBy:'Status'">
+                <td></td>
+                <td><input type="checkbox" ng-checked="Affairs.IsSelected" ng-model="Affairs.IsSelected" ng-click="SelectSingle()"></td>
+                <td ng-bind-template="{{Affairs.UserName}}"></td>
+                <td ng-bind="GetUserType(Affairs.UserType)"></td>
+                <td ng-bind="Affairs.OrganizationName"></td>
+                <td ng-bind="Affairs.ClassName"></td>
+                <td ng-bind="Affairs.AffairType"></td>
+                <td ng-bind="Affairs.Reson"></td>
+                <td ng-bind="Affairs.AffairDesc"></td>
+                <td ng-bind="Affairs.CreateDate|dateFormat"></td>
+                <td>
+                    <p ng-show="Affairs.Status==0" class="operation_btn">
+                        <a title="同意" href="javascript:;" ng-click="StatusEdit(Affairs,2)">同意</a>
+                        <a href="javascript:;" ng-click="StatusEdit(Affairs,1)">拒绝</a>
+                    </p>
+                    <span ng-show="Affairs.Status==1" class="refuse_box">已拒绝</span>
+                    <span ng-show="Affairs.Status==2" class="agree_box">已同意</span>
+                </td>
+            </tr>
+        </table>
+        <table class="item_table" ng-show="Affairs.Type==2">
+            <tr>
+                <th width="15"></th>
+                <th width="25"><input type="checkbox" ng-model="CheckAll" ng-checked="CheckAll" ng-click="SelectAll()"></th>
+                <th width="100">被申请人</th>
+                <th width="155">所属机构</th>
+                <th width="100">事务类型</th>
+                <th width="100">事务详细</th>
+                <th width="100">申请时间</th>
+                <th>状态</th>
+            </tr>
+            <tr ng-repeat="Affairs in AffairsList|orderBy:'Status'">
+                <td></td>
+                <td><input type="checkbox" ng-checked="Affairs.IsSelected" ng-model="Affairs.IsSelected" ng-click="SelectSingle()"></td>
+                <td ng-bind-template="{{Affairs.RespondentUserName}}"></td>
+                <td ng-bind="Affairs.OrganizationName"></td>
+                <td ng-bind="Affairs.AffairType"></td>
+                <td ng-bind="Affairs.AffairDesc"></td>
+                <td ng-bind="Affairs.CreateDate|dateFormat"></td>
+                <td>
+                    <span ng-show="Affairs.Status==0" class="operation_btn">审核中</span>
+                    <span ng-show="Affairs.Status==1" class="refuse_box">已拒绝</span>
+                    <span ng-show="Affairs.Status==2" class="agree_box">已同意</span>
+                </td>
+            </tr>
+        </table>
+        <div id="AffairsPage" style="margin:20px; margin-left:150px;"></div>
+
+    </div>
+    <!--右侧主题内容结束-->
+</div>

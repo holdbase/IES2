@@ -1,0 +1,224 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Css/class.css" rel="stylesheet" />
+<div class="wrap_box" ng-controller="AddClassController">
+    <div id="addStudentModal" class="modal hide fade" tabindex="-1" style="width: 800px; position: absolute; left: 40%;" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4>添加</h4>
+        <i class="icon close_pop" aria-hidden="true" data-dismiss="modal"></i>
+        <div class="add_student">
+            <ul class="accord_box" style="margin-top: 10px;">
+                <li title="按行政班添加" style="cursor:pointer" class="active" ng-class="{true: 'active', false: ''}[SearchType]"><a ng-click="addSearchType(true)">按行政班添加</a></li>
+                <li title="按学生添加" style="cursor:pointer" ng-class="{true:'', false: 'active'}[SearchType]"><a ng-click="addSearchType(false)">按学生添加</a></li>
+            </ul>
+            <div class="result_box" ng-show="SearchType">
+                <div class="stu_accord">
+                    <div class="user_search" style="padding-top:10px;">
+                        <input type="text" ng-model="ClassModel.Key" placeholder="请输入 '行政班名称' 关键字">
+                        <b class="red">*</b>
+                        <a href="#" ng-click="SearchClass()">搜索</a>
+                    </div>
+                </div>
+                <div class="stu_box">
+                    <table class="class_box">
+                        <tr>
+                            <th width="20"></th>
+                            <th width="160">行政班名称</th>
+                            <th width="100">年级</th>
+                            <th width="100">学生数</th>
+                            <th width="200">专业</th>
+                            <th>所属机构</th>
+                        </tr>
+                        <tr ng-repeat="Class in Class_List">
+                            <td><input type="radio" name="rad_addClass" ng-model="ClassModel.ClassID" ng-value="{{Class.ClassID}}"></td>
+                            @*<td>{{Class.ClassName}}</td>
+                                <td>{{Class.SpecialtyName}}</td>
+                                <td>{{Class.OrganizationName}}</td>*@
+
+                            <td title="{{Class.ClassName}}"><p ng-bind="Class.ClassName" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 160px; "></p></td>
+                            <td>{{Class.EntryDate|dateFormatYear}}</td>
+                            <td>{{Class.StudentsNumber}}</td>
+                            <td title="{{Class.SpecialtyName}}"><p ng-bind="Class.SpecialtyName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 200px; "></p></td>
+                            <td title="{{Class.OrganizationName}}"><p ng-bind="Class.OrganizationName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 200px; "></p></td>
+
+
+                        </tr>
+                    </table>
+                    <div id="ClassPage" style=" margin-top:10px;margin-bottom:10px; float:right"></div>
+                    @*<div class="btn_box">
+                            <a class="save" href="javascript:;" ng-show="ClassModel.ClassID>0" ng-click="SelectClassStudent()">选择</a>
+                            <a class="cancel" data-dismiss="modal" aria-hidden="true">取消</a>
+                        </div>*@
+                    <div class="modal-footer bootstrapbtn_box">
+                        <a class="save" data-dismiss="modal" ng-show="ClassModel.ClassID>0" ng-click="SelectClassStudent()">选择</a>
+                        <a class="cancel" data-dismiss="modal" aria-hidden="true">取消</a>
+                    </div>
+                </div>
+            </div>
+            <div class="result_box" ng-hide="SearchType">
+                <div class="stu_accord">
+                    @*<input type="text" ng-model="SearchModel.Key" placeholder="请输入 '学号、姓名、年级、机构、专业' 关键字">
+            <b>*</b>
+            <a href="#" ng-click="SearchStudent()">搜索</a>*@
+                    @*<b>按学生添加：</b>*@
+                    <ul class="condition_list">
+                        <li><input type="text" ng-model="SearchModel.UserNo" placeholder="学号"></li>
+                        <li><input type="text" ng-model="SearchModel.UserName" placeholder="姓名"></li>
+                        <li><input type="text" ng-model="SearchModel.EnterDate" placeholder="年级"></li>
+                        <li><input type="text" ng-model="SearchModel.ClassName" placeholder="所属机构"></li>
+                        <li><input type="text" ng-model="SearchModel.SpecialtyName" placeholder="专业"></li>
+                        <li><a class="search_btn" href="#" ng-click="SearchStudent()">搜索</a></li>
+                        <li class="select_button"><a ng-click="InitSearchKey()" href="#">清空选项</a></li>
+                    </ul>
+                </div>
+                <div class="stu_box">
+                    <table class="class_box">
+                        <tr>
+                            <th width="20"><input type="checkbox" ng-checked="SelectedType.SelectPage" ng-model="SelectedType.SelectPage" ng-click="SelectPage(!SelectedType.SelectPage)"></th>
+                            <th width="100">学号</th>
+                            <th width="150">姓名</th>
+                            <th width="100">身份</th>
+                            <th width="120">专业</th>
+                            <th width="150">行政班</th>
+                            <th>年级</th>
+                        </tr>
+                        <tr ng-repeat="occlassstudent in OCClassStudentSearchList|listFilter111:'between':PageSearchStudentIndex:PageSize" ng-model="PageSearchStudentIndex">
+                            <td ng-disabled="IsSelectedSelected(occlassstudent.UserNo)"><input type="checkbox" ng-checked="occlassstudent.IsSelected" ng-model="occlassstudent.IsSelected" ng-click="SelectSingel()"></td>
+                            <td>{{occlassstudent.UserNo}}</td>
+                            @*<td>{{occlassstudent.UserName}}</td>
+                                <td>{{occlassstudent.SpecialtyName}}</td>
+                                <td>{{occlassstudent.ClassName}}</td>*@
+                            <td title="{{occlassstudent.UserName}}"><p ng-bind="occlassstudent.UserName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 150px; "></p></td>
+                            <td><span ng-if="occlassstudent.UserRole==1">学生</span><span ng-if="occlassstudent.UserRole==2">学生/教师</span><span ng-if="occlassstudent.UserRole==3">其他</span></td>
+                            <td title="{{occlassstudent.SpecialtyName}}"><p ng-bind="occlassstudent.SpecialtyName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 120px; "></p></td>
+                            <td title="{{occlassstudent.ClassName}}"><p ng-bind="occlassstudent.ClassName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 140px; "></p></td>
+
+                            <td>{{occlassstudent.EntryDate}}</td>
+                        </tr>
+                    </table>
+                    <div class="all_select">
+                        <p style="margin-left:7px;"><input type="checkbox" ng-checked="SelectedType.SelectAll" ng-click="SelectAll(!SelectedType.SelectAll)" ng-model="SelectedType.SelectAll">全选</p> <div id="SearchStuPage" style="float:right;margin-right:20px;"></div>
+                    </div>
+
+                </div>
+                <div class="select_num">
+                    <p>已选{{(OCClassStudentSearchList|listFilter222:'=':true).length}} 人</p>
+                    <div class="btn_box" >
+                        <a class="save" href="javascript:;" style=" margin-left:60px;" ng-show="(OCClassStudentSearchList|listFilter222:'=':true).length>0" ng-click="SelectSelectedStudent()">选择</a>
+                        <a class="cancel" data-dismiss="modal" aria-hidden="true">取消</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="class_guide"><span style="cursor:pointer" ng-click="GoBack()">在读教学班</span> > {{OCClassID==-1?'新增教学班':'编辑教学班'}}<a target="_self" href="../class/index">返回</a></p>
+    <div class="form_select">
+        <div class="class_name_box">
+            <label class="table_tit"><b class="red">*</b>教学班名称：</label>
+            <p><input class="class_name" value="" ng-model="OCClass.TeachingClassName" type="text"></p>
+
+        </div>
+        <div class="teach_date">
+            <label class="table_tit"><b class="red">*</b>授课起止日期：</label>
+            <p>
+                <input class="laydate-icon" id="start_date" value="{{OCClass.StartDate|dateFormat}}" ng-model="OCClass.StartDate" type="text">
+            </p>
+            <span>~</span>
+            <p>
+                <input class="laydate-icon" id="end_date" value="{{OCClass.EndDate|dateFormat}}" ng-model="OCClass.EndDate" type="text">
+            </p>
+        </div>
+        <div class="teacher_select">
+            <label class="table_tit"><b class="red">*</b>授课教师：</label>
+            <span style="margin-right:5px;" ng-repeat="octeacher in OCClassTeachertList"><input type="checkbox" style="margin-right:5px" ng-checked="octeacher.IsSelected" ng-model="octeacher.IsSelected" />{{octeacher.UserName}}</span>
+            <a class="add_btn" href="javascript:;" ng-click="ShowAddTeacherModel()"><em><i class="icon icon_add"></i></em><span>+添加其他课教师</span></a>
+        </div>
+        <div class="open_register"><label class="table_tit">注册码：</label><input type="checkbox" style="margin-right:5px" ng-checked="OCClass.RegStatus" ng-model="OCClass.RegStatus"><span>启用</span><input class="register_num" type="text" ng-disabled="!OCClass.RegStatus" ng-model="OCClass.RegNum"></div>
+    </div>
+    <div class="class_management stu_management">
+        <h5>教学班学生({{OCClassStudentList.length}})</h5>
+        <div class="function_list">
+            <a href="javascript:;" ng-click="BatchDeleteStudent()"><em><i class=" icon delete_btn1"></i></em><span>批量删除</span></a>
+            <div class="import_box">
+                <a href="javascript:;" ng-click="ShowBox()"><em><i class="icon import_btn"></i></em><span>导入班级学生</span></a>
+                <a class="download_box" target="_blank" href="~/ImportExport/StudentImport.xls"><em><i class="icon download_btn"></i></em><span>下载导入格式</span></a>
+            </div>
+            <a class="add_btn" href="javascript:;" ng-click="ShowAddModal()"><em><i class="icon icon_add"></i></em><span>添加学生</span></a>
+
+        </div>
+        <div class="class_wrap">
+            <table class="class_box">
+                <tr>
+                    <th width="20"><input type="checkbox" ng-checked="OCClassSelectedType.SelectedPage" ng-click="OCClassSelectPage(!OCClassSelectedType.SelectedPage)" ng-model="OCClassSelectedType.SelectedPage"></th>
+                    <th width="115">学号</th>
+                    <th width="95">姓名</th>
+                    <th width="195">专业</th>
+                    <th width="195">行政班</th>
+                    <th>来源</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="OCClassStudent in OCClassStudentList|listFilter111:'between':OCClassStudentIndex:PageSize" ng-class="{true: 'active', false: ''}[Show_btn]" ng-mouseover="Show_btn=true" ng-mouseleave="Show_btn=false">
+                    <td><input type="checkbox" ng-model="OCClassStudent.IsSelected" ng-checked="OCClassStudent.IsSelected" ng-click="OCClassSelectSingel()"></td>
+                    <td ng-model="OCClassStudent.UserNo">{{OCClassStudent.UserNo}}</td>
+                    <td ng-model="OCClassStudent.UserName">{{OCClassStudent.UserName}}</td>
+                    <td ng-model="OCClassStudent.SpecialtyName">{{OCClassStudent.SpecialtyName}}</td>
+                    <td ng-model="OCClassStudent.ClassName">{{OCClassStudent.ClassName}}</td>
+                    <td ng-model="OCClassStudent.Source">{{OCClassStudent.Source}}</td>
+                    <td><span class="icon delete_btn1" style="cursor:pointer; float:right; margin-right:30px;" ng-click="DeleteStudent(OCClassStudent)"></span></td>
+                </tr>
+            </table>
+            <div class="all_select">
+                <p style="margin-left:7px;"><input type="checkbox" ng-checked="OCClassSelectedType.SelectedAll" ng-click="OCClassSelectAll(!OCClassSelectedType.SelectedAll)" ng-model="OCClassSelectedType.SelectedAll">全选</p> <div id="OCClassStudentPage" style="float:right;margin-right:20px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="btn_box">
+        <a class="save" href="javascript:;" ng-click="OCClass_Edit()">保存</a>
+        <a class="cancel" target="_self" href="../class/index">取消</a>
+    </div>
+
+
+    <div id="myAddTeacherModal" class="modal hide fade" tabindex="-1" style="width:700px; position: absolute; " role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4>选择站内用户</h4>
+        <span class="icon close_pop" ng-click="CloseDialog()" data-dismiss="modal"></span>
+        <div class="form_box">
+            <div class="user_search" style=" margin-bottom:10px;">
+                <input type="text" ng-model="TeacherModel.Key" placeholder='请输入关键字'>
+                <b>*</b>
+                <a style="cursor:pointer" ng-click="SearchUserList()">搜索</a>
+            </div>
+            <table class="class_box">
+                <tr>
+                    <th width="20"></th>
+                    <th width="150">工号</th>
+                    <th width="150">姓名</th>
+                    <th>所属机构</th>
+                </tr>
+                <tr ng-repeat="Teacher in TeacherList" ng-class="{even:!$even,odd:!$odd,active:isActive}" ng-mousemove="isActive=true" ng-mouseleave="isActive=false">
+                    <td ><input type="radio" ng-disabled="Teacher.IsSelected" style="cursor:pointer" name="rad_addUser" ng-model="TeacherModel.UserID" ng-value="{{Teacher.UserID}}"></td>
+                    <td ng-bind="Teacher.UserNo"></td>
+                    <td><p ng-bind="Teacher.UserName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 120px; "></p></td>
+                    <td><p ng-bind="Teacher.OrganizationName" style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 120px; "></p></td>
+                </tr>
+            </table>
+            <div id="TeamPage" style="float:right;margin-right:20px; margin-top:10px;"></div>
+            <div class="btn_box">
+                <a class="save" style="cursor:pointer" ng-show="TeacherModel.UserID!=-1" ng-click="GetSelectUser()" data-dismiss="modal">选择</a>
+                <a class="cancel" ng-click="CloseDialog()" style="cursor:pointer" data-dismiss="modal">取消</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="box" style="display:none;">
+        <div ies-excel-uploader id="eIesUploader"
+                            step="eIesUploader"
+                            fileuptype="3"
+                            filesize="20" @*文件大小以M为单位*@
+                            filecount="1" @*允许上传的文件个数*@
+                            filesuffix="filesuffix" @*文件类型*@>
+        </div>
+    </div>
+</div>
+
+
+

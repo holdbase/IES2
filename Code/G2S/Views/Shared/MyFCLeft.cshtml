@@ -1,0 +1,140 @@
+﻿
+<div class="reverse_nav">
+    <ul class="nav_item">
+        <li ng-class="{true: 'click', false: ''}[SimpleOCFC.NavTab==-1]">
+            <ul class="second_reverse" style="display:block;">
+                <li ng-class="{true: 'active', false: ''}[SimpleOCFC.NavTab==-1]" ng-click="ShowFCProviewDitials(-1,-1,-1)">
+                    @*<a class="second_item" target="_self" href="FCExolain?ocID={{SimpleOCFC.OCID}}&FCID={{SimpleOCFC.FCID}}&NavTab={{SimpleOCFC.NavTab}}">*@
+                    <a class="second_item" ng-click="ShowFCProviewDitials(-1,-1,-1,'')">
+                        <span class="label_icon"></span>
+                        <span class="label_tit">翻转课堂说明</span>
+                        <i class="label_arrow"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-if="OCFCLearnNavInfo.OCFCFileList.length>0" ng-class="{true: 'click', false: ''}[SimpleOCFC.NavTab==1]" ng-click="ChangeNavTab(1)">
+            <a class="first_item" href="javascript:;">资料学习</a>
+            <div class="chart_box" drowp-pie-progsess id="chart_box_1" rale="FCLearnProgress.File" color="#00846F">
+            </div>
+            <ul class="second_reverse" ng-show="SimpleOCFC.NavTab==1">
+                <li ng-repeat="fcFile in OCFCLearnNavInfo.OCFCFileList" ng-class="{true: 'active', false: ''}[SimpleOCFC.NavTab==1&&fcFile.FCFileID==SimpleOCFC.SourceID]">
+                    @*<a class="second_item" target="_self" href="FCFileLearn?FCFileID={{fcFile.FCFileID}}&ocID={{SimpleOCFC.OCID}}&FCID={{SimpleOCFC.FCID}}&NavTab={{SimpleOCFC.NavTab}}&NavTabID={{fcFile.FCFileID}}">*@
+                    <a class="second_item" ng-click="ShowFCProviewDitials(1,1,fcFile.FCFileID,fcFile)">
+                        <span class="label_icon"><i class="icon_24 complete_btn" ng-if="fcFile.IsFinish>=1"></i><i class="icon_r require_btn" ng-if="fcFile.IsMust&&fcFile.IsFinish<1"></i></span>
+                        <span class="label_tit" ng-bind-template="{{fcFile.FileTitle}}"></span>
+                        <i class="label_arrow"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-if="OCFCLearnNavInfo.OCFCTestList.length>0" ng-class="{true: 'click', false: ''}[SimpleOCFC.NavTab==2]" ng-click="ChangeNavTab(2)">
+            <a class="first_item" href="javascript:;">作业测试</a>
+            <div class="chart_box" drowp-pie-progsess id="chart_box_2" rale="FCLearnProgress.Test" color="#00846F">
+                <span></span>
+                <p>0%</p>
+            </div>
+            <ul class="second_reverse" ng-show="SimpleOCFC.NavTab==2">
+                <li ng-repeat="fcTest in OCFCLearnNavInfo.OCFCTestList" ng-class="{true: 'active', false: ''}[SimpleOCFC.NavTab==2&&fcTest.SourceID==SimpleOCFC.SourceID]">
+                    @*<a class="second_item" target="_blank" href="FCTest?SourceID={{fcTest.SourceID}}&ocID={{SimpleOCFC.OCID}}&FCID={{SimpleOCFC.FCID}}&NavTab={{SimpleOCFC.NavTab}}&NavTabID={{fcTest.SourceID}}">*@
+                    <a class="second_item" ng-click="ShowFCProviewDitials(2,2,fcTest.SourceID,'')">
+                        <span class="label_icon"><i class="icon_24 complete_btn" ng-if="fcTest.IsFinish>=20"></i></span>
+                        <span class="label_tit" ng-bind-template="{{fcTest.Title}}"></span>
+                        <i class="label_arrow"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-if="OCFCLearnNavInfo.OCFCForumTopicList.length>0" ng-class="{true: 'click', false: ''}[SimpleOCFC.NavTab==3]" ng-click="ChangeNavTab(3)">
+            <a class="first_item" href="javascript:;">论题互动</a>
+            <div class="chart_box" drowp-pie-progsess id="chart_box_3" rale="FCLearnProgress.Forum" color="#00846F">
+                <span></span>
+                <p>0%</p>
+            </div>
+            <ul class="second_reverse" ng-show="SimpleOCFC.NavTab==3">
+                <li ng-repeat="fcForumTopic in OCFCLearnNavInfo.OCFCForumTopicList" ng-class="{true: 'active', false: ''}[SimpleOCFC.NavTab==3&&fcForumTopic.SourceID==SimpleOCFC.SourceID]">
+                    @*<a class="second_item" target="_self" href="FCForumTopic?SourceID={{fcForumTopic.SourceID}}&ocID={{SimpleOCFC.OCID}}&FCID={{SimpleOCFC.FCID}}&NavTab={{SimpleOCFC.NavTab}}&NavTabID={{fcForumTopic.SourceID}}">*@
+                    <a class="second_item" ng-click="ShowFCProviewDitials(3,3,fcForumTopic.SourceID,'')">
+                        <span class="label_icon"><i class="icon_24 complete_btn" ng-if="fcForumTopic.IsFinish>0"></i></span>
+                        <span class="label_tit" ng-bind-template="{{fcForumTopic.Title}}"></span>
+                        <i class="label_arrow"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-if="OCFCLearnNavInfo.FCOfflineList.length>0" ng-class="{true: 'click', false: ''}[SimpleOCFC.NavTab==4]" ng-click="ChangeNavTab(4)">
+            <a class="first_item" href="javascript:;">线下课堂</a>
+            <div class="chart_box" drowp-pie-progsess id="chart_box_4" rale="FCLearnProgress.Offline" color="#00846F">
+                <span></span>
+                <p>0%</p>
+            </div>
+            <ul class="second_reverse" ng-show="SimpleOCFC.NavTab==4">
+                <li ng-repeat="fcOffline in OCFCLearnNavInfo.FCOfflineList" ng-class="{true: 'active', false: ''}[SimpleOCFC.NavTab==4&&fcOffline.FCOfflineID==SimpleOCFC.SourceID]">
+                    @*<a class="second_item" target="_self" href="FCOffline?FCOfflineID={{fcOffline.FCOfflineID}}&ocID={{SimpleOCFC.OCID}}&FCID={{SimpleOCFC.FCID}}&NavTab={{SimpleOCFC.NavTab}}&NavTabID={{fcOffline.FCOfflineID}}">*@
+                    <a class="second_item" ng-click="ShowFCProviewDitials(4,4,fcOffline.FCOfflineID,'')">
+                        <span class="label_icon" ng-if="fcOffline.IsAtend>0"><i class="icon_24 complete_btn"></i></span>
+                        <span class="label_icon" ng-if="fcOffline.IsAtend<=0" ng-bind-template="{{fcOffline.StartTime|dateFormatMMDD}}"></span>
+                        <span class="label_tit" ng-bind-template="{{fcOffline.Title}}"></span>
+                        <i class="label_arrow"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-if="OCFCLearnNavInfo.OCFCOfflineScoreList.length>0" ng-class="{true: 'click', false: ''}[SimpleOCFC.NavTab==5]" ng-click="ChangeNavTab(5)">
+            <a class="first_item" href="javascript:;">线下成绩</a>
+            <div class="chart_box" drowp-pie-progsess id="chart_box_5" rale="100" color="#00846F">
+                <span></span>
+                <p>0%</p>
+            </div>
+            @*<ul class="second_reverse" ng-show="SimpleOCFC.NavTab==5">
+                    <li ng-class="{true: 'active', false: ''}[SimpleOCFC.NavTab==5]">
+                        <a class="second_item" ng-click="ShowFCProviewDitials(5,5,-1,'')">
+                            <span class="label_icon"></span>
+                            <span class="label_tit">线下成绩列表</span>
+                            <i class="label_arrow"></i>
+                        </a>
+                    </li>
+                </ul>*@
+        </li>
+        <li ng-if="OCFCLearnNavInfo.OCFCSurveyList.length>0" ng-class="{true: 'click', false: ''}[SimpleOCFC.NavTab==6]" ng-click="ChangeNavTab(6)">
+            <a class="first_item" href="javascript:;">互相评价</a>
+            <div class="chart_box" drowp-pie-progsess id="chart_box_6" rale="FCLearnProgress.Survey" color="#00846F">
+                <span></span>
+                <p>0%</p>
+            </div>
+            <ul class="second_reverse" ng-show="SimpleOCFC.NavTab==6">
+                <li ng-repeat="fcSurvey in OCFCLearnNavInfo.OCFCSurveyList" ng-class="{true: 'active', false: ''}[SimpleOCFC.NavTab==4&&fcSurvey.SourceID==SimpleOCFC.SourceID]">
+                    @*<a class="second_item" target="_self" href="FCSurvey?SourceID={{fcSurvey.SourceID}}&ocID={{SimpleOCFC.OCID}}&FCID={{SimpleOCFC.FCID}}&NavTab={{SimpleOCFC.NavTab}}&NavTabID={{fcSurvey.SourceID}}">*@
+                    <a class="second_item" ng-click="ShowFCProviewDitials(6,6,fcSurvey.SourceID,'')">
+                        <span class="label_icon"><i class="icon_24 complete_btn" ng-if="fcSurvey.IsFinish>1"></i></span>
+                        <span class="label_tit" ng-bind-template="{{fcSurvey.Title}}"></span>
+                        <i class="label_arrow"></i>
+                    </a>
+                </li>
+                @*<li>
+                        <a class="second_item" href="#">
+                            <span class="label_icon"></span>
+                            <span class="label_tit">校外活动评价</span>
+                            <i class="label_arrow"></i>
+                        </a>
+                    </li>*@
+            </ul>
+        </li>
+        <li ng-class="{true: 'click', false: ''}[SimpleOCFC.NavTab==7]" ng-click="ChangeNavTab(7)">
+            <a class="first_item last_item" href="javascript:;">成绩排名</a>
+            <div ng-if="FCLearnProgress.ScoreProgress==100" class="chart_box" drowp-pie-progsess id="chart_box_7" rale="100" color="#00846F">
+            </div>
+            <div ng-if="FCLearnProgress.ScoreProgress<100" class="chart_box" drowp-pie-progsess id="chart_box_7" rale="FCLearnProgress.ScoreProgress" color="#00846F">
+            </div>
+            @*<ul class="second_reverse" ng-show="SimpleOCFC.NavTab==7">
+                    <li ng-class="{true: 'active', false: ''}[SimpleOCFC.NavTab==7]">
+                        <a class="second_item" ng-click="ShowFCProviewDitials(7,7,-1,'')">
+                            <span class="label_icon"></span>
+                            <span class="label_tit">成绩排名</span>
+                            <i class="label_arrow"></i>
+                        </a>
+                    </li>
+                </ul>*@
+        </li>
+    </ul>
+</div>

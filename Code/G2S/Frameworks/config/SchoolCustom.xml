@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--isStudentSpace 二军大定制 学生空间课程列表展示样式结构与教师空间相同 -->
+<config>
+	<banben>
+		<isStudentSpace>1</isStudentSpace>
+	</banben>
+</config>

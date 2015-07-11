@@ -1,0 +1,393 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout2.cshtml";
+}
+<link href="~/Css/construction.css" rel="stylesheet" />
+<script src="~/Frameworks/jwplay/jwplayer.js"></script>
+<!DOCTYPE html>
+
+
+<div ng-controller="PreviewController">
+    <div class="preview_bg" style="background: url(../../OCTheme/{{ThemeNO}}/back.jpg) no-repeat center 0 fixed; ">
+        <div class="side_leftPreview across_nav  preview_side" id="side_top">
+            <div class="column_box">
+                <ul class="column_list">
+                    <li ng-repeat="Column in ColumnList" ng-show="Column.IsShow" on-column-get>
+                        <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column.ContentType,Column.Title,Column.ColumnID,0)">
+                            <span style=" display:block; width:190px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{Column.Title}}</span><em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column.HasChild}}]"></em>
+                        </a>
+                        <ul class="second_nav" ng-if="Column.HasChild==1">
+                            <li ng-repeat="Column1 in Column.Children" ng-model="Column.ContentType">
+                                <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column1.ContentType,Column1.Title,Column1.ColumnID,1)">
+                                    <span>{{Column1.Title}}</span><em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column1.HasChild}}]"></em>
+                                </a>
+                                <ul ng-if="Column1.HasChild==1">
+                                    <li ng-repeat="Column2 in Column1.Children" ng-model="Column.ContentType">
+                                        <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column2.ContentType,Column2.Title,Column2.ColumnID,2)">
+                                            <span>{{Column2.Title}}</span> <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column2.HasChild}}]"></em>
+                                        </a>
+                                        <ul ng-if="Column2.HasChild==1">
+                                            <li ng-repeat="Column3 in Column2.Children" ng-model="Column.ContentType">
+                                                <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column3.ContentType,Column3.Title,Column3.ColumnID,3)">
+                                                    <span>{{Column3.Title}}</span> <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column3.HasChild}}]"></em>
+                                                </a>
+                                                <ul ng-if="Column3.HasChild==1">
+                                                    <li ng-repeat="Column4 in Column3.Children" ng-model="Column.ContentType">
+                                                        <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column4.ContentType,Column4.Title,Column4.ColumnID,4)">
+                                                            <span>{{Column4.Title}}</span> <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column4.HasChild}}]"></em>
+                                                        </a>
+                                                        <ul ng-if="Column4.HasChild==1">
+                                                            <li ng-repeat="Column5 in Column4.Children" ng-model="Column.ContentType">
+                                                                <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column5.ContentType,Column5.Title,Column5.ColumnID,5)">
+                                                                    <span>{{Column5.Title}}</span> <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column5.HasChild}}]"></em>
+                                                                </a>
+                                                                <ul ng-if="Column5.HasChild==1">
+                                                                    <li ng-repeat="Column6 in Column5.Children" ng-model="Column.ContentType">
+                                                                        <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column6.ContentType,Column6.Title,Column6.ColumnID,6)">
+                                                                            <span>{{Column6.Title}}</span> <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column6.HasChild}}]"></em>
+                                                                        </a>
+                                                                        <ul ng-if="Column6.HasChild==1">
+                                                                            <li ng-repeat="Column7 in Column6.Children" ng-model="Column.ContentType">
+                                                                                <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column7.ContentType,Column7.Title,Column7.ColumnID,7)">
+                                                                                    <span>{{Column7.Title}}</span> <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column7.HasChild}}]"></em>
+                                                                                </a>
+                                                                                <ul ng-if="Column7.HasChild==1">
+                                                                                    <li ng-repeat="Column8 in Column7.Children" ng-model="Column.ContentType">
+                                                                                        <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column8.ContentType,Column8.Title,Column8.ColumnID,8)">
+                                                                                            <span>{{Column8.Title}}</span> <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column8.HasChild}}]"></em>
+                                                                                        </a>
+                                                                                        <ul ng-if="Column8.HasChild==1">
+                                                                                            <li ng-repeat="Column9 in Column8.Children" ng-model="Column.ContentType">
+                                                                                                <a href="#" ng-click="OCSiteColumn_Conten_Upd(Column9.ContentType,Column9.Title,Column9.ColumnID,9)">
+                                                                                                    <span>{{Column9.Title}}</span> <em ng-class="{1: 'icon_con icon_fold', 0: ''}[{{Column9.HasChild}}]"></em>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main_content">
+            <div class="banner_box">
+                <img src="../../OCTheme/{{ThemeNO}}/banner.jpg" width="1000" height="280" alt="">
+                <h1>{{Name}}</h1>
+            </div>
+            <div id="div_indexhome" class="main_all">
+                <div class="main_l">
+                    <div class="add_course">
+                        <div class="upload_course">
+                            <img src="{{AttachmentOC.DownURL}}" width="280" height="150" alt="" />
+                        </div>
+                        <div class="course_detail">
+                            <div class="course_document">
+                                <h4>课程档案</h4>
+                            </div>
+                            <div class="text_box">
+                                <p>负 责 人：<span>{{principalname}}</span></p>
+                                <p>创建日期：<span>{{CreateTime |dateFormat}}</span></p>
+                                <p>所属分类：<span>{{SubjectName}}</span></p>
+                                <p>课程标签：<span>{{Tags}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add_course">
+                        <div class="course_document">
+                            <h4>课程负责人</h4>
+                        </div>
+                        <div class="teacher_box" ng-repeat="octeam in OCTeam_List">
+                            <div class="teacher_name">
+                                <img src="" width="60" height="60" alt="" user-img userid="{{octeam.UserID}}" />
+                                <span>{{octeam.UserName}}<br>{{octeam.Ranks}}</span>
+                            </div>
+                            <p>{{octeam.Brief}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_r">
+                    <div class="upload_video">
+                        <div class="upload_course tap_box">
+                            <img src="{{AttachmentOCSite.Thumbnail}}" width="265" height="150" alt="" ng-click="videopre(AttachmentOCSite.ViewURL)" style=" cursor:pointer;" />
+                            <i class="broadcast" ng-click="videopre(AttachmentOCSite.ViewURL)"></i>
+                        </div>
+                        <div class="course_recom">
+                            <p><img src="../../images/quote_l.gif" width="21" height="14" alt="">{{Brief}}<img src="../../images/quote_r.gif" width="21" height="14" alt=""></p>
+                        </div>
+                    </div>
+                    <div class="upload_video">
+                        <div class="course_document">
+                            <h4>课程视频</h4>
+                        </div>
+                        <div class="video_box">
+                            <div class="video_item">
+                                <ul class="video_list">
+                                    <li ng-repeat="Preview in PreviewMP4List" on-finish-render-filters>
+                                        <img src="{{Preview.Thumbnail}}" ng-model="Preview.ViewURL" width="180" height="100" alt="" ng-click="videopre(Preview.ViewURL)" style=" cursor:pointer;" />
+                                        <span class="broadcast" ng-click="videopre(Preview.ViewURL)"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a class="icon_con icon_l" href="javascript:;"></a>
+                            <a class="icon_con icon_r" href="javascript:;"></a>
+                        </div>
+                    </div>
+                    <div class="upload_video">
+                        <div class="course_document">
+                            <h4>课程通知</h4>
+                        </div>
+                        <div ng-show="OCNoticeCount==0" class="course_content">
+                            <img src="~/Images/expression.png" width="96" height="96" alt="">
+                            <p>没有找到任何内容</p>
+                        </div>
+                        <div class="course_notice">
+                            <ul class="notice_list">
+                                <li ng-repeat="Notice in OCNotice_List" ng-if="Notice.IsShow==1">
+                                    <h4>{{Notice.Title}}</h4>
+                                    <p>{{Notice.Conten}}</p>
+                                    <div class="issue_detail">{{Notice.UpdateTime |dateFormat}}　来自: {{Notice.UserName}}　<a ng-click="Notice_Del(Notice.NoticeID)" style="text-decoration: underline; cursor: pointer; " ng-if="Notice.CanDelete==1">[删除]</a></div>
+                                </li>
+                            </ul>
+                            <div class="page_box" ng-show="OCNotice_List[0].Count>10">
+                                <a class="prev" href="javascript:;">前一页</a>
+                                <a href="#">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <span class="more">...</span>
+                                <a href="#">8</a>
+                                <a class="prev" href="javascript:;">后一页</a>
+                                <span>共229条，到第<input type="text">页</span>
+                                <a class="confirm" href="#">确认</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main_all" id="div_ewebeditor" style=" display: none; height:auto; min-height:450px; background-color:white; ">
+                <div class="content_box">
+                    <p ng-show="Column_NavCount>0" class="course_guide " style=" background-color: #fff; padding-left: 1px;"><a style="cursor: pointer; margin-left: 10px; text-decoration:none; " ng-repeat="Notice in NavnameList"><span ng-click="OCSiteColumn_Conten_Upd(Notice.ContentType,Notice.Title,Notice.ColumnID,1)">{{Notice.Title}}</span><span ng-if="($index+1)!=Column_NavCount">></span></a></p>
+                    <div class="course_nav_box" ng-show="OCColumnCount>0">
+                        <ul class="content_list">
+                            <li ng-repeat="columnson in ColumnSonList" ng-click="NvaColumnSonClick(this)" ng-class="{true: 'active', false: ''}[columnson.IsShow]"><a href="#">{{columnson.Title}}</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="course_box" id="div_Conten">
+                    </div>
+                </div>
+            </div>
+            <div class="main_all" id="div_mainList" style=" display:none;">
+                <p ng-show="Column_NavCount>0" class="course_guide " style=" background-color: #fff; padding-left: 1px;"><a style="cursor: pointer; margin-left: 10px; text-decoration:none; " ng-repeat="Notice in NavnameList"><span ng-click="OCSiteColumn_Conten_Upd(Notice.ContentType,Notice.Title,Notice.ColumnID,1)">{{Notice.Title}}</span><span ng-if="($index+1)!=Column_NavCount">></span></a></p>
+                <table class="knowledge_list">
+                    <tr ng-repeat="Column in ColumnSonList">
+                        <td width="790"><p style=" cursor:pointer;" ng-click="OCSiteColumnByConten(Column.ContentType,Column.Title,Column.ColumnID,1)"> {{Column.Title}}</p></td>
+                        <td>
+                            {{Column.Updatetime|dateFormat}}
+                        </td>
+
+                    </tr>
+                </table>
+                <div ng-show="OCColumnCount==0" class="course_content" style=" background-color:#fff;">
+                    <img src="~/Images/expression.png" width="96" height="96" alt="">
+                    <p>没有找到任何内容</p>
+                </div>
+            </div>
+            <div id="div_mooc" style=" display:none;">
+                <div ng-controller="SitePreviewPlanController">
+                    <div class="main_all">
+                        <div class="teaching_plan">
+                            <div class="plan_box">
+                                <div class="plan_detail" ng-repeat="Chapter in ChapterList|MoocFilter:'ParentID':'=':0|orderBy:'Orde'" on-offline-get>
+                                    <div class="step_box">
+                                        <p>第{{$index+1}}阶段 {{Chapter.PlanDay}}天</p>
+                                        <span class="line"></span>
+                                        <i class="icon_24 icon_node"></i>
+                                    </div>
+                                    <div class="online_box">
+                                        <div class="step_detail">
+                                            <div class="chapt_box">
+                                                <span class="learning_style online_learning">在线学习</span>
+                                                <h4>第{{$index+1}}章：{{Chapter.Title}}<b>（{{Chapter.MinHour}}学时）</b></h4>
+                                                <div class="chapt_detail">
+                                                    <a href="javascript:void(0);"><i class="icon_con icon_test" title="测试"></i>{{Chapter.TestNumTotal}}</a>
+                                                    <a href="javascript:void(0);"><i class="icon_con icon_know" title="知识点"></i>{{Chapter.KenNumTotal}}</a>
+                                                    <a href="javascript:void(0);"><i class="icon_con icon_discuss" title="讨论"></i>{{Chapter.TopicNum}}</a>
+                                                    <a href="javascript:void(0);"><i class="icon_con icon_txt" title="资料"></i>{{Chapter.FileNumTotal}}</a>
+                                                    <a href="javascript:void(0);"><i class="icon_con icon_video" title="视频"></i>{{Chapter.VideoNumTotal}}</a>
+                                                </div>
+                                            </div>
+                                            <ul class="chapt_list">
+                                                <li ng-repeat="Chapter2 in ChapterList|MoocFilter:'ParentID':'=':Chapter.ChapterID|orderBy:'Orde'">
+                                                    {{$index+1}}:{{Chapter2.Title}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="step_detail" ng-repeat=" OCMoocOffline in OCMoocOfflineList|MoocFilter:'ChapterID':'=':Chapter.ChapterID">
+                                            <div class=" chapt_box">
+                                                <span class="learning_style off_learning">见面课</span>
+                                                <h4>{{OCMoocOffline.Title}}<b>（{{OCMoocOffline.Hours}}学时）</b></h4>
+                                                <div class="group_discuss">
+                                                    <span>{{OCMoocOffline.TaskType}} | {{OCMoocOffline.UserName}}</span>
+                                                    <a href="javascript:void(0);">[展开]</a>
+                                                </div>
+                                            </div>
+                                            <ul class="discuss_question" style="display:none;">
+                                                <li>
+                                                    <b>本次见面课的目的</b>
+                                                    <p ng-bind-html="OCMoocOffline.Purpose|toHtml"></p>
+
+                                                </li>
+                                                <li>
+                                                    <b>教师要点说明</b>
+                                                    <p ng-bind-html="OCMoocOffline.Points|toHtml"></p>
+                                                </li>
+                                                <li>
+                                                    <b>学生组织说明</b>
+                                                    <p ng-bind-html="OCMoocOffline.Grouping|toHtml"></p>
+                                                </li>
+                                                <li>
+                                                    <b>评价与成绩说明</b>
+                                                    <p ng-bind-html="OCMoocOffline.Score|toHtml"></p>
+                                                </li>
+                                                <li>
+                                                    <b>配套资源说明</b>
+                                                    <p ng-bind-html="OCMoocOffline.Resource|toHtml"></p>
+                                                </li>
+                                                <li>
+                                                    <b>考核方式</b>
+                                                    <p ng-bind-html="OCMoocOffline.Assess|toHtml"></p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="plan_detail">
+                                    <div class="step_box">
+                                        <p>结业考试</p>
+                                        <span class="line"></span>
+                                        <i class="icon_24 icon_end"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="div_data" style=" display:none;">
+                <div ng-controller="SitePreviewController">
+                    <div class="main_all">
+                        <div class="data_preview">
+                            <div class="exercise_search">
+                                <div class="select_condition">
+                                    <p class="current_course">
+
+                                        <span ng-style="{'cursor':'pointer'}" ng-click="Floder_Change(0)"> 教学资料</span>
+                                        <span ng-style="{'cursor':'pointer'}" ng-click="Floder_Change(Folder.FolderID)" ng-repeat="Folder in FolderOrderList"> > {{Folder.FolderName}}</span>
+
+                                    </p>
+                                </div>
+                                <div class="exercise_btn">
+                                    <span class="sort_box" ng-click="conditionShow=true">[筛选]</span>
+                                    <p class="search_topic"><input type="text" ng-model="keyWords" placeholder="请输入您要搜索的关键字"><span ng-click="ResourceInfo()" class="icon" href="#"></span></p>
+                                </div>
+                            </div>
+                            <div ng-show="conditionShow" class="filter_box">
+                                <dl class="filter_list">
+                                    <dt>文件类型</dt>
+                                    <dd>
+                                        <a ng-class="FileType==0?'active':''" ng-click="FileType_Change(0)" href="#"><span>不限</span></a>
+                                        <a ng-class="FileType==1?'active':''" ng-click="FileType_Change(1)" href="#"><span>视频</span></a>
+                                        <a ng-class="FileType==7?'active':''" ng-click="FileType_Change(7)" href="#"><span>音频</span></a>
+                                        <a ng-class="FileType==2?'active':''" ng-click="FileType_Change(2)" href="#"><span>Word</span></a>
+                                        <a ng-class="FileType==4?'active':''" ng-click="FileType_Change(4)" href="#"><span>PPT</span></a>
+                                        <a ng-class="FileType==3?'active':''" ng-click="FileType_Change(3)" href="#"><span>Excel</span></a>
+                                        <a ng-class="FileType==5?'active':''" ng-click="FileType_Change(5)" href="#"><span>PDF</span></a>
+                                        <a ng-class="FileType==6?'active':''" ng-click="FileType_Change(6)" href="#"><span>图片</span></a>
+                                        <a ng-class="FileType==8?'active':''" ng-click="FileType_Change(8)" href="#"><span>压缩包</span></a>
+                                        <a ng-class="FileType==9?'active':''" ng-click="FileType_Change(9)" href="#"><span>其他</span></a>
+                                    </dd>
+                                </dl>
+                                <dl class="filter_list">
+                                    <dt>上传时间</dt>
+                                    <dd>
+                                        <a ng-class="DateSpan==0?'active':''" ng-click="DateSpan_Change(0)" href="#"><span>不限</span></a>
+                                        <a ng-class="DateSpan==7?'active':''" ng-click="DateSpan_Change(7)" href="#"><span>一周内</span></a>
+                                        <a ng-class="DateSpan==30?'active':''" ng-click="DateSpan_Change(40)" href="#"><span>一个月内</span></a>
+                                        <a ng-class="DateSpan==180?'active':''" ng-click="DateSpan_Change(180)" href="#"><span>半年内</span></a>
+                                    </dd>
+                                </dl>
+                                <span class="guanbi" ng-click="conditionShow=false"><i class="icon"></i></span>
+                            </div>
+                            <div class="">
+                                @*file_box*@
+                                <table class="course_data">
+                                    <tr>
+                                        <th width="630">
+                                            <div class="data_name">
+                                                <p>文件名称</p>
+                                                <i class="icon arrow"></i>
+                                            </div>
+                                        </th>
+                                        <th width="120">
+                                            <div class="data_name">
+                                                <p>文件格式</p>
+                                                <i class="icon arrow"></i>
+                                            </div>
+                                        </th>
+                                        <th width="120">
+                                            <div class="data_name">
+                                                <p>文件大小</p>
+                                            </div>
+                                        </th>
+                                        <th>修改日期</th>
+                                    </tr>
+                                    <tr ng-repeat="Resource in FileList">
+                                        <td ng-switch on="Resource.Ext">
+                                            <div class="data_name">
+                                                <i file-ext ext="{{Resource.Ext}}" class="icon_24"></i>
+                                                <p ng-if="Resource.Ext=='文件夹'"><a href="javascript:void(0)" ng-click="Resource_Search(Resource)">{{Resource.ResourceName}}</a></p>
+                                                <p ng-if="Resource.Ext!='文件夹'"><a href="javascript:void(0)" ng-click="Resource_View(Resource)">{{Resource.ResourceTitle}}</a></p>
+                                            </div>
+                                        </td>
+                                        <td>{{Resource.Ext}}</td>
+                                        <td ng-if="Resource.Ext=='文件夹'">--</td>
+                                        <td ng-if="Resource.Ext!='文件夹'">{{Resource.FileSize}}</td>
+                                        <td>{{Resource.CreateTime|dateFormat}}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="videopre" style=" display:none;">
+        <div ies-file-preview fileid="div_play"
+                          flash="/Frameworks/jwplay/pl.swf"
+                          viewurl="viewurl"
+                          width="750"
+                          height="400"
+                          autoplay="true"
+                          setmute="false"
+                          pageurl="palyurl"
+                          filetype="1">
+        </div>
+    </div>
+</div>

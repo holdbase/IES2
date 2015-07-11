@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+@{
+    string UserIDS = "";
+    if (Session["SendUserIDs"] != null)
+    {
+        UserIDS = Session["SendUserIDs"].ToString();
+    }
+}
+@{
+    var mUrl = @Request.ApplicationPath == "/" ? "" : @Request.ApplicationPath;
+}
+<script src="~/js/jquery-1.8.3.min.js"></script>
+<script src="~/js/MsgAdd.js"></script>
+<style>
+    .Frame {
+        padding: 4px 20px 4px 20px;
+        background: #475C7C;
+        color: #FFF;
+    }
+    .Send_div {
+        width: 800px;
+        height: 30px;
+        border: 1px solid #E4E4E4;
+        float: left;
+        overflow: hidden;
+    }
+    .Send2_div {
+        width: 800px;
+        border: 1px solid #E4E4E4;
+        float: left;
+        overflow: hidden;
+    }
+</style>
+<input type="hidden" id="AddresseeID" value="@UserIDS" />
+
+<div style="float:left;width:1000px">
+    <div style="float: left; width: 1000px; height: 41px; background: #374760">
+        <a href="Msg" target="_self" style="float:left;line-height:41px;font-size:16px;font-weight:bold;margin-left:25px;color:#fff">消息中心</a>
+        <span style="float:left;line-height:41px;font-size:16px;font-weight:bold;color:#fff">> 发送新消息</span>
+    </div>
+    <div style="margin-left: 20px; margin-top: 15px; float: left;">
+        <span style="color:#333;width: 60px; display: block; float: left; font-size: 14px; line-height: 30px">收件人:</span>
+        <div id="Addressee" class="Send_div">
+            
+        </div>
+        <a style="margin-left:10px" href="javascript:AddRole();"><img src="@mUrl/Images/u1355.png" style="width: 30px;height: 30px;" /></a>
+    </div>
+    <div style="clear:both"></div>
+    <div style="margin-left:20px; margin-top:10px;width:100%">
+        <span style="width: 43px; display: block; float: left; font-size: 14px; line-height: 30px; text-align: right; color: #333">主题:</span>
+        <input id="Theme" style="margin-left: 17px;width: 800px; height: 30px; border: 1px solid #E4E4E4; " />
+    </div>
+    <div style="margin-left:20px; margin-top:10px;">
+        <div id="Close" style="display:none;">
+            <textarea id="Text" maxlength="5" style=" width: 950px; height: 360px; border: 1px solid #E4E4E4; resize: none; font-size: 14px; font-family: '幼圆'"></textarea>
+        </div>
+        <div id="Open">
+            <input style=" border:1px solid #808080;" type="hidden" name="oEditor1" id="oEditor1" />
+            <iframe id="frmoEditor1" src="../Frameworks/ewebeditor/ewebeditor.htm?id=oEditor1&style=coolblue" frameborder="0" scrolling="no" width="950" height="360" style="display: block;"></iframe>
+        </div>
+    </div>
+    <div style="margin-left:20px; margin-top:10px; height:25px; display:none; ">
+        <div style="float:left;">
+            <input type="checkbox" id="Closes" name="checkbox">同时发送邮件
+        </div>
+        <div style="margin-left:20px; float:left; display:none;">
+            <input type="checkbox" id="SMS" name="=checkbox" onclick="Message()" />同时发送短信（字数不得超过67字,包含标点字符,空格和短信签名）
+        </div>
+        <div id="result" style="float:right; margin-right:100px; display:none;">
+            已输入0字符
+        </div>
+    </div>
+    <div style="margin-left:20px; margin-top:10px; float:left;">
+        <div>
+            <a id="button" href="javascript:;" onclick="SendInformation()" class="Frame">发送</a>
+            <a href="javascript:;" onclick="Return();" class="Frame" style="margin-left: 20px; background-color: #8C8C8C;">取消</a>
+        </div>
+
+    </div>
+</div>
+

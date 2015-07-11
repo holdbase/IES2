@@ -1,0 +1,61 @@
+﻿
+<div ng-if="IsProview==-1">
+    <div class="flip_box">
+        <ul class="flip_list">
+            <li ng-click="SelectedChangedOCFC(mYFC)" style="cursor:pointer" ng-class="{true: 'active', false: ''}[SimpleOCFC.FCID==mYFC.FCID]" ng-repeat="mYFC in OCFCList|fcLearnFilter:'RowNum':'<=':4">
+                <p title="{{mYFC.Title}}" ng-bind-template="{{mYFC.Title}}"></p>
+                <span><em ng-style="set_Style(mYFC.Progress)"></em></span>
+            </li>
+        </ul>
+        <div class="finish_box" ng-mouseover="Show_finish=true" ng-mouseleave="Show_finish=false">
+            <p class="finish_tit">{{SelectedOCFCNmae}}<i class="icon_r down_btn"></i></p>
+            <ul class="finish_list" ng-class="{true: 'finish_list block', false: 'finish_list'}[Show_finish]">
+                <li ng-click="SelectedChangedOCFC(mYFC)" ng-class="{true: 'active', false: ''}[SimpleOCFC.FCID==mYFC.FCID]" ng-repeat="mYFC in OCFCList|fcLearnFilter:'RowNum':'>':4">
+                    <a title="{{mYFC.Title}}" href="javascript:;" ng-bind-template="{{mYFC.Title}}"></a>
+                </li>
+            </ul>
+           
+        </div>
+    </div>
+    <div class="groups_box">
+        <div class="progress_box" ng-repeat=" mmm in MyOCFCGroupInfo.MyOCFCGroup">
+            <div drowp-pie-progsess class="bar_box" id="bar_box_group" rale="mmm.Progress*100" color="#00846F">
+                <span></span>
+                <p>小组总进度<b>0%</b></p>
+            </div>
+            <div class="group_info">
+                <h4 ng-bind-template="{{mmm.Name}}">番茄组</h4>
+                <p class="group_rank">小组排名<b class="red" ng-bind-template="{{mmm.RanKInfo}}">15</b>（共<span ng-bind-template="{{mmm.GroupCount}}"></span>组）</p>
+                <p ng-hide="true" class="gap_box">还有<span class="red" ng-bind-template="{{mmm.FProgress}}">%</span>的进度可以击败上1名</p>
+            </div>
+        </div>
+        <ul class="member_list">
+            <li ng-repeat="GroupMember in MyOCFCGroupInfo.GroupMemberList|fcLearnFilter:'MemberFilte':'=':'0'">
+                <img src="" width="50" height="50" user-img userid="{{GroupMember.UserID}}" />
+                <i class="icon_r teacher_label"></i>
+                <p class="member" ng-bind-template="{{GroupMember.UserName}}"></p>
+            </li>
+            <li ng-repeat="GroupMember in MyOCFCGroupInfo.GroupMemberList|fcLearnFilter:'MemberFilte':'=':'1'|orderBy:'Progress'">
+                <img src="" width="50" height="50" user-img userid="{{GroupMember.UserID}}" />
+                <i ng-if="GroupMember.Role==1" class="icon_r member_label"></i>
+                <p class="member" ng-bind-template="{{GroupMember.UserName}}"></p>
+                <p class="jindu">进度<span ng-bind-template="{{GroupMember.Progress}}"></span>%</p>
+            </li>
+            @*{{MyOCFCGroupInfo|json}}*@
+        </ul>
+    </div>
+</div>
+<div ng-if="IsProview==1">
+    <a target="_self" class="return_box" href="index">返回</a>
+    <div class="groups_box">
+        <ul class="groups_list">
+            <li ng-repeat="group in OCFCLGroupist">
+                <img src="" width="80" height="80" user-img userid="{{group.LeaderUserID}}" />
+                <div class="group_member">
+                    <h4 ng-bind-template="{{group.Name}}">番茄组</h4>
+                    <p>小组成员：<span ng-bind-template="{{group.UserCount}}"></span>人<br>小组组长：<span ng-bind-template="{{group.LeaderName}}"></span><br>指导教师：<span ng-bind-template="{{group.TeacherName}}"></span></p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+﻿@{
+    Layout = null;
+}
+@using IES.Service.Common;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Frameworks/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="~/js/jquery-1.8.3.min.js"></script>
+    <script src="~/js/G2S.js"></script>
+    <script src="~/Frameworks/zTree_v3/js/jquery.ztree.all-3.5.js"></script>
+    <script>
+        window.appPatch = "@Request.ApplicationPath" == "/" ? "" : "@Request.ApplicationPath";
+    </script>
+    <script src="~/js/MsgTree.js"></script>  
+   
+    <style>
+        .ztree li span { line-height: 16px; margin-right: 2px; }
+        .ztree li a.curSelectedNode {color: red;border: 0;height: 40px;background:#fff}
+        .ztree li {line-height: 40px;border-bottom: 1px solid #ccc;}
+        .ztree li a {height: 41px;padding-top: 0px;}
+        .icon_admin { display: inline-block; width: 16px; height: 16px; background: url(../Images/icon_admin.png) no-repeat; }
+        .delete_btn { background-position: -16px -48px; }
+        .input { border: 1px solid #ccc; height: 30px; padding: 0 20px 0 5px; width: 174px; }
+        .Frame { padding: 8px 40px; background: #475C7C; color: #FFF; }
+        .border { padding: 8px 40px; border:1px solid #ccc; color:#161414 }
+        .Determine { padding: 6px 20px; background: #475C7C; color: #FFF;}
+        .Cancel { margin-left: 20px; padding: 6px 20px 6px; background: #999999; color: #FFF; }
+        a { font-size:14px; font-weight:bold; text-decoration:none;}
+        .ztree li a :hover {
+            text-decoration: none;
+        }
+        .center { text-align: center;}
+    </style>
+    <script>
+        //应用程序根目录-->  结果('/')||('/g2s')
+        window.appPatch = "@Request.ApplicationPath" == "/" ? "" : "@Request.ApplicationPath";
+    </script>
+</head>
+<body>
+    <input type="hidden" id="IdentityName" value=""/>
+    <div style="margin:0 auto;width:750px">
+        <div class="filter_item" style="width:750px;height:42px;padding:0;background:#fff; border-bottom:1px solid #ccc;">
+            <p style="float:left"><a href="javascript:Getlook(1);" id="People" class="Frame">我的联系人</a></p>
+            <p style="margin-left:20px; float:left;"><a href="javascript:Getlook(2);" id="group" class="border">我的联系组</a></p>
+            <p class="search_btn" style="width:200px; float:right; margin:11px 0 0;">
+                <input id="txtKey" type="text" class="input" placeholder="请输入教工号/学号或姓名" /><a href="javascript:GetUserList();" style="float: right; position: relative; margin-right: 3px; margin-top: -25px; z-index: 999;cursor:pointer"  class="icon_admin search_icon"></a>
+            </p>
+        </div>
+        <div id="div_tea" style="margin-top: 5px; float:left;">
+            <div style="float: left; border-right: 1px solid #ccc; height: 375px; width: 235px;margin-top: 5px;">
+                <div id="courseWebSite" style=" height: 375px;  overflow-y: auto;margin-right:5px;">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+            </div>
+            <div style="float: left; height: 375px; width: 498px; margin-left: 15px;margin-top:5px">
+                <div id="wName" style="height: 30px; line-height: 30px;text-align:left; vertical-align: middle; width: 100%; font-weight: bold; font-size: 14px; background: #fff;">
+                </div>
+                <div id="GroupList" style="height: 330px; overflow-y: auto; overflow-x: hidden;color:#000;font-size:12px">
+                </div>
+                @*<div>
+                    <table border='0' cellpadding='0' cellspacing='0' style="width:490px;">
+                        <tr class='item_title' style='background:#ccc;color:#000;line-height:30px; font-size:14px;'>
+                            <th style="width: 30px; height: 30px; border-right: 1px solid #fff;"><div style="text-indent: 1em; height: 13px; width: 13px; margin-left: -5px; margin-bottom: 9px; "><input type="checkbox" id="chkAll" name="chkAll" onclick="selectAll()" /></div></th>
+                            <th style='border-right:1px solid #fff;text-indent:1em' width='75'>姓名</th>
+                            <th style='border-right:1px solid #fff;text-indent:1em' width='75'>教工号/学号</th>
+                            <th style='border-right:1px solid #fff;text-indent:1em' width='75'>
+                                <select name='role2' onchange='GetTextUserLidt()' style="width:75px;height:24px">
+                                    <option value="0">身份</option>
+                                    <option value="8">教师</option>
+                                    <option value="4">学生</option>
+                                </select>
+                            </th>
+                            <th style="height:30px; width:100px;">
+                                <div id="dropClassName" onclick="dropShow()" style="margin-left: 2px; text-align: left; width: 125px; height: 22px; position: absolute; margin-top: -12px; border: 1px solid; font-weight: 500; background: url(../../Images/u77.png) no-repeat; background-position: 110px 3px; "></div>
+                                <select name="classdrop" onchange="GetTextUserLidt()" size="10" style=" width: 126px; position: absolute; z-index: 999; margin-top: 11px; float: left; margin-left:2px;"></select>
+                            </th>                            
+                        </tr>
+                    </table>
+                    <table id="grou">
+                    </table>
+                </div>*@
+                <div id="page" style="margin: 20px; margin-left: 150px;"></div>
+            </div>
+            <div style="clear: both;">
+            </div>
+        </div>
+        <div id="set" style="display: none; margin-top: 5px; float: left;">
+            <div style="float: left; border-right: 1px solid #ccc; height: 375px; width: 235px;margin-top: 5px;">
+                <div id="courseWebSite" style=" height: 375px;  overflow-y: auto;margin-right:5px;">
+                    <ul id="grouptreeDemo" class="ztree ContactzTree_list"></ul>
+                </div>
+            </div>
+            <div style="float: left; height: 375px; width: 498px; margin-left: 15px;margin-top:5px">
+                <div id="nName" style="height: 30px; line-height: 30px;text-align:left; vertical-align: middle; width: 100%; font-weight: bold; font-size: 14px; background: #fff;">
+                </div>
+                <div id="ContactList" style="height: 330px; overflow-y: auto; overflow-x: hidden;color:#000;font-size:12px">
+                </div>
+                <div id="page" style="margin: 20px; margin-left: 150px;"></div>
+            </div>
+            <div style="clear: both;">
+            </div>
+        </div>
+        <div style="float:left; display:none;">
+            已选择：<span id="Number" style="color:red;"></span> / <span id="TNumber"></span>人
+        </div>
+        <div style=" margin-top: 40px;float:right;width:480px">
+            <a id="btnConfirm" href="javascript:SurdAdd();" class="Determine">确定添加</a>
+            <a id="btnClosk" href="javascript:Close();" class="Cancel">取消</a>
+        </div>
+    </div>
+</body>
+</html>

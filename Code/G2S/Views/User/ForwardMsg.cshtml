@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+<script src="~/js/jquery-1.8.3.min.js"></script>
+<script src="~/js/ForwardMsg.js"></script>
+<style>
+    .Frame { padding: 4px 20px 4px 20px; background: #475C7C; color: #FFF;}
+</style>
+<input type="hidden" id="AddresseeID" value="" />
+
+<div>
+    <input type="hidden" id="MsgID" value="" />
+    <input type="hidden" id="Temporary" value="" />
+    <input type="hidden" id="AddresseeID" value="" />
+    <input type="hidden" id="Cont" value="" />
+    <div style=" width: 1000px; height: 41px; background: #374760">
+        <a href="Msg" target="_self" style="float:left;line-height:41px;font-size:16px;font-weight:bold;margin-left:25px;color:#fff">消息中心</a>
+        <span style="float:left;line-height:41px;font-size:16px;font-weight:bold;color:#fff">> 发送新消息</span>
+    </div>
+    <div style="margin-left: 20px; margin-top: 15px;">
+        <span style="color:#333;width: 60px; display: block; float: left; font-size: 14px; line-height: 30px">收件人:</span>
+        <div id="Addressee" style="width: 800px; height: 30px; border: 1px solid #E4E4E4;float:left;">
+            <div style="border:0;height:30px;width:75px;line-height:30px;color:#666">
+            </div>
+        </div>
+        <a style="margin-left:10px" href="javascript:AddRole();"><img src="../../Images/u1355.png" style="width: 30px;height: 30px;" /></a>
+    </div>
+    <div style="margin-left:20px; margin-top:10px;">
+        <span style="width: 43px; display: block; float: left; font-size: 14px; line-height: 30px; text-align: right; color: #333">主题:</span>
+        <input id="Theme" style="margin-left: 17px;width: 800px; height: 30px; border: 1px solid #E4E4E4; " value="" />
+    </div>
+    <div style="margin-left:20px; margin-top:10px;">
+        <div id="Open">
+            <input style=" border:1px solid #808080;" type="hidden" name="oEditor1" id="Text" />
+            <iframe id="frmoEditor1" src="../../../Frameworks/ewebeditor/ewebeditor.htm?id=Text&style=coolblue" frameborder="0" scrolling="no" width="900" height="290" style="display: block;"></iframe>
+        </div>
+    </div>
+    <div style="margin-left:20px; margin-top:10px; height:25px; ">
+        <div style="float:left;">
+            <input type="checkbox" id="Closes" name="checkbox">同时发送邮件
+        </div>
+        <div style="margin-left:20px; float:left; display:none;">
+            <input type="checkbox" id="SMS" name="=checkbox" onclick="Message()" />同时发送短信（字数不得超过67字,包含标点字符,空格和短信签名）
+        </div>
+        <div style="float:right; margin-right:100px; display:none;">
+            已输入0字符
+        </div>
+    </div>
+    <div style="margin-left:20px; margin-top:10px; float:left;">
+        <div>
+            <a href="javascript:;" onclick="SendInformation()" class="Frame">发送</a>
+            <a href="javascript:;" onclick="Return();" class="Frame" style="margin-left: 20px; background-color: #8C8C8C;">取消</a>
+        </div>
+
+    </div>
+
+    <div id="Reply" style="display:none;">
+        <div style="margin-left: 25px; margin-top: 25px; margin-right: 10px; width: 850px; border-bottom: 1px dashed #000000; ">
+        </div>
+        <div style="margin-left: 20px; width: 850px; height: 30px; border: 1px solid #F2F2F2; margin-top: 10px; padding-top: 5px; background-color: #F2F2F2; ">
+            <label style=" margin-left:25px; float: left; color: #808080">发送人：</label>
+            <label id="Sender" style=" margin-left:10px; float: left; color: #808080"></label>
+            <label style=" margin-left:25px; float: left; color: #808080">&nbsp;&nbsp;&nbsp;时间：</label>
+            <label id="Time" style=" margin-left:10px; float: left; color: #808080"></label>
+        </div>
+        <div id="Content" style="margin-left:25px; margin-top:15px; margin-right: 10px; width: 920px; height:200px;">
+        </div>
+    </div>
+</div>
+

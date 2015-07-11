@@ -1,0 +1,201 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout9.cshtml";
+}
+@using IES.Cache;
+@using IES.JW.Model;
+@using IES.G2S.JW.BLL;
+@using IES.Service;
+@{
+    IES.JW.Model.User user = new IES.JW.Model.User { UserID = UserService.CurrentUser.UserID };
+    IES.G2S.JW.BLL.UserBLL userbll = new IES.G2S.JW.BLL.UserBLL();
+    IES.JW.Model.User _user = userbll.UserTS_Get(user);
+}
+@{
+    var mUrl = @Request.ApplicationPath == "/" ? "" : @Request.ApplicationPath;
+}
+@{
+    string OnlineUrl = "http://v1.live800.com/live800/chatClient/chatbox.jsp?companyID=496937&configID=41705&jid=5578562966&enterurl=&info=userId%3D";
+    try
+    {
+        int UserID = UserService.CurrentUser.UserID;
+        string UserName = UserService.CurrentUser.UserName;
+        if (UserID != null && UserName != "")
+        {
+            OnlineUrl = "http://v1.live800.com/live800/chatClient/chatbox.jsp?companyID=496937&configID=41705&jid=5578562966&enterurl=&info=userId%3D" + UserID + "%26name%3D" + UserName + "%26+memo+%3D%E6%9C%AA%E5%BC%80%E5%8F%91%E5%85%B6%E5%AE%83%E4%BF%A1%E6%81%AF";
+        }
+    }
+    catch { };
+}
+<link href="~/Views/User/AddressBook.css" rel="stylesheet" />
+<div style="width:1000px;">
+    <div class="daohang_div">
+        <div class="daohang_box">
+            <a target="_self" href="Account?leftmenu=D">个人资料</a>
+            <a class="active" target="_self" href="Accountsecurity?leftmenu=D">账号安全</a>
+        </div>
+    </div>
+    <div class="notes">
+        <span style="color:#333">提示：无法通过下列方式修改密码？点击此联系<a href="@OnlineUrl" target="_blank" style="font-weight: bold; color: #374760; text-decoration: underline; ">在线客服</a>。</span>
+        <a class="u117_btn" href="javascript:Hidets();" style="float:right;margin:17px 25px 0 0"></a>
+    </div>
+    <div style="width: 1000px; font-size: 13px;">
+        <div class="security_div">
+            <div class="securtop_div">
+                <span>密码</span>
+            </div>
+            <div class="securcon_div">
+                <div class="securrig_div">
+                    <span>您当前的密码强度为:</span>
+                </div>
+                <div class="securlet_div">
+                    <div style="height: 17px; width: 189px; border: 0;float:left;margin:17px 0 0 16px">
+                        <div id="qiangdu4" style="width: 61px; height: 17px; background: #FF0000; float: left"></div>
+                        <div id="qiangdu5" style="width: 61px; height: 17px; background: #F2F2F2; margin-left: 3px; float: left; "></div>
+                        <div id="qiangdu6" style="width: 61px; height: 17px; background: #F2F2F2; margin-left: 3px; float: left; "></div>
+                    </div>
+                </div>
+                <div class="secura_div">
+                    <span id="mmqd" style="display:none">@_user.Pwd</span>
+                    <a href="javascript:PagePwd()">修改密码</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="security_div">
+            <div class="securtop_div">
+                <span>手机</span>
+                <span id="mobileyc" style="display:none">@_user.Mobile</span>
+            </div>
+            <div class="securcon_div">
+                <div class="securcet_div">
+                    @if (_user.Mobile == "")
+                    {
+                        <span>您还未绑定手机，请尽快输入手机号码</span>
+                    }
+                    else
+                    {
+                        <span>已绑定手机号:</span>
+                        <span id="mobilejm"></span>
+                    }
+                </div>
+                <div class="secura_div">
+                    <a href="javascript:PageMobile()" style="padding: 9px 62px; background: #B7D55B; ">修改手机号</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="security_div">
+            <div class="securtop_div">
+                <span>邮箱</span>
+                <span id="emailyc" style="display:none">@_user.Email</span>
+            </div>
+            <div class="securcon_div">
+                <div class="securcet_div">
+                    @if (_user.Email == "")
+                    {
+                        <span>您还未绑定邮箱，请尽快输入邮箱地址</span>
+                    }
+                    else
+                    {
+                        <span>已绑定邮箱:</span>
+                        <span id="emailjm"></span>
+                    }
+                </div>
+                <div class="secura_div">
+                    <a href="javascript:PageEmail()" style="background: #DF7424">修改邮箱</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="Pwdarea" class="security_div" style="height: 320px;margin:0; display: none">
+            <div class="securtop_div">
+                <span>密码</span>
+            </div>
+            <div class="securcon_div">
+                <div class="secuimg_div">
+                    <img src="@mUrl/Images/u42.png" style="width:200px;height:200px;margin:40px 20px 40px 40px">
+                </div>
+                <div style="width:637px;height:278px;float:left">
+                    <div class="reinf_div"></div>
+                    <div class="reinf_div">                  
+                        <span><span style="width:auto;float:right;margin:0">当前密码:</span><span style="color: red; width: auto; float: right; margin: 0">*</span></span>
+                        <input id="dqpwd" type="password" />
+                        <a href="javascript:;">忘记当前密码?</a>
+                    </div>
+                    <div class="reinf_div">
+                        <span><span style="width:auto;float:right;margin:0">新密码:</span><span style="color: red; width: auto; float: right; margin: 0">*</span></span>
+                        <input name="Pwd" onkeyup="checkRank()" type="password" />
+                        <a style="text-decoration:none">密码由6-16个字符组成，区分大小写</a>
+                    </div>
+                    <div class="reinf_div">
+                        <span></span>
+                        <div class="securlet_div">
+                            <div style="height: 17px; width: 189px; border: 0;float:left;margin:0">
+                                <div id="qiangdu1" style="width: 61px; height: 17px; float: left"></div>
+                                <div id="qiangdu2" style="width: 61px; height: 17px; margin-left: 3px; float: left; "></div>
+                                <div id="qiangdu3" style="width: 61px; height: 17px; margin-left: 3px; float: left; "></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reinf_div">
+                        <span><span style="width:auto;float:right;margin:0">确认新密码:</span><span style="color: red; width: auto; float: right; margin: 0">*</span></span>
+                        <input name="repwd" onblur="pwdIsNull(this)" type="password" />
+                        <label id="repwd1" style="display:none;color:#FF0000;height:40px;line-height:40px;float:left;margin-left:20px">请您确认输入密码！</label>
+                    </div>
+                    <div class="reinf_div" style="margin-top:10px">
+                        <a href="javascript:Pwd_Upd()" style="padding: 9px 70px;text-decoration:none;font-size: 16px; color: #fff; background: #0099CC; margin-left: 100px">确定</a>
+                        <a id="pagebtn1" href="javascript:ClosePage()">取消</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="Mobilearea" class="security_div" style="height: 320px; margin: 0; display: none; ">
+            <div class="securtop_div">
+                <span>手机</span>
+            </div>
+            <div class="securcon_div">
+                <div class="secuimg_div">
+                    <img src="@mUrl/Images/u84.png" style="width: 200px; height: 200px; margin: 40px 20px 40px 40px">
+                </div>
+                <div style="width:637px;height:278px;float:left">
+                    <div class="reinf_div"></div>
+                    <div class="reinf_div">
+                        <span><span style="width:auto;float:right;margin:0">新手机号:</span><span style="color: red; width: auto; float: right; margin: 0">*</span></span>
+                        <input name="Mobile" onblur="MobileIsBind()" type="text" />
+                        <label id="bind1" style="display:none;color:#FF0000;height:40px;line-height:40px;float:left;margin-left:20px">已被其他账号绑定！</label>
+                    </div>
+                    <div class="reinf_div" style="margin-top:10px">
+                        <a href="javascript:Mobile_Upd()" style="padding: 9px 70px; text-decoration: none; font-size: 16px; color: #fff; background: #B7D55B; margin-left: 100px">确定</a>
+                        <a id="pagebtn2" href="javascript:ClosePage()">取消</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="Emailarea" class="security_div" style="height: 320px; margin: 0; display: none">
+            <div class="securtop_div">
+                <span>邮箱</span>
+            </div>
+            <div class="securcon_div">
+                <div class="secuimg_div">
+                    <img src="@mUrl/Images/u82.png" style="width: 200px; height: 200px; margin: 40px 20px 40px 40px">
+                </div>
+                <div style="width:637px;height:278px;float:left">
+                    <div class="reinf_div"></div>
+                    <div class="reinf_div">
+                        <span><span style="width:auto;float:right;margin:0">新邮箱:</span><span style="color: red; width: auto; float: right; margin: 0">*</span></span>
+                        <input name="Email" onblur="EmailIsBind()" type="text" />
+                        <label id="bind2" style="display:none;color:#FF0000;height:40px;line-height:40px;float:left;margin-left:20px">已被其他账号绑定！</label>
+                    </div>
+                    <div class="reinf_div" style="margin-top:10px">
+                        <a href="javascript:Email_Upd()" style="padding: 9px 70px; text-decoration: none; font-size: 16px; color: #fff; background: #DF7424; margin-left: 100px">确定</a>
+                        <a id="pagebtn3" href="javascript:ClosePage()">取消</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/md5.js"></script>
+<script src="~/js/Account.js"></script>

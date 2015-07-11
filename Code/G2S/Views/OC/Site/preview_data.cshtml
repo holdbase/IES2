@@ -1,0 +1,99 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout2.cshtml";
+}
+
+<link href="~/Css/construction.css" rel="stylesheet" />
+
+<!DOCTYPE html>
+<div ng-controller="SitePreviewController">
+    <div class="main_content">
+        <div class="main_all">
+            <div class="data_preview">
+                <div class="exercise_search">
+                    <div class="select_condition">
+                        <p class="current_course" >
+
+                            <span ng-style="{'cursor':'pointer'}" ng-click="Floder_Change(0)"> 教学资料</span> 
+                            <span ng-style="{'cursor':'pointer'}" ng-click="Floder_Change(Folder.FolderID)" ng-repeat="Folder in FolderOrderList"> > {{Folder.FolderName}}</span>
+                            
+                        </p>
+                    </div>
+                    <div class="exercise_btn">
+                        <span class="sort_box" ng-click="conditionShow=true">[筛选]</span>
+                        <p class="search_topic"><input type="text" ng-model="keyWords" placeholder="请输入您要搜索的关键字"><span ng-click="ResourceInfo()" class="icon" href="#"></span></p>
+                    </div>
+                </div>
+                <div ng-show="conditionShow" class="filter_box">
+                    <dl class="filter_list">
+                        <dt>文件类型</dt>
+                        <dd>
+                            <a ng-class="FileType==0?'active':''" ng-click="FileType_Change(0)" href="#"><span>不限</span></a>
+                            <a ng-class="FileType==1?'active':''" ng-click="FileType_Change(1)" href="#"><span>视频</span></a>
+                            <a ng-class="FileType==7?'active':''" ng-click="FileType_Change(7)" href="#"><span>音频</span></a>
+                            <a ng-class="FileType==2?'active':''" ng-click="FileType_Change(2)" href="#"><span>Word</span></a>
+                            <a ng-class="FileType==4?'active':''" ng-click="FileType_Change(4)" href="#"><span>PPT</span></a>
+                            <a ng-class="FileType==3?'active':''" ng-click="FileType_Change(3)" href="#"><span>Excel</span></a>
+                            <a ng-class="FileType==5?'active':''" ng-click="FileType_Change(5)" href="#"><span>PDF</span></a>
+                            <a ng-class="FileType==6?'active':''" ng-click="FileType_Change(6)" href="#"><span>图片</span></a>
+                            <a ng-class="FileType==8?'active':''" ng-click="FileType_Change(8)" href="#"><span>压缩包</span></a>
+                            <a ng-class="FileType==9?'active':''" ng-click="FileType_Change(9)" href="#"><span>其他</span></a>
+                        </dd>
+                    </dl>
+                    <dl class="filter_list">
+                        <dt>上传时间</dt>
+                        <dd>
+                            <a ng-class="DateSpan==0?'active':''" ng-click="DateSpan_Change(0)" href="#"><span>不限</span></a>
+                            <a ng-class="DateSpan==7?'active':''" ng-click="DateSpan_Change(7)" href="#"><span>一周内</span></a>
+                            <a ng-class="DateSpan==30?'active':''" ng-click="DateSpan_Change(40)" href="#"><span>一个月内</span></a>
+                            <a ng-class="DateSpan==180?'active':''" ng-click="DateSpan_Change(180)" href="#"><span>半年内</span></a>
+                        </dd>
+                    </dl>
+                    <span class="guanbi" ng-click="conditionShow=false"><i class="icon"></i></span>
+                </div>
+                <div class="">   @*file_box*@
+                    <table class="course_data">
+                        <tr>
+                            <th width="630">
+                                <div class="data_name">
+                                    <p>文件名称</p>
+                                    <i class="icon arrow"></i>
+                                </div>
+                            </th>
+                            <th width="120">
+                                <div class="data_name">
+                                    <p>文件格式</p>
+                                    <i class="icon arrow"></i>
+                                </div>
+                            </th>
+                            <th width="120">
+                                <div class="data_name">
+                                    <p>文件大小</p>
+                                </div>
+                            </th>
+                            <th>修改日期</th>
+                        </tr>
+                        <tr ng-repeat="Resource in FileList">
+                            <td>
+                                <div class="data_name">
+                                    <i file-ext ext="{{Resource.Ext}}" class="icon_24"></i>
+                                    @*<i ng-switch-when="mp4" class="icon_24 mp4"></i>
+                                    <i ng-switch-when="pdf" class="icon_24 pdf"></i>
+                                    <i ng-switch-when="jpg" class="icon_24 pic"></i>
+                                    <i ng-switch-when="文件夹" class="icon_24 file"></i>*@
+                                    <p ng-if="Resource.Ext=='文件夹'"><a href="javascript:void(0)" ng-click="Resource_Search(Resource)">{{Resource.ResourceName}}</a></p>
+                                    <p ng-if="Resource.Ext!='文件夹'">{{Resource.ResourceName}}</p>
+                                </div>
+                            </td>
+                            <td>{{Resource.Ext}}</td>
+                            <td ng-if="Resource.Ext=='文件夹'">--</td>
+                            <td ng-if="Resource.Ext!='文件夹'">{{Resource.FileSize}}</td>
+                            <td>{{Resource.CreateTime|dateFormat}}</td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

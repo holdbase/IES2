@@ -1,0 +1,240 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout4.cshtml";
+}
+<link href="~/Css/home.css" rel="stylesheet" />
+<link href="~/Css/student.css" rel="stylesheet" />
+<div ng-controller="StudentController">
+    <div class="course_nav">
+        <ul class="course_arrange">
+            <li ng-class="{true: 'active', false: ''}[StudentOC.IsHistroy==0]"><a ng-click="ChangeHistroyTab(0)" href="#">学习中</a></li>
+            <li ng-class="{true: 'active', false: ''}[StudentOC.IsHistroy==1]"><a ng-click="ChangeHistroyTab(1)" href="#">历史课程</a></li>
+            <li ng-hide="true"><a target="_self" href="MyCourse">我的课表</a></li>
+        </ul>
+        <a class="creat_course" ng-hide="true" target="_self" href="#">+我要选课</a>
+    </div>
+    <div ng-class="{true: 'study_box2', false: 'study_box'}[IsShowTeacherSpace==true]" ng-show="StudentOC.IsHistroy==0">
+        <div ng-if="IsShowTeacherSpace==false">
+            <div class="learn_box">
+                <ul class="learn_list">
+                    <li ng-repeat="myOC in OnLineList|studentOCListFilter:'between':PageIndex:'3'">
+                        <div class="img_box">
+                            <img src='{{myOC.ImgFileUrl==null ? "../Images/default/Course_M.jpg":myOC.ImgFileUrl}}' title="{{myOC.Name}}" style="cursor:pointer" width="220" height="120" ng-click="GoOnLing(myOC)" />
+                            <p>{{myOC.Name}}<a ng-show="myOC.IsHasSite" class="icon home_icon" target="_blank" href="../Site/Preview?currentoc={{myOC.OCID}}"></a></p>
+                        </div>
+                        <div class="lecture_box">
+                            <ul class="lecture_nav">
+                                <li ng-class="{true: 'active', false: ''}[myOC.ShowFirst==1]" ng-click="ChangeTab(myOC,1)">关于课程</li>
+                                <li ng-show="myOC.IsShowMooc" ng-class="{true: 'active', false: ''}[myOC.ShowFirst==2]" ng-click="ChangeTab(myOC,2)">MOOC</li>
+                                <li ng-show="myOC.IsShowFC" ng-class="{true: 'active', false: ''}[myOC.ShowFirst==3]" ng-click="ChangeTab(myOC,3)">翻转课堂</li>
+                            </ul>
+                            <div class="lecture_r" ng-class="{true: 'block', false: ''}[myOC.ShowFirst==1]">
+                                <div class="about_box">
+                                    <span><i class="icon user_icon"></i>{{myOC.TeacherName}}</span>
+                                    <span><i class="icon class_icon"></i>{{myOC.TeachingClassName}}</span>
+                                    <p class="about_btn">
+                                        <a class="discuss_btn" target="_blank" href="../CourseLive/Forum/index?currentoc={{myOC.OCID}}">讨论</a>
+                                        <a class="work_btn" target="_blank" href="../CourseLive/Test/StudentWorkList?currentoc={{myOC.OCID}}">作业</a>
+                                        <a ng-hide="true" class="note_btn" target="_self" href="#?currentoc={{myOC.OCID}}">笔记</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div ng-show="myOC.IsShowMooc" class="lecture_r" ng-class="{true: 'block', false: ''}[myOC.ShowFirst==2]">
+                                <div class="mooc_box">
+                                    <p class="text_explanation1" ng-click="GoToMyMoocFC(myOC.OCID,2)">我的进度：{{myOC.MyMoocRate}}%</p>
+                                    <div class="bar_box bar_box2">
+                                        <p class="standard_box" ng-style="set_Style(myOC.PlanMoocRate)"><span></span></p>
+                                        <p class="mine_progress" ng-style="set_Style(myOC.MyMoocRate)"><span></span></p>
+                                    </div>
+                                    <p class="text_explanation2">标准进度：{{myOC.PlanMoocRate}}%</p>
+                                </div>
+                            </div>
+                            <div ng-show="myOC.IsShowFC" class="lecture_r" ng-class="{true: 'block', false: ''}[myOC.ShowFirst==3]">
+                                <p class="label_box"><span class="mine_label" ng-click="GoToMyMoocFC(myOC.OCID,3)">我的进度：{{myOC.MyFCRate}}%</span>@*<span class="group_label"> | 小组：{{myOC.MyGroupFCRate}}%</span>*@</p>
+                                <div class="mooc_box">
+                                    <div class="bar_box bar_box2">
+                                        @*<p class="standard_box" ng-style="set_Style(myOC.PlanFCRate)"><span></span></p>*@
+                                        <p class="mine_progress" ng-style="set_Style(myOC.MyFCRate)"><span></span></p>
+                                        @*<p class="group_progress" ng-style="set_Style(myOC.MyGroupFCRate)"><span></span></p>*@
+                                    </div>
+                                    @*<p class="text_explanation2">标准进度：{{myOC.PlanFCRate}}%</p>*@
+                                    <p class="text_explanation2">进行中：{{myOC.InFCCount}} 已结束：{{myOC.FinishFCCount}}</p>
+                                </div>
+                                @*<p class="label_box" style="padding-left:10px; margin-left:0px;"><span class="mine_label" ng-click="GoToMyMoocFC(myOC.OCID,3)">进行中翻转课堂数：{{myOC.InFCCount}}</span></p>
+                                    <p class="text_explanation2" ><span ng-click="GoToMyMoocFC(myOC.OCID,3)">已结束翻转课堂数：{{myOC.FinishFCCount}}</span></p>*@
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <span class="arrow_l" ng-click="GetPageList(0,0)"></span>
+            <span class="arrow_r" ng-click="GetPageList(1,0)"></span>
+            <ul class="list" style="right:auto;left:50%;margin-left:-24px;">
+                <li ng-class="{true: 'active', false: ''}[num==PageIndex]" style="cursor:pointer" ng-repeat="num in OnLinePagesNumList" ng-click="JumpPage(num,0)"></li>
+            </ul>
+        </div>
+        <div ng-if="IsShowTeacherSpace==true">
+            <div class="switch_box">
+                <ul class="switch_list">
+                    <li ng-class="{true: 'active', false: ''}[num==PageIndex]" style="cursor:pointer" ng-repeat="num in OnLinePagesNumList" ng-click="JumpPage(num,0)"></li>
+                </ul>
+                <div class="course_switch">
+                    <ul class="course_list">
+                        <li ng-repeat="oc in OnLineList|studentOCListFilter:'between':PageIndex:'2'" on-get-my-oc-list>
+                            <div class="img_tit">
+                                <img ng-if="oc.ImgFileUrl!=null&&oc.ImgFileUrl.length>0" title="{{oc.Name}}" src='{{oc.ImgFileUrl}}' width="280" height="150" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                                <img ng-if="oc.ImgFileUrl==null||oc.ImgFileUrl.length<=0" title="{{oc.Name}}" src="../Images/default/Course_M.jpg" width="280" height="150" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                                <div class="course_intro">
+                                    <h4 title="{{oc.Name}}"><div class="strTitle" style="width:210px;height:40px">{{oc.Name}}</div></h4>
+                                    <div style="float:right" ng-if="oc.IsShowMooc">{{oc.MyMoocRate}}%</div>
+                                    @*<a ng-if="oc.IsHasSite==1" class="icon home_icon" target="_blank" href="../Site/Preview?currentoc={{oc.OCID}}"></a>*@
+                                   
+                                </div>
+                            </div>
+                            <ul class="icon_list">
+                                <li ng-if="oc.IsShowFC" title=" 翻转课堂"><a target="_self" href="../OC/FC/FCPreviewIndex?OCID={{oc.OCID}}"><i class="icon_24 fanzhuan"></i>翻转课堂</a></li>
+                                <li ng-if="oc.IsHasSite==1" title="网站"><a target="_blank" href="../Site/Preview?currentoc={{oc.OCID}}"><i class="icon_24 site"></i>网站</a></li>
+                                <li ng-if="oc.IsShowMooc" title="MOOC"><a target="_blank" href="../OC/MOOC/Preview?OCID={{oc.OCID}}"><i class="icon_24 mooc"></i>MOOC</a></li>
+                                <li title="讨论"><a target="_self" href="../CourseLive/Forum/index?currentoc={{oc.OCID}}"><i class="icon_24 team"></i>讨论</a></li>
+                                <li title="作业"><a target="_self" href="../CourseLive/Test/StudentWorkList?currentoc={{oc.OCID}}"><i class="icon_24 student"></i>作业</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <a class="icon course_prev" href="javascript:;" ng-click="GetPageList(0,0)"></a>
+                <a class="icon course_next" href="javascript:;" ng-click="GetPageList(1,0)"></a>
+            </div>
+            <a class="shouqi" id="ShowCourse" href="#" ng-click="SlideCourse()">展开全部课程↓</a>
+            <ul class="course_all" ng-show="ShowCourse">
+                <li ng-repeat="oc in OnLineList">
+                    <a class="course_img">
+                        <img ng-if="oc.ImgFileUrl!=null&&oc.ImgFileUrl.length>0" title="{{oc.Name}}" src='{{oc.ImgFileUrl}}' width="120" height="65" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                        <img ng-if="oc.ImgFileUrl==null||oc.ImgFileUrl.length<=0" title="{{oc.Name}}" src="../Images/default/Course_S.jpg" width="120" height="65" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                    </a>
+                    <p title="{{oc.Name}}">{{oc.Name}}</p>
+                    <ul class="small_icon">
+                        <li ng-if="oc.IsShowFC" title=" 翻转课堂"><a target="_self" href="../OC/FC/FCPreviewIndex?OCID={{oc.OCID}}"><i class="icon small_fz"></i>翻转课堂</a></li>
+                        <li ng-if="oc.IsHasSite==1" title="网站"><a target="_blank" href="../Site/Preview?currentoc={{oc.OCID}}"><i class="icon small_site"></i>网站</a></li>
+                        <li ng-if="oc.IsShowMooc" title="MOOC"><a target="_blank" href="../OC/MOOC/Preview?OCID={{oc.OCID}}"><i class="icon small_mooc"></i>MOOC</a></li>
+                        <li title="讨论"><a target="_self" href="../CourseLive/Forum/index?currentoc={{oc.OCID}}"><i class="icon small_team"></i>讨论</a></li>
+                        <li title="作业"><a target="_self" href="../CourseLive/Test/StudentWorkList?currentoc={{oc.OCID}}"><i class="icon small_stu"></i>作业</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div ng-class="{true: 'study_box2', false: 'study_box'}[IsShowTeacherSpace==true]" ng-show="StudentOC.IsHistroy==1">
+        <div ng-if="IsShowTeacherSpace==false">
+            <div class="learn_box">
+                <ul class="learn_list">
+                    <li ng-repeat="myOC in HistoryList|studentOCListFilter:'between':HistoryPageIndex:'3'">
+                        <div class="img_box">
+                            <img src='{{myOC.ImgFileUrl==null ? "../Images/default/Course_M.jpg":myOC.ImgFileUrl}}' style="cursor:pointer" width="220" height="120" />
+                            <p>{{myOC.Name}}<a ng-show="myOC.IsHasSite" class="icon home_icon" target="_self" href="../Site/index?currentoc={{myOC.OCID}}"></a></p>
+                        </div>
+                        <div class="lecture_box">
+                            <ul class="lecture_nav">
+                                <li ng-class="{true: 'active', false: ''}[myOC.ShowFirst==1]" ng-click="ChangeTab(myOC,1)">关于课程</li>
+                                <li ng-show="myOC.IsShowMooc" ng-class="{true: 'active', false: ''}[myOC.ShowFirst==2]" ng-click="ChangeTab(myOC,2)">MOOC</li>
+                                <li ng-show="myOC.IsShowFC" ng-class="{true: 'active', false: ''}[myOC.ShowFirst==3]" ng-click="ChangeTab(myOC,3)">翻转课堂</li>
+                            </ul>
+                            <div class="lecture_r" ng-class="{true: 'block', false: ''}[myOC.ShowFirst==1]">
+                                <div class="about_box">
+                                    <span><i class="icon user_icon"></i>{{myOC.TeacherName}}</span>
+                                    <span><i class="icon class_icon"></i>{{myOC.TeachingClassName}}</span>
+                                    <p class="about_btn">
+                                        <a class="discuss_btn" target="_blank" href="../CourseLive/Forum/index?currentoc={{myOC.OCID}}">讨论</a>
+                                        <a class="work_btn" target="_blank" href="../CourseLive/Test/StudentWorkList?currentoc={{myOC.OCID}}">作业</a>
+                                        <a ng-hide="true" class="note_btn" target="_self" href="#?currentoc={{myOC.OCID}}">笔记</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div ng-show="myOC.IsShowMooc" class="lecture_r" ng-class="{true: 'block', false: ''}[myOC.ShowFirst==2]">
+                                <div class="mooc_box">
+                                    <p class="text_explanation1" ng-click="GoToMyMoocFC(myOC.OCID,2)">我的进度：{{myOC.MyMoocRate}}%</p>
+                                    <div class="bar_box bar_box2">
+                                        <p class="standard_box" ng-style="set_Style(myOC.PlanMoocRate)"><span></span></p>
+                                        <p class="mine_progress" ng-style="set_Style(myOC.MyMoocRate)"><span></span></p>
+                                    </div>
+                                    <p class="text_explanation2">标准进度：{{myOC.PlanMoocRate}}%</p>
+                                </div>
+                            </div>
+                            <div ng-show="myOC.IsShowFC" class="lecture_r" ng-class="{true: 'block', false: ''}[myOC.ShowFirst==3]">
+                                <p class="label_box"><span class="mine_label" ng-click="GoToMyMoocFC(myOC.OCID,3)">我的进度：{{myOC.MyFCRate}}%</span>@*<span class="group_label"> | 小组：{{myOC.MyGroupFCRate}}%</span>*@</p>
+                                <div class="mooc_box">
+                                    <div class="bar_box bar_box2">
+                                        @*<p class="standard_box" ng-style="set_Style(myOC.PlanFCRate)"><span></span></p>*@
+                                        <p class="mine_progress" ng-style="set_Style(myOC.MyFCRate)"><span></span></p>
+                                        @*<p class="group_progress" ng-style="set_Style(myOC.MyGroupFCRate)"><span></span></p>*@
+                                    </div>
+                                    @*<p class="text_explanation2">标准进度：{{myOC.PlanFCRate}}%</p>*@
+                                    <p class="text_explanation2">进行中：{{myOC.InFCCount}} 已结束：{{myOC.FinishFCCount}}</p>
+                                </div>
+                                @*<p class="label_box" style="padding-left:10px; margin-left:0px;" ng-click="GoToMyMoocFC(myOC.OCID,3)"><span class="mine_label">进行中翻转课堂数：{{myOC.InFCCount}}</span></p>
+                                <p class="text_explanation2" ng-click="GoToMyMoocFC(myOC.OCID,3)">已结束翻转课堂数：{{myOC.FinishFCCount}}</p>*@
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-show="HistoryPageIndex==HistoryPagesNum">
+                        <a ng-hide="true" class="select_btn_1" target="_self" href="javascript:;">
+                            <span>+</span>
+                            <em>我要选课</em>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <span class="arrow_l" ng-click="GetPageList(0,1)"></span>
+            <span class="arrow_r" ng-click="GetPageList(1,1)"></span>
+            <ul class="list" style="right:auto;left:50%;margin-left:-24px;">
+                <li ng-class="{true: 'active', false: ''}[num==HistoryPageIndex]" style="cursor:pointer" ng-repeat="num in HistoryPagesNumList" ng-click="JumpPage(num,1)"></li>
+            </ul>
+        </div>
+        <div ng-if="IsShowTeacherSpace==true">
+            <div class="switch_box">
+                <ul class="switch_list">
+                    <li ng-class="{true: 'active', false: ''}[num==HistoryPageIndex]" style="cursor:pointer" ng-repeat="num in HistoryPagesNumList" ng-click="JumpPage(num,1)"></li>
+                </ul>
+                <div class="course_switch">
+                    <ul class="course_list">
+                        <li ng-repeat="oc in HistoryList|studentOCListFilter:'between':HistoryPageIndex:'2'" on-get-my-histry-oc-list>
+                            <div class="img_tit">
+                                <img ng-if="oc.ImgFileUrl!=null&&oc.ImgFileUrl.length>0" src='{{oc.ImgFileUrl}}' width="280" height="150" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                                <img ng-if="oc.ImgFileUrl==null||oc.ImgFileUrl.length<=0" src="../Images/default/Course_M.jpg" width="280" height="150" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                                <div class="course_intro">
+                                    <h4>{{oc.Name}}</h4>
+                                    <a ng-if="oc.IsHasSite==1" class="icon home_icon" target="_blank" href="../Site/Preview?currentoc={{oc.OCID}}"></a>
+                                </div>
+                            </div>
+                            <ul class="icon_list">
+                                <li ng-if="oc.IsShowFC" title=" 翻转课堂"><a target="_self" href="../OC/FC/FCPreviewIndex?OCID={{oc.OCID}}"><i class="icon_24 fanzhuan"></i>翻转课堂</a></li>
+                                <li ng-if="oc.IsHasSite==1" title="网站"><a target="_blank" href="../Site/Preview?currentoc={{oc.OCID}}"><i class="icon_24 site"></i>网站</a></li>
+                                <li ng-if="oc.IsShowMooc" title="MOOC"><a target="_blank" href="../OC/MOOC/Preview?OCID={{oc.OCID}}"><i class="icon_24 mooc"></i>MOOC</a></li>
+                                <li title="讨论"><a target="_self" href="../CourseLive/Forum/index?currentoc={{oc.OCID}}"><i class="icon_24 team"></i>讨论</a></li>
+                                <li title="作业"><a target="_self" href="../CourseLive/Test/StudentWorkList?currentoc={{oc.OCID}}"><i class="icon_24 student"></i>作业</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <a class="icon course_prev" href="javascript:;" ng-click="GetPageList(0,1)"></a>
+                <a class="icon course_next" href="javascript:;" ng-click="GetPageList(1,1)"></a>
+            </div>
+            <a class="shouqi" id="ShowHirstyCourse" href="#" ng-click="SlideHirstyCourse()">展开全部课程↓</a>
+            <ul class="course_all" ng-show="ShowHirstyCourse">
+                <li ng-repeat="oc in HistoryList">
+                    <a class="course_img">
+                        <img ng-if="oc.ImgFileUrl!=null&&oc.ImgFileUrl.length>0" src='{{oc.ImgFileUrl}}' width="120" height="65" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                        <img ng-if="oc.ImgFileUrl==null||oc.ImgFileUrl.length<=0" src="../Images/default/Course_S.jpg" width="120" height="65" style="cursor:pointer" ng-click="GoOnLing(oc)" />
+                    </a>
+                    <p>{{oc.Name}}</p>
+                    <ul class="small_icon">
+                        <li ng-if="oc.IsShowFC" title=" 翻转课堂"><a target="_self" href="../OC/FC/FCPreviewIndex?OCID={{oc.OCID}}"><i class="icon small_fz"></i>翻转课堂</a></li>
+                        <li ng-if="oc.IsHasSite==1" title="网站"><a target="_blank" href="../Site/Preview?currentoc={{oc.OCID}}"><i class="icon small_site"></i>网站</a></li>
+                        <li ng-if="oc.IsShowMooc" title="MOOC"><a target="_blank" href="../OC/MOOC/Preview?OCID={{oc.OCID}}"><i class="icon small_mooc"></i>MOOC</a></li>
+                        <li title="讨论"><a target="_self" href="../CourseLive/Forum/index?currentoc={{oc.OCID}}"><i class="icon small_team"></i>讨论</a></li>
+                        <li title="作业"><a target="_self" href="../CourseLive/Test/StudentWorkList?currentoc={{oc.OCID}}"><i class="icon small_stu"></i>作业</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

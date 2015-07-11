@@ -1,0 +1,281 @@
+﻿@{
+    Layout = Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/views/") ? null : "~/Views/Shared/_Layout.cshtml";
+    PageData["title"] = "论坛答疑";
+}
+<link href="~/Css/forum.css" rel="stylesheet" />
+
+<div class="main_all main_course" ng-controller="ForumCtrl">
+    <div class="main_content">
+        <div class="coursesite_box">
+            @*<div class="current_class">
+                    <div class="theme_box">
+                        <span class="theme_name">话题广场</span>
+                        <div class="prensent">
+                            <a class="prensent_class" href="#">我的班级[2]<span></span></a>
+                            <div class="class_theme">
+                                <em></em>
+                                <span></span>
+                                <div class="myclass_box">
+                                    <div class="class_search">
+                                        <input type="text" placeholder="请输入搜索关键字">
+                                        <a href="javascript:;">我的班级</a>
+                                    </div>
+                                    <table class="theme_table">
+                                        <tr>
+                                            <td width="240"><p><input type="checkbox">全选</p></td>
+                                            <td><p>总帖/章节讨论/排名</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p><input type="checkbox" checked="checked">混合式课程设计与技术</p></td>
+                                            <td><p class="table_c">[1/0/619]</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p><input type="checkbox" checked="checked">卓越商学院</p></td>
+                                            <td><p class="table_c">[1/0/619]</p></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            <div class="model_box">
+                <div class="model_text" ng-mouseover="tips()"></div>
+                <ul class="model_list">
+                    <li ng-repeat="m in Forum_HotUser_Item">
+                        <img src="" width="40" height="40" title="{{m.UserName}}" user-img userid="{{m.UserID}}" />
+                    </li>
+                </ul>
+            </div>
+            <div class="right_content">
+                <div class="forum_box">
+                    <div class="discuss_box">
+                        <h5>
+                            讨论板块
+                            <a class="icon_24 create_zone" ng-show="UserRoleCheck(UserInfo.UserID,0,true)" role="button" title="新建版块" data-toggle="modal" data-backdrop="static" ng-click="EditOrAdd(true,1)" href="#addForum"></a>
+                            @*<a class="icon_24 create_zone" href="javascript:;"></a>*@
+                        </h5>
+                        <ul class="discuss_section">
+
+                            <li ng-repeat="m in ForumType_Item" ng-class="(m.IsPublic&&m.IsSys)?'':'inner'" ng-mouseover="showOrHide=true" ng-mouseleave="showOrHide=false">
+                                <span>
+                                    {{(m.IsPublic)?"公共板块":"班内板块"}}
+                                    <div class="topic_icon ng-hide" ng-show="(showOrHide && !m.IsSys && UserRoleCheck(m.UserID,m.TeachingClassID,false))">
+                                        <a class="icon icon_write" role="button" data-toggle="modal" ng-click="EditOrAdd(false,m);" data-backdrop="static" href="#addForum" title="编辑"></a>
+                                        <a class="icon icon_remove" href="javascript:;" ng-click="ForumType_Del(m)" title="删除"></a>
+                                    </div>
+                                </span>
+
+                                <div class="discuss_theme">
+                                    <a ng-show="m.IsSys" target="_self" href="topiclist?ForumTypeID={{m.ForumTypeID}}&mooc={{m.Title=='章节讨论'?1:0}}">{{m.Title}}</a>
+                                    <a ng-show="!m.IsSys" target="_self" href="topiclist?ForumTypeID={{m.ForumTypeID}}&mooc=0">{{(m.ClassName==null||m.ClassName=='')?'':'['+m.ClassName+']'}}{{m.Title}}</a>
+                                    <p title="{{m.Brief}}" ng-show="m.IsSys">{{m.Brief}}</p>
+                                    <p title="{{m.Brief}}" ng-show="!m.IsSys">{{'创建时间:'+(m.CreateDate|dateFormat)}}&nbsp;&nbsp;{{(m.ClassName==null||m.ClassName=='')?'':'版块所属:'+m.ClassName}}</p>
+                                </div>
+
+                            </li>
+
+                            @*<li class="inner">
+                                    <span>班内板块</span>
+                                    <div class="discuss_theme">
+                                        <a href="#">[混合式课程设计与技术平台<1>班]自由讨论区 </a>
+                                        <p>版主: 孙慧丽  | 创建时间:2014/08/12  版块所属:混合式课程设计与技术平台<1>班...</p>
+                                    </div>
+                                </li>*@
+                        </ul>
+                    </div>
+                    <div class="discuss_box active_discuss">
+                        <h5>活跃讨论</h5>
+                        <ul class="discuss_section">
+
+                            <li ng-repeat="m in ForumTopic_Active_Item">
+                                <p class="active_article"><a target="_self" href="topicdetail?topicid={{m.TopicID}}&OCID={{OCID}}">{{m.Title}}</a><em>发布于 （{{m.UpdateTime|dateFormat}}）</em></p>
+                            </li>
+                            @*<li>
+                                    <p class="active_article"><a href="#">关于公共关系在线视频课程内容重复的问题</a><br><em>发布于 （2014/11/11）</em></p>
+                                </li>
+                                <li>
+                                    <p class="active_article"><a href="#">童鞋们，注意啦！智慧树平台已从10月16日开始清退未学习的学生~~ [附件：1]</a><em>发布于 （2014/11/11）</em></p>
+                                </li>
+                                <li>
+                                    <p class="active_article"><a href="#">关于标题只能五十字的关于标题只能五十字的关于标题只能五十字的关于标题只能五十字的关于标题只能五十字的</a><em>发布于 （2014/11/11）</em></p>
+                                </li>
+                                <li>
+                                    <p class="active_article"><a href="#">关于XX课程的看法</a><em>发布于 （2014/11/11）</em></p>
+                                </li>*@
+                        </ul>
+                    </div>
+                </div>
+                <div class="forum_box">
+                    <div class="theme_tit">
+                        <ul class="theme_type">
+                            <li ng-class="active.All?'active':''" ng-click="activeInit();active.All=true"><a href="#" ng-click="InitSearch(0);">全部话题</a></li>
+                            <li ng-class="active.Essence?'active':''" ng-click="activeInit();active.Essence=true"><a href="#" ng-click="InitSearch(1);">精华话题</a></li>
+                            <li ng-class="active.MyJoin?'active':''" ng-click="activeInit();active.MyJoin=true"><a href="#" ng-click="InitSearch(2);">我参与的</a></li>
+                            <li ng-class="active.MyStart?'active':''" ng-click="activeInit();active.MyStart=true"><a href="#" ng-click="InitSearch(3);">我发起的</a></li>
+                        </ul>
+                        <div class="post_select" ng-mouseover="topaddshow = true" ng-mouseout="topaddshow=false">
+                            <a class="posts" target="_self" href="topicadd?ReturnUrl=index" style="font-size:14px;">发帖@*<span></span>*@</a>
+                            @*<div class="post_list" style="display:block;" ng-show="topaddshow">
+                                    <a target="_self" href="topicadd?returnUrl=index">新帖子</a>
+                                    <a href="#">新投票</a>
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="select_factor">
+                        <div class="rank_condition">
+                            @*<a href="#" ng-click="NextSearch(1)"><i class="icon_forum {{ForumTopic.Order==0?'icon_top':'icon_low'}}"></i>最新</a>
+                                <a href="#" ng-click="NextSearch(2)"><i class="icon_forum {{ForumTopic.Order==1?'icon_top':'icon_low'}}"></i>最热</a>*@
+                            <p><input type="radio" checked="checked" name="ResponseStatus" ng-click="NextSearch(3)">全部</p>
+                            <p><input type="radio" name="ResponseStatus" ng-click="NextSearch(4)">已回答</p>
+                            <p><input type="radio" name="ResponseStatus" ng-click="NextSearch(5)">未回答</p>
+                        </div>
+                        <div class="theme_search">
+                            @*<a href="javascript:;">全部设为已读</a>*@
+                            <p><input type="text" placeholder="请输入关键字" ng-model="ForumTopic.SearchKey"><i class="icon_forum icon_search" ng-click="NextSearch(0)"></i></p>
+                        </div>
+                    </div>
+
+                    <div class="theme_wrap">
+                        <ul class="theme_list">
+                            <li ng-repeat="m in ForumTopic_Item|orderBy:'-IsTop'">
+                                <img src="" width="40" height="40" user-img userid="{{m.UserID}}" />
+                                <p class="praise_amount" style="color: #c8c8c8;" ng-click="ForumMy_IsGood_Upd(m)"><i class="icon_24 {{m.IsGood?'icon_praise2':'icon_praise'}}"></i>{{m.Goods}}</p>
+                                <div class="theme_detail">
+                                    <div class="post_name">
+                                        <a target="_self" href="topicdetail?TopicID={{m.TopicID}}&OCID={{OCID}}">{{m.Title}}</a>
+                                        <span class="top_vertical" ng-show="m.IsTop" style="margin-right:5px;">置顶</span>
+                                        <span class="good_rate" ng-show="m.IsEssence" style="margin-right:5px;">精Ⅲ</span>
+                                        <span class="top_vertical" ng-show="m.IsTeacherTopic">老师</span>
+                                    </div>
+                                    <p><b>{{m.ForumTypeTitle}} {{m.FromClassName!=null?'['+m.FromClassName+']':''}}</b> {{m.LastClassName!=null?'来自['+m.LastClassName+']':''}}  {{m.UserName}} ({{m.UpdateTime|dateFormat}}) . 最后回复 {{m.LastUserName==null?"暂无回复":m.LastUserName}}  {{m.LastUpdateTime|dateFormat}}</p>
+                                    <div class="posts_detail">
+                                        <a title="回复次数" target="_self" href="topicdetail?TopicID={{m.TopicID}}&OCID={{OCID}}"><i class="icon_forum icon_info"></i>{{m.Responses}}</a>
+                                        <a title="浏览次数" target="_self" href="topicdetail?TopicID={{m.TopicID}}&OCID={{OCID}}"><i class="icon_forum icon_scan"></i>{{m.Clicks}}</a>
+                                    </div>
+                                </div>
+                            </li>
+                            @*<li ng-repeat="m in ForumTopic_Item">
+                                    <img src="http://placehold.it/40x40/cccccc" width="40" height="40" />
+                                    <p class="praise_amount"><i class="icon_24 icon_praise2"></i>12</p>
+                                    <div class="theme_detail">
+                                        <div class="post_name">
+                                            <a href="#">{{m.Title}}</a>
+                                            <span class="top_vertical">置顶</span>
+                                        </div>
+                                        <p><b>自由讨论区 [混合式课程设计与技术平台<1>班]</b>来自 [混合式课程设计与技术平台<1>班]  陈建 (2014/09/24) . 最后回复 诸葛孔明  2014/10/26</p>
+                                        <div class="posts_detail">
+                                            <a href="#"><i class="icon_forum icon_info"></i>12</a>
+                                            <a href="#"><i class="icon_forum icon_scan"></i>12</a>
+                                        </div>
+                                    </div>
+                                </li>*@
+                            @*<li>
+                                    <img src="http://placehold.it/40x40/cccccc" width="40" height="40" />
+                                    <p class="praise_amount"><i class="icon_24 icon_praise"></i></p>
+                                    <div class="theme_detail">
+                                        <div class="post_name">
+                                            <a href="#">大家好</a>
+                                            <span class="good_rate">精Ⅲ</span>
+                                        </div>
+                                        <p><b>自由讨论区 [混合式课程设计与技术平台<1>班]</b>来自 [混合式课程设计与技术平台<1>班]  陈建 (2014/09/24) . 最后回复 诸葛孔明  2014/10/26</p>
+                                        <div class="posts_detail">
+                                            <a href="#"><i class="icon_forum icon_info"></i>12</a>
+                                            <a href="#"><i class="icon_forum icon_scan"></i>12</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="http://placehold.it/40x40/cccccc" width="40" height="40" />
+                                    <p class="praise_amount"><i class="icon_24 icon_praise"></i></p>
+                                    <div class="theme_detail">
+                                        <div class="post_name">
+                                            <a href="#">大家好</a>
+                                        </div>
+                                        <p><b>自由讨论区 [混合式课程设计与技术平台<1>班]</b>来自 [混合式课程设计与技术平台<1>班]  陈建 (2014/09/24) . 最后回复 诸葛孔明  2014/10/26</p>
+                                        <div class="posts_detail">
+                                            <a href="#"><i class="icon_forum icon_info"></i>12</a>
+                                            <a href="#"><i class="icon_forum icon_scan"></i>12</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="http://placehold.it/40x40/cccccc" width="40" height="40" />
+                                    <p class="praise_amount"><i class="icon_24 icon_praise"></i></p>
+                                    <div class="theme_detail">
+                                        <div class="post_name">
+                                            <a href="#">大家好</a>
+                                        </div>
+                                        <p><b>自由讨论区 [混合式课程设计与技术平台<1>班]</b>来自 [混合式课程设计与技术平台<1>班]  陈建 (2014/09/24) . 最后回复 诸葛孔明  2014/10/26</p>
+                                        <div class="posts_detail">
+                                            <a href="#"><i class="icon_forum icon_info"></i>12</a>
+                                            <a href="#"><i class="icon_forum icon_scan"></i>12</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="http://placehold.it/40x40/cccccc" width="40" height="40" />
+                                    <p class="praise_amount"><i class="icon_24 icon_praise"></i></p>
+                                    <div class="theme_detail">
+                                        <div class="post_name">
+                                            <a href="#">大家好</a>
+                                        </div>
+                                        <p><b>自由讨论区 [混合式课程设计与技术平台<1>班]</b>来自 [混合式课程设计与技术平台<1>班]  陈建 (2014/09/24) . 最后回复 诸葛孔明  2014/10/26</p>
+                                        <div class="posts_detail">
+                                            <a href="#"><i class="icon_forum icon_info"></i>12</a>
+                                            <a href="#"><i class="icon_forum icon_scan"></i>12</a>
+                                        </div>
+                                    </div>
+                                </li>*@
+                        </ul>
+                        <a ng-init="PageShow=false" ng-show="PageSize<ForumTopic_Count&&!PageShow" class="more_theme" href="javascript:;" ng-click="ForumTopic_list_load();PageShow=true;">还有更多讨论想见你！</a>
+                        @*<a class="more_theme" href="javascript:;">没有更多讨论了哦！</a>*@
+                    </div>
+                    <div id="page" ng-show="PageShow&&ForumTopic_Count>10" style="margin-left:200px; margin-top:20px;"></div>
+                    <div class="no_discuss" ng-show="ForumTopic_Item.length==0">
+                        <img src="../../images/no_discuss.gif" width="81" height="88" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右侧主题内容结束-->
+
+    <div class="pop_bg"></div>
+    <div class="modal hide fade" style="width:800px;margin-left:-400px;" id="addForum" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <h4>{{Title}}</h4>
+        <i class="icon icon_close" data-dismiss="modal" aria-hidden="true"></i>
+        <div class="wrap_box">
+            <form name="myForm">
+                <div class="module_box">
+                    <dl>
+                        <dt>版块名称</dt>
+                        <dd><input class="module_name" type="text" maxlength="30" ng-model="ForumType.Title" placeholder="请输入板块名称[30个字以内]" style="width:640px;" required><span class="red red_label">*</span></dd>
+                    </dl>
+                    <dl>
+                        <dt>所属班级</dt>
+                        <dd>
+                            <select ng-model="selected" ng-options=" m.TeachingClassID as m.TeachingClassName for m in OCClass_Dropdown_Item" style="height:30px;"></select>
+
+                            <span style="color:#808080;">如不选，则默认为公共板块</span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>版块说明</dt>
+                        <dd><textarea class="module_explaination" ng-model="ForumType.Brief" maxlength="500" placeholder="请输入板块说明[500个字以内]" style="width:640px;"></textarea></dd>
+                    </dl>
+                    @*<p class="choice">
+                        <input ng-model="ForumType.IsEssence" type="checkbox">设为精选版块
+                    </p>*@
+                    <div class="btn_box">
+                        @*<a class="confirm" href="javascript:;" ng-click="AddOrEdit()" data-dismiss="modal" aria-hidden="true">确定</a>*@
+                        <input class="confirm" style="width: 70px; font-size:16px; color:#ffffff; height: 30px; border: 0; background: #475c7c;" value="确定" type="button" data-dismiss="modal" aria-hidden="true" ng-disabled="myForm.$invalid" ng-click="AddOrEdit();" />
+                        <a class="cancel" data-dismiss="modal" aria-hidden="true">取消</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@*<script src="~/js/jquery-1.8.3.min.js"></script>
+    <script src="~/js/forum.js"></script>*@

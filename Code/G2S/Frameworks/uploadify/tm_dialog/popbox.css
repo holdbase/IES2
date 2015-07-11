@@ -1,0 +1,103 @@
+@charset "utf-8";/* CSS Document */
+.tm_window_warp{width: 100%;height: 100%;overflow: hidden;}
+.tm_winow_popboxes{background-color:#ffffff;overflow-y:auto;overflow-x:hidden;}
+.tm_window_title,.tm_window_close,.popboxes_tit,.popboxes_close,.ico_warm,.ico_error,.ico_success,.ico_tip,.ico_question,.popbtn_yes,.popbtn_yes span,.popbtn_cancel,.popbtn_cancel span{background:url(bg_sppopbox.png) no-repeat -400px -400px;}
+
+.tm_window_box{width:360px;font-size:14px;color:#666666;background:#fff;border:1px solid #ccc;position:absolute;top:2;left:2;border-radius:4px;padding: 1px}
+.wrap_popboxes{/*width:360px;*/padding:6px;font-size:14px;color:#666666;background:rgba(0,0,0,0.1);filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#19000000',EndColorStr='#19000000');}
+.popboxes_tit,.tm_window_title{position:relative;height:22px;padding:7px 0 7px 12px;background-color:#ffffff;background-position:0 -360px;background-repeat:repeat-x;}
+.popboxes_tit strong{display:block;}
+.tm_window_title strong{display:block;}
+.popboxes_close,.tm_window_close{display:block;position:absolute;top:5px;right:10px;width:20px;padding:20px 0 0 0;background-position:0 -317px;}
+.popboxes_close:hover{background-position:0 -338px;}
+.tm_window_close:hover{background-position:0 -338px;}
+.box_popboxes{background-color:#ffffff;}
+#popbox_title{font-size:14px;font-weight:bold;}
+.popbox_apptit_selected{padding:6px 6px 11px 6px;background:#fff;border-bottom:0;border-left:1px solid #ccc;border-top:1px solid #ccc;border-right:1px solid #ccc}
+.popbox_apptit{padding:6px 6px 11px 6px;border-bottom:0;border-top:1px solid #ccc;border-right:1px solid #ccc;}
+.tm_apptit{position:relative;}
+.popboxes_main,.tm_window_main{position:relative;padding:0 0 30px 0;zoom:1;}
+.popboxes_con{padding:25px 10px 0 85px;line-height:22px;}
+.ico_warm,.ico_error,.ico_success,.ico_tip,.ico_question{display:block;position:absolute;top:21px;left:25px;}
+.ico_warm{width:42px;padding:37px 0 0 0;background-position:0 0;}
+.ico_error{width:38px;padding:38px 0 0 0;background-position:-50px 0;}
+.ico_success{width:42px;padding:34px 0 0 0;background-position:-100px 0;}
+.ico_tip{width:39px;padding:38px 0 0 0;background-position:-150px 0;}
+.ico_question{width:25px;padding:40px 0 0 0;background-position:-200px 0;}
+.popboxes_btn{padding:6px 0 6px 0;text-align:right;font-size:12px;border-top:1px solid #ccc;}
+.popbtn_yes,.popbtn_cancel{display:inline-block;padding:0 5px 0 2px;text-decoration:none;}
+.popbtn_yes span,.popbtn_cancel span{display:block;float:left;height:14px;padding:6px 16px 5px 14px;font-weight:normal;line-height:14px;cursor:pointer;}
+.popbtn_yes{background-position:0 -46px;}
+.popbtn_yes span{background-position:right -72px;color:#ffffff;}
+.popbtn_yes:hover{background-position:0 -98px;text-decoration:none;}
+.popbtn_yes:hover span{background-position:right -124px;}
+.popbox_input{border-color:#9A9A9A #CDCDCD #CDCDCD #9A9A9A;border-style:solid;border-width:1px;font:14px arial;padding:4px 5px;vertical-align:top;margin-top:4px;}
+.popbtn_cancel{background-position:0 -150px;margin:0 0px 0 4px;}
+.popbtn_cancel span{background-position:right -176px;color:#73797c;}
+.popbtn_cancel:hover{background-position:0 -202px;text-decoration:none;}
+.popbtn_cancel:hover span{background-position:right -228px;}
+.wrap_popboxes a{color:#666;text-decoration: none;}
+.wrap_popboxes a:hover{color:#333;text-decoration: underline;}
+
+#taskbar .taskbarLeft, #taskbar .taskbarRight { display:block; overflow:hidden; width:18px; height:29px; text-indent:-1000px; position:absolute; top:0;}
+#taskbar .taskbarLeft { background-position:0 0; left:2px; cursor:pointer;}
+#taskbar .taskbarLeft:Hover { background-position:0 -50px;}
+#taskbar .taskbarLeftDisabled { background-position:0 -100px; cursor:default;}
+#taskbar .taskbarRight { background-position:0 -150px; right:2px; cursor:pointer;}
+#taskbar .taskbarRight:Hover { background-position:0 -200px;}
+#taskbar .taskbarRightDisabled { background-position:0 -250px; cursor:default;}
+#taskbar, #taskbar li, #taskbar li .taskbutton { background:url(tm_window_taskbar.png) no-repeat;}
+#taskbar .close, #taskbar .restore, #taskbar .minimize { background:url(taskbar_icon.png) no-repeat;}
+#taskbar li .taskbutton span { color:#FFF;}
+#taskbar .taskbarLeft, #taskbar .taskbarRight { background:url(taskbar_control.png) no-repeat;}
+/* Icon */
+.tabsHeader li.main a span span, #taskbar li .taskbutton span { background:url(icon.png) no-repeat;}
+
+#taskbar { overflow:hidden; height:29px; border-style:solid; border-width: 0; border-color:#0f3255; background-color:#112746; background-repeat:repeat-x; position:absolute; z-index:30;}
+#taskbar .taskbarContent { display:block; overflow:hidden; height:29px; position:relative;}
+#taskbar .taskbarMargin { margin:0 20px;}
+#taskbar ul { position:absolute; width:10000px;}
+#taskbar li { float:left; height:27px; margin-left:2px; padding-left:5px; background-position:0 -50px; position:relative; cursor:pointer;}
+#taskbar li .taskbutton { float:left; display:block; overflow:hidden; height:27px; background-position:100% -100px;}
+#taskbar li .taskbutton span { display:block; overflow:hidden; width:70px; height:27px; line-height:29px; padding:0 25px 0 20px; background-position:3px -42px;}
+
+#taskbar .selected { background-position:0 -250px;}
+#taskbar .selected .taskbutton { background-position:100% -300px;}
+#taskbar li:hover { background-position:0 -150px;}
+#taskbar li:hover .taskbutton { background-position:100% -200px;}
+
+#taskbar .close { display:block; overflow:hidden; width:11px; height:11px; padding:0; text-indent:-1000px; position:absolute; top:5px;}
+#taskbar  .close { right:3px;}
+#taskbar .close:Hover { background-position:0 -50px;}
+
+
+.tm_window_title_btns .close, .tm_window_title_btns .maximize, .tm_window_title_btns.restore, .tm_window_title_btns .minimize { display:block; overflow:hidden; text-indent:-1000px; width:19px; height:19px; position:absolute; top:5px;}
+.tm_window_title_btns .restore { right:14px; background-position:0 -100px;}
+.tm_window_title_btns .restore:Hover { background-position:0 -150px;}
+.tm_window_title_btns .minimize { right:14px; background-position:0 -200px;}
+.tm_window_title_btns .minimizeHover { background-position:0 -250px;}
+.tm_window_title_btns .maximize,.tm_window_title_btns .minimize,.tm_window_title_btns .close,.tm_window_title_btns .restore{ background:url('tm_window_mcm.png') no-repeat;}
+.tm_window_title_btns .close { background-position:0 0; right:4px;}
+.tm_window_title_btns .close:hover { background-position:0 -50px;}
+.tm_window_title_btns .maximize { background-position:0 -100px; right:23px;}
+.tm_window_title_btns .maximize:hover { background-position:0 -150px;}
+.tm_window_title_btns .restore { background-position:0 -200px; right:23px;}
+.tm_window_title_btns .restore:hover { background-position:0 -250px;}
+.tm_window_title_btns .minimize { background-position:0 -300px; right:42px;}
+.tm_window_title_btns .minimize:hover { background-position:0 -350px;}
+.tm_resizable{display:none; overflow:hidden; border-style:dashed; border-width:1px; opacity:0.5; filter:alpha(opacity=50); position:absolute; top:0; left:0; z-index:999;}
+.tm_resizable{ border-color:#081629; background:#c3d7dc;}
+
+/*8arrow*/
+.wrap_popboxes .resizable_f_r{background-position:0 -400px;height:11px;width:11px;}
+.resizable{border-style:dashed;border-width:1px;display:none;left:0;opacity:0.5;overflow:hidden;position:absolute;top:0;z-index:100;}
+.resizable_h_l,.resizable_h_r,.resizable_h_c,.resizable_c_l,.resizable_c_r,.resizable_f_l,.resizable_f_r,.resizable_f_c{display:block;height:6px;overflow:hidden;position:absolute;width:6px;}
+.resizable_h_l{cursor:nw-resize;left:0;top:0;z-index:2;}
+.resizable_h_r{cursor:ne-resize;right:0;top:0;z-index:2;}
+.resizable_h_c{cursor:n-resize;left:0;top:0px;width:100%;z-index:1;}
+.resizable_c_l{cursor:w-resize;left:0;top:0;height:100%;z-index:1;}
+.resizable_c_r{cursor:e-resize;right:0;top:0;height:100%;z-index:1;}
+.resizable_f_l{bottom:0;cursor:sw-resize;left:0;z-index:2;}
+.resizable_f_r{bottom:0;cursor:se-resize;right:0;z-index:2;}
+.resizable_f_c{bottom:0;cursor:s-resize;left:0;width:100%;z-index:1;}
+/*8arrow*/
