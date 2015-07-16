@@ -1,18 +1,19 @@
 <div class="micro_wrap">
-	<div class="micro_index">
-		<h2 class="course_tit">微课程</h2>
+    <div class="micro_index">
+        <h2 class="course_tit">微课程</h2>
         <ul class="step_nav">
-        	<li class="first_child index2"><a href="javascript:;">1.确认课程信息</a><i></i></li>
-            <li class="active index1"><a href="javascript:;">2.完成</a></li>
+            <li ng-class="{active:$state.includes('course.submit')}" class="first_child index2"><a style="cursor:pointer;" ui-sref="course.submit">1.确认课程信息</a><i></i></li>
+            <li ng-class="{active:$state.includes('course.finished')}" class="index1"><a style="cursor:pointer;" ui-sref="course.finished">2.完成</a></li>
         </ul>
         <div class="lecture_wrap">
-        	<div class="complete_tip">
-        		<img src="../../Images/micro_expression.jpg" width="125" height="111" alt="">
+            <div class="complete_tip">
+                <img src="../../Images/micro_expression.jpg" width="125" height="111" alt="">
                 <div class="complete_text">
-                	<b>恭喜你，你已经成功完成了课程的申请。</b>
-                    <p>你已经被录取！你的申请已经审核通过，我们已经向您发送了录取消息。请在"消息中心"里查阅。本门课程已经收入到你的"学生空间"课程列表中，你现在就可以开始学习了！希望早日在课程中看到你！
-</p>
-					<a href="#" target="_blank">开始学习</a>
+                    <b>恭喜你，你已经成功完成了课程的申请。</b>
+                    <p>
+                        你已经被录取！你的申请已经审核通过，我们已经向您发送了录取消息。请在"消息中心"里查阅。本门课程已经收入到你的"学生空间"课程列表中，你现在就可以开始学习了！希望早日在课程中看到你！
+                    </p>
+                    <a href="#" target="_blank">开始学习</a>
                 </div>
             </div>
         </div>
