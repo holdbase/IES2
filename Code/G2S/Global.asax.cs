@@ -27,8 +27,8 @@ namespace App.G2S
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //BundleTable.EnableOptimizations = true;
             //BundleTable.EnableOptimizations = false;
-            IES.Service.AuService.AuLoad(); //用户授权信息加载
-            GetAttachList();
+          //  IES.Service.AuService.AuLoad(); //用户授权信息加载
+         //   GetAttachList();
             //RegisterRoutes(RouteTable.Routes);
 
 

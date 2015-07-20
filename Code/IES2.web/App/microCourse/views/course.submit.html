@@ -2,8 +2,8 @@
 	<div class="micro_index">
 		<h2 class="course_tit">微课程</h2>
         <ul class="step_nav">
-        	<li class="active first_child index2"><a href="javascript:;">1.确认课程信息</a></li>
-            <li class="index1"><a href="javascript:;">2.完成</a></li>
+            <li ng-class="{active:$state.includes('course.submit')}" class="first_child index2"><a style="cursor:pointer;" ui-sref="course.submit">1.确认课程信息</a><i></i></li>
+            <li ng-class="{active:$state.includes('course.finished')}" class="index1"><a style="cursor:pointer;" ui-sref="course.finished">2.完成</a></li>
         </ul>
         <div class="lecture_wrap">
         	<p class="lecture_tip">亲爱的 <b>杨洋</b>，你的课程申请信息如下：</p>
