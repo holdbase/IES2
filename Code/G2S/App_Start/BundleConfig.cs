@@ -98,6 +98,18 @@ namespace App.G2S
                    "~/scripts/controllers/Resource/Paper/PaperIndexController.js",
                    "~/scripts/controllers/Resource/Paper/BrowsePaper.js",
                    "~/scripts/controllers/Resource/Paper/BrowseCard.js",
+
+                   "~/micro/controllers/micro.base.controller.js",
+                   "~/micro/controllers/micro.create.controller.js",
+                   "~/micro/controllers/micro.finished.controller.js",
+                   "~/micro/controllers/micro.overview.controller.js",
+                   "~/micro/controllers/micro.publish.controller.js",
+                   "~/micro/controllers/micro.submit.controller.js",
+                   "~/micro/controllers/micro.test.controller.js",
+                   "~/micro/controllers/micro.view.controller.js",
+                   "~/micro/micro.routes.js",
+                   "~/micro/micro.services.js",
+
                   "~/Template/template.js",
                   "~/scripts/app.js"
 
