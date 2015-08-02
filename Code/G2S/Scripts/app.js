@@ -17,6 +17,7 @@ var appModule = angular.module('app', [
     'app.affairs',
     'angularFileUpload',
     'app.oc.site.preview',
+    'microModule'
 ]);
 // 'app.oc.team'
 appModule.config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {

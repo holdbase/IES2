@@ -99,6 +99,7 @@ namespace App.G2S
                    "~/scripts/controllers/Resource/Paper/BrowsePaper.js",
                    "~/scripts/controllers/Resource/Paper/BrowseCard.js",
 
+                   "~/micro/micro.services.js",
                    "~/micro/controllers/micro.base.controller.js",
                    "~/micro/controllers/micro.create.controller.js",
                    "~/micro/controllers/micro.finished.controller.js",
@@ -108,7 +109,6 @@ namespace App.G2S
                    "~/micro/controllers/micro.test.controller.js",
                    "~/micro/controllers/micro.view.controller.js",
                    "~/micro/micro.routes.js",
-                   "~/micro/micro.services.js",
 
                   "~/Template/template.js",
                   "~/scripts/app.js"
