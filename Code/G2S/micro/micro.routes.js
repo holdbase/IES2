@@ -1,7 +1,7 @@
 ﻿
 'use strict';
 
-angular.module('microModule').config(['$stateProvider', function (
+angular.module('app').config(['$stateProvider', function (
   $stateProvider) {
 
     $stateProvider
@@ -28,7 +28,7 @@ angular.module('microModule').config(['$stateProvider', function (
       })
       .state('micro.create', {
           url: '/create',
-          templateUrl: '/micro/views/micro.create.html',
+          templateUrl: '/views/Micro/microCreate',
           controller: 'MicroCreateController'
       })
       .state('micro.test', {

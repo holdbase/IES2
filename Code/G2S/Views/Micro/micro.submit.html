@@ -1,0 +1,30 @@
+<div class="micro_wrap">
+	<div class="micro_index">
+		<h2 class="course_tit">微课程</h2>
+        <ul class="step_nav">
+            <li ng-class="{active:$state.includes('course.submit')}" class="first_child index2"><a style="cursor:pointer;" ui-sref="course.submit">1.确认课程信息</a><i></i></li>
+            <li ng-class="{active:$state.includes('course.finished')}" class="index1"><a style="cursor:pointer;" ui-sref="course.finished">2.完成</a></li>
+        </ul>
+        <div class="lecture_wrap">
+        	<p class="lecture_tip">亲爱的 <b>杨洋</b>，你的课程申请信息如下：</p>
+        	<div class="lecture_box">
+            	<img src="http://placehold.it/205x110/cccccc" width="205" height="110" alt="">
+                <div class="lecture_info">
+                	<b>《高等数学微课程》</b>
+                    <p>
+                    	<span>课程分类：经济学&gt;金融学类</span>
+                        <span>主讲人： &nbsp;孙慧丽</span>
+                        <span>学习周期：10天</span>
+                        <span>开课时间：2015-05-06</span>
+                        <span>学习班级：金融管理0701、金融管理0702</span>
+                    </p>
+                </div>
+            </div>
+            <div class="button_box">
+                <a class="cancel_btn" href="javascript:;">取消</a>
+                <a class="submit_btn" href="javascript:;">确认提交</a>
+            </div>
+        </div>
+
+    </div>
+</div>

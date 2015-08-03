@@ -108,10 +108,10 @@ namespace App.G2S
                    "~/micro/controllers/micro.submit.controller.js",
                    "~/micro/controllers/micro.test.controller.js",
                    "~/micro/controllers/micro.view.controller.js",
-                   "~/micro/micro.routes.js",
 
                   "~/Template/template.js",
                   "~/scripts/app.js"
+                   //"~/micro/micro.routes.js"
 
 
 
@@ -167,6 +167,7 @@ namespace App.G2S
             bundles.Add(new StyleBundle("~/content/css/Layout3").Include(
                    "~/Css/footer.css",
                    "~/Css/header.css",
+                   "~/Css/micro.css",
                 //"~/Css/index.css",
                 //  "~/Css/side_left.css",
                 // "~/Css/reverse.css",

@@ -110,6 +110,18 @@ appModule.config(['$stateProvider', '$locationProvider', function ($stateProvide
         //浏览试卷
         .state('BrowsePaper', { url: '/Resource/Paper/BrowsePaper', templateUrl: '/views/Resource/Paper/BrowsePaper', controller: 'BrowsePaperController' })
 
+          .state('micro', {
+              abstract: true,
+              url: '/micro',
+              templateUrl: '/micro/views/micro.base.html',
+              controller: 'MicroBaseController'
+          })
+      .state('micro.create', {
+          url: '/create',
+          templateUrl: '/views/Micro/microCreate',
+          controller: 'MicroCreateController'
+      })
+
         .state('otherwise', {
             url: '*path',
             templateUrl: '/views/404',

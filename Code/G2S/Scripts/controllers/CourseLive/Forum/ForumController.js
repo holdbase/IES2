@@ -12,6 +12,10 @@ forumModule.controller('ForumCtrl', ['$scope', '$state', 'forumProviderUrl', fun
     $scope.ForumTopic_Item = []; //论题
     $scope.ForumTypeID = ($G2S.request("ForumTypeID") == "" || $G2S.request("ForumTypeID") == null || $G2S.request("ForumTypeID") == undefined) ? 0 : $G2S.request("ForumTypeID");
 
+    $scope.go = function (stateName) {
+        $state.go(stateName);
+    }
+
     try {
         $scope.OCID = $(".exercise_nav_list .active a").attr("href").split("?")[1].split("=")[1];
     } catch (e) {

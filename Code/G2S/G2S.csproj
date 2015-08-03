@@ -1884,6 +1884,16 @@
     <Content Include="Images\main_bg.gif" />
     <Content Include="Images\main_bg2.gif" />
     <Content Include="Images\menuLineBg.png" />
+    <Content Include="Images\micro_add.png" />
+    <Content Include="Images\micro_editmodule.jpg" />
+    <Content Include="Images\micro_expression.jpg" />
+    <Content Include="Images\micro_expression2.png" />
+    <Content Include="Images\micro_icon.png" />
+    <Content Include="Images\micro_learning_btn.png" />
+    <Content Include="Images\micro_select.png" />
+    <Content Include="Images\micro_type.gif" />
+    <Content Include="Images\micro_video_btn.png" />
+    <Content Include="Images\micro_yuan.png" />
     <Content Include="Images\model_text.gif" />
     <Content Include="Images\module1.gif" />
     <Content Include="Images\module2.gif" />
@@ -2012,6 +2022,16 @@
     <Content Include="js\TopMaster.js" />
     <Content Include="login.aspx" />
     <Content Include="Log\ExceptionLog.txt" />
+    <Content Include="micro\views\micro.base.html" />
+    <Content Include="micro\views\micro.create.html" />
+    <Content Include="micro\views\micro.finished.html" />
+    <Content Include="micro\views\micro.library.html" />
+    <Content Include="micro\views\micro.overview.create.html" />
+    <Content Include="micro\views\micro.overview.html" />
+    <Content Include="micro\views\micro.publish.html" />
+    <Content Include="micro\views\micro.submit.html" />
+    <Content Include="micro\views\micro.test.html" />
+    <Content Include="micro\views\micro.view.html" />
     <Content Include="OCTheme\fx_Black_jrqh_280px\back.jpg" />
     <Content Include="OCTheme\fx_Black_jrqh_280px\banner.jpg" />
     <Content Include="OCTheme\fx_Black_jrqh_280px\skin.jpg" />
@@ -2206,16 +2226,6 @@
     <Content Include="micro\controllers\micro.view.controller.js" />
     <Content Include="micro\micro.routes.js" />
     <Content Include="micro\micro.services.js" />
-    <Content Include="micro\views\micro.base.html" />
-    <Content Include="micro\views\micro.create.html" />
-    <Content Include="micro\views\micro.finished.html" />
-    <Content Include="micro\views\micro.library.html" />
-    <Content Include="micro\views\micro.overview.create.html" />
-    <Content Include="micro\views\micro.overview.html" />
-    <Content Include="micro\views\micro.publish.html" />
-    <Content Include="micro\views\micro.submit.html" />
-    <Content Include="micro\views\micro.test.html" />
-    <Content Include="micro\views\micro.view.html" />
     <Content Include="Template\iesExcelUploader.html" />
     <Content Include="Template\iesFilePreview.html" />
     <Content Include="Template\iesFileUploader.html" />
@@ -2286,6 +2296,7 @@
     <Content Include="DataProvider\OC\Class\Web.config" />
     <Content Include="DataProvider\User\Web.config" />
     <Content Include="Images\Web.config" />
+    <Content Include="micro\views\microCreate.cshtml" />
     <None Include="Properties\PublishProfiles\g2s.pubxml" />
     <None Include="Properties\PublishProfiles\g2s_wsh.pubxml" />
     <None Include="Properties\PublishProfiles\qb.pubxml" />
@@ -2307,6 +2318,16 @@
     <Content Include="Views\User\AddressBook.js" />
     <Content Include="Views\User\Histcontacts.js" />
     <Content Include="Views\User\MyGroup.js" />
+    <Content Include="Views\Micro\micro.base.html" />
+    <Content Include="Views\Micro\micro.create.html" />
+    <Content Include="Views\Micro\micro.finished.html" />
+    <Content Include="Views\Micro\micro.library.html" />
+    <Content Include="Views\Micro\micro.overview.create.html" />
+    <Content Include="Views\Micro\micro.overview.html" />
+    <Content Include="Views\Micro\micro.publish.html" />
+    <Content Include="Views\Micro\micro.submit.html" />
+    <Content Include="Views\Micro\micro.test.html" />
+    <Content Include="Views\Micro\micro.view.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2399,6 +2420,7 @@
     <Content Include="Views\Shared\Web.config" />
     <Content Include="Views\OC\MC\Index.cshtml" />
     <Content Include="Template\Web.config" />
+    <Content Include="Views\Micro\microCreate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
