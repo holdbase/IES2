@@ -31,6 +31,5 @@ appModuleMicro.run(['$templateCache', '$rootScope', '$state', '$stateParams',
 
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $rootScope.layout = toState.layout;
-                console.log('stateChangeSuccess');
             });
         }]);

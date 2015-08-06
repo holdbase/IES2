@@ -2028,6 +2028,7 @@
     <Content Include="micro\css\header.css" />
     <Content Include="micro\css\micro.css" />
     <Content Include="micro\css\side_left.css" />
+    <Content Include="micro\helper.js" />
     <Content Include="micro\Images\add_bg.gif" />
     <Content Include="micro\Images\add_bg_hover.gif" />
     <Content Include="micro\Images\add_new.jpg" />

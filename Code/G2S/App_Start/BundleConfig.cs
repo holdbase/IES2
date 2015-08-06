@@ -201,6 +201,7 @@ namespace App.G2S
 
             //¶ÔÓ¦Î¢¿ÎµÄjs
             bundles.Add(new ScriptBundle("~/js/micro").Include( 
+                   "~/micro/helper.js",
                    "~/micro/microApp.js",
                    "~/micro/micro.services.js",
                    "~/micro/controllers/micro.base.controller.js",

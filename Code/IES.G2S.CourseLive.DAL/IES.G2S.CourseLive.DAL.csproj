@@ -65,6 +65,7 @@
     <Compile Include="Forum\ForumTypeDAL.cs" />
     <Compile Include="Forum\ForumTopicDAL.cs" />
     <Compile Include="Forum\ResponseDAL.cs" />
+    <Compile Include="Micro\MicroDAL.cs" />
     <Compile Include="Notes\NotesDAL.cs" />
     <Compile Include="OC\OCClassDAL.cs" />
     <Compile Include="PBL\GroupAffairsDAL.cs" />
