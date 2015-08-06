@@ -109,19 +109,7 @@ appModule.config(['$stateProvider', '$locationProvider', function ($stateProvide
         .state('PaperAdd', { url: '/Resource/Paper/PaperAdd', templateUrl: '/views/Resource/Paper/PaperAdd', controller: 'PaperAddController' })
         //浏览试卷
         .state('BrowsePaper', { url: '/Resource/Paper/BrowsePaper', templateUrl: '/views/Resource/Paper/BrowsePaper', controller: 'BrowsePaperController' })
-
-          .state('micro', {
-              abstract: true,
-              url: '/micro',
-              templateUrl: '/micro/views/micro.base.html',
-              controller: 'MicroBaseController'
-          })
-      .state('micro.create', {
-          url: '/create',
-          templateUrl: '/views/Micro/microCreate',
-          controller: 'MicroCreateController'
-      })
-
+ 
         .state('otherwise', {
             url: '*path',
             templateUrl: '/views/404',
@@ -148,4 +136,51 @@ appModule.config(['$stateProvider', '$locationProvider', function ($stateProvide
 
             $rootScope.$on('$locationChangeStart', function (event) {
             })
+        }]);
+
+
+
+var appModuleMicro = angular.module('microModule', [
+    'ui.router',
+    'app.filters',
+    'app.directives',
+    'app.services',
+    'angularFileUpload'
+]);
+
+appModuleMicro.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
+
+    $urlRouterProvider.when("", "/");
+
+    $stateProvider
+       .state('micro', {
+           abstract: true,
+           url: '/micro',
+           templateUrl: '/micro/views/microBase',
+           controller: 'MicroBaseController'
+       })
+      .state('micro.create', {
+          url: '/create',
+          templateUrl: '/views/Micro/microCreate',
+          controller: 'MicroCreateController'
+      })
+    ;
+}]).run(['$templateCache', '$rootScope', '$state', '$stateParams', 'baseService',
+        function ($templateCache, $rootScope, $state, $stateParams, baseService) {
+
+            var view = angular.element('#ui-view');
+            $templateCache.put(view.data('tmpl-url'), view.html());
+
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+            $rootScope.baseService = baseService;
+
+            $rootScope.$on('$routeChangeStart', function (evt, next, current) {
+                console.log('route begin change');
+            });
+
+            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+                $rootScope.layout = toState.layout;
+                console.log('route have already changed');
+            });
         }]);

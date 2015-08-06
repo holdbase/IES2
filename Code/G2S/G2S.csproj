@@ -2022,6 +2022,12 @@
     <Content Include="js\TopMaster.js" />
     <Content Include="login.aspx" />
     <Content Include="Log\ExceptionLog.txt" />
+    <Content Include="micro\css\certificate.css" />
+    <Content Include="micro\css\common.css" />
+    <Content Include="micro\css\footer.css" />
+    <Content Include="micro\css\header.css" />
+    <Content Include="micro\css\micro.css" />
+    <Content Include="micro\css\side_left.css" />
     <Content Include="micro\views\micro.base.html" />
     <Content Include="micro\views\micro.create.html" />
     <Content Include="micro\views\micro.finished.html" />
@@ -2421,6 +2427,7 @@
     <Content Include="Views\OC\MC\Index.cshtml" />
     <Content Include="Template\Web.config" />
     <Content Include="Views\Micro\microCreate.cshtml" />
+    <Content Include="Views\Micro\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
