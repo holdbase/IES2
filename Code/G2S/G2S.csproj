@@ -2467,16 +2467,6 @@
     <Content Include="Views\User\AddressBook.js" />
     <Content Include="Views\User\Histcontacts.js" />
     <Content Include="Views\User\MyGroup.js" />
-    <Content Include="Views\Micro\micro.base.html" />
-    <Content Include="Views\Micro\micro.create.html" />
-    <Content Include="Views\Micro\micro.finished.html" />
-    <Content Include="Views\Micro\micro.library.html" />
-    <Content Include="Views\Micro\micro.overview.create.html" />
-    <Content Include="Views\Micro\micro.overview.html" />
-    <Content Include="Views\Micro\micro.publish.html" />
-    <Content Include="Views\Micro\micro.submit.html" />
-    <Content Include="Views\Micro\micro.test.html" />
-    <Content Include="Views\Micro\micro.view.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2569,8 +2559,6 @@
     <Content Include="Views\Shared\Web.config" />
     <Content Include="Views\OC\MC\Index.cshtml" />
     <Content Include="Template\Web.config" />
-    <Content Include="Views\Micro\microCreate.cshtml" />
-    <Content Include="Views\Micro\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutMicro.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
