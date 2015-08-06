@@ -99,15 +99,7 @@ namespace App.G2S
                    "~/scripts/controllers/Resource/Paper/BrowsePaper.js",
                    "~/scripts/controllers/Resource/Paper/BrowseCard.js",
 
-                   "~/micro/micro.services.js",
-                   "~/micro/controllers/micro.base.controller.js",
-                   "~/micro/controllers/micro.create.controller.js",
-                   "~/micro/controllers/micro.finished.controller.js",
-                   "~/micro/controllers/micro.overview.controller.js",
-                   "~/micro/controllers/micro.publish.controller.js",
-                   "~/micro/controllers/micro.submit.controller.js",
-                   "~/micro/controllers/micro.test.controller.js",
-                   "~/micro/controllers/micro.view.controller.js",
+                 
 
                   "~/Template/template.js",
                   "~/scripts/app.js"
@@ -192,6 +184,33 @@ namespace App.G2S
                 "~/Css/side_left.css",
                 "~/Css/record.css",
                 "~/Css/footer.css"
+            ));
+
+
+
+            //对应微课的样式
+            bundles.Add(new StyleBundle("~/content/css/LayoutMicro").Include(
+                "~/micro/Css/header.css",
+                "~/micro/Css/footer.css",
+                "~/micro/Css/certificate.css",
+                "~/micro/Css/common.css",
+                "~/micro/Css/side_left.css",
+                "~/micro/Css/micro.css"
+            ));
+
+            //对应微课的js
+            bundles.Add(new ScriptBundle("~/js/micro").Include( 
+                   "~/micro/microApp.js",
+                   "~/micro/micro.services.js",
+                   "~/micro/controllers/micro.base.controller.js",
+                   "~/micro/controllers/micro.create.controller.js",
+                   "~/micro/controllers/micro.finished.controller.js",
+                   "~/micro/controllers/micro.overview.controller.js",
+                   "~/micro/controllers/micro.publish.controller.js",
+                   "~/micro/controllers/micro.submit.controller.js",
+                   "~/micro/controllers/micro.test.controller.js",
+                   "~/micro/controllers/micro.view.controller.js",
+                   "~/micro/micro.routes.js"
             ));
         }
     }

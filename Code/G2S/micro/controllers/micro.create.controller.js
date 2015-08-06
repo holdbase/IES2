@@ -6,4 +6,6 @@ angular.module('microModule').controller('MicroCreateController',
     $scope.go = function (stateName) {
         $state.go(stateName);
     }
+
+    console.log('dddddddddddddd');
 }]);

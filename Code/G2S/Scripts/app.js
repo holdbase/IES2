@@ -16,8 +16,7 @@ var appModule = angular.module('app', [
     'app.moocpreview',
     'app.affairs',
     'angularFileUpload',
-    'app.oc.site.preview',
-    'microModule'
+    'app.oc.site.preview'
 ]);
 // 'app.oc.team'
 appModule.config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
@@ -139,48 +138,3 @@ appModule.config(['$stateProvider', '$locationProvider', function ($stateProvide
         }]);
 
 
-
-var appModuleMicro = angular.module('microModule', [
-    'ui.router',
-    'app.filters',
-    'app.directives',
-    'app.services',
-    'angularFileUpload'
-]);
-
-appModuleMicro.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
-
-    $urlRouterProvider.when("", "/");
-
-    $stateProvider
-       .state('micro', {
-           abstract: true,
-           url: '/micro',
-           templateUrl: '/micro/views/microBase',
-           controller: 'MicroBaseController'
-       })
-      .state('micro.create', {
-          url: '/create',
-          templateUrl: '/views/Micro/microCreate',
-          controller: 'MicroCreateController'
-      })
-    ;
-}]).run(['$templateCache', '$rootScope', '$state', '$stateParams', 'baseService',
-        function ($templateCache, $rootScope, $state, $stateParams, baseService) {
-
-            var view = angular.element('#ui-view');
-            $templateCache.put(view.data('tmpl-url'), view.html());
-
-            $rootScope.$state = $state;
-            $rootScope.$stateParams = $stateParams;
-            $rootScope.baseService = baseService;
-
-            $rootScope.$on('$routeChangeStart', function (evt, next, current) {
-                console.log('route begin change');
-            });
-
-            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-                $rootScope.layout = toState.layout;
-                console.log('route have already changed');
-            });
-        }]);
