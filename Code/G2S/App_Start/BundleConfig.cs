@@ -195,6 +195,7 @@ namespace App.G2S
                 "~/micro/Css/certificate.css",
                 "~/micro/Css/common.css",
                 "~/micro/Css/side_left.css",
+                //"~/Css/class.css",
                 "~/micro/Css/micro.css"
             ));
 

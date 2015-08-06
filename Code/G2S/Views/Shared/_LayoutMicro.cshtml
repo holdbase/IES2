@@ -19,17 +19,17 @@
     <div class="wrap">
         @RenderPage("Top.cshtml")
         @*<div ui-view>
-            @RenderBody()
-        </div>*@
+                @RenderBody()
+            </div>*@
         <div class="micro_wrap">
             <div class="micro_index micro_index2">
                 <h2 class="course_tit">微课程</h2>
                 <div class="step_wrap">
                     <ul class="step_nav">
                         <li ng-class="{active:$state.includes('microCreate')}" class="first_child index4"><a style="cursor:pointer;" ui-sref="microCreate">1.填写基本信息</a></li>
-                        <li ng-class="{active:$state.includes('course.test')}" class="index3"><a style="cursor:pointer;" ui-sref="course.test">2.添加测试</a></li>
-                        <li ng-class="{active:$state.includes('course.overview')}" class="index2"><a style="cursor:pointer;" ui-sref="course.overview">3.见面课设计</a></li>
-                        <li ng-class="{active:$state.includes('course.publish')}"><a style="cursor:pointer;" ui-sref="course.publish">4.申请发布</a></li>
+                        <li ng-class="{active:$state.includes('microTest')}" class="index3"><a style="cursor:pointer;" ui-sref="microTest">2.添加测试</a></li>
+                        @*<li ng-class="{active:$state.includes('course.overview')}" class="index2"><a style="cursor:pointer;" ui-sref="course.overview">3.见面课设计</a></li>*@
+                        <li ng-class="{active:$state.includes('microPublish')}"><a style="cursor:pointer;" ui-sref="microPublish">4.申请发布</a></li>
                     </ul>
                     <div class="course_btn">
                         <a class="icon_24 icon_list" href="#"></a>
@@ -38,7 +38,7 @@
                         <a href="https://www.baidu.com/" target="_blank">如何创建好课程？</a>
                     </div>
                     <div ui-view>
-                            @RenderBody()
+                        @RenderBody()
                     </div>
                 </div>
             </div>

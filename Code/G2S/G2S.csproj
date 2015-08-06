@@ -2171,15 +2171,11 @@
     <Content Include="micro\Images\yuan.png" />
     <Content Include="micro\Images\yuan_hover.png" />
     <Content Include="micro\microApp.js" />
-    <Content Include="micro\views\micro.base.html" />
-    <Content Include="micro\views\micro.create.html" />
     <Content Include="micro\views\micro.finished.html" />
     <Content Include="micro\views\micro.library.html" />
     <Content Include="micro\views\micro.overview.create.html" />
     <Content Include="micro\views\micro.overview.html" />
-    <Content Include="micro\views\micro.publish.html" />
     <Content Include="micro\views\micro.submit.html" />
-    <Content Include="micro\views\micro.test.html" />
     <Content Include="micro\views\micro.view.html" />
     <Content Include="OCTheme\fx_Black_jrqh_280px\back.jpg" />
     <Content Include="OCTheme\fx_Black_jrqh_280px\banner.jpg" />
@@ -2365,7 +2361,6 @@
     <Content Include="Scripts\controllers\Home\StudentController.js" />
     <Content Include="Scripts\controllers\OC\MC\MCController.js" />
     <Content Include="Scripts\controllers\OC\Site\SitePreviewController.js" />
-    <Content Include="micro\controllers\micro.base.controller.js" />
     <Content Include="micro\controllers\micro.create.controller.js" />
     <Content Include="micro\controllers\micro.finished.controller.js" />
     <Content Include="micro\controllers\micro.overview.controller.js" />
@@ -2448,6 +2443,8 @@
     <Content Include="micro\views\microCreate.cshtml" />
     <Content Include="micro\Images\vssver2.scc" />
     <Content Include="micro\views\microBase.cshtml" />
+    <Content Include="micro\views\microTest.cshtml" />
+    <Content Include="micro\views\microPublish.cshtml" />
     <None Include="Properties\PublishProfiles\g2s.pubxml" />
     <None Include="Properties\PublishProfiles\g2s_wsh.pubxml" />
     <None Include="Properties\PublishProfiles\qb.pubxml" />

@@ -12,6 +12,16 @@ angular.module('microModule').config(['$stateProvider', function ($stateProvider
           templateUrl: '/micro/views/microCreate',
           controller: 'MicroCreateController'
       })
+      .state('microTest', {
+          url: '/micro/test',
+          templateUrl: '/micro/views/microTest',
+          controller: 'MicroTestController'
+      })
+      .state('microPublish', {
+          url: '/micro/publish',
+          templateUrl: '/micro/views/microPublish',
+          controller: 'MicroPublishController'
+      })
     //$stateProvider
     //  .state('microView', {
     //      url: '/micro/view',

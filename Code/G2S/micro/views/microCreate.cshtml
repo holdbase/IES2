@@ -10,6 +10,20 @@
                 <span>经济学&gt;金融学类<a href="javascript:;">x</a></span>
                 <a class="select_btn" href="javascript:;"></a>
             </div>
+            @*<div class="type_list assort_box">
+                <div class="assort_item">
+                    <input class="course_sort" ng-mousedown="ShowSpecialtyType()" value="{{CourseNew.SelectValue}}" type="text">
+                    <span class="select_btn" ng-click="ShowSpecialtyType()">+</span>
+                </div>
+                <div class="select_box" ng-show="ShowType" ng-mouseleave="ShowSpecialtyType()">
+                    <select size="7" ng-model="ParentSpecialtyType" ng-change="ShowSelectInfo(0)" ng-options="m.SpecialtyTypeName for m in SpecialtyType|listFilter5:'=':0">
+                        <option value="">请选择</option>
+                    </select>
+                    <select size="7" ng-model="ChildSpecialtyType" ng-change="ShowSelectInfo(1)" ng-click="ShowSpecialtyType()" ng-options="m.SpecialtyTypeName for m in SpecialtyType|listFilter5:'=':ParentSpecialtyType.SpecialtyTypeID">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>*@
             <ul class="type_list">
                 <li>哲学</li>
                 <li>
@@ -41,7 +55,7 @@
         <label>课程简介：</label>
         <img src="../../Images/micro_editmodule.jpg" width="700" height="280" alt="">
     </div>
-    <div class="create_item">
+    <div class="create_item"> 
         <label>主讲人：</label>
         <div class="teacher_box">
             <div class="teacher_list">
@@ -55,7 +69,6 @@
                 </div>
                 <div class="operation_btn">
                     <a href="javascript:;"><i class="icon_m icon_add"></i></a>
-                    <a href="javascript:;"><i class="icon_m icon_d"></i></a>
                 </div>
             </div>
             <div class="teacher_list">
@@ -68,7 +81,6 @@
                     <textarea placeholder="请输入主讲人描述[少于500字]"></textarea>
                 </div>
                 <div class="operation_btn">
-                    <a href="javascript:;"><i class="icon_m icon_add"></i></a>
                     <a href="javascript:;"><i class="icon_m icon_d"></i></a>
                 </div>
             </div>
