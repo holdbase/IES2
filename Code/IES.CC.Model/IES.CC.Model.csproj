@@ -75,6 +75,7 @@
     <Compile Include="Forum\ForumVoteInfo.cs" />
     <Compile Include="Forum\ForumVoteItem.cs" />
     <Compile Include="Forum\ForumVoteResponse.cs" />
+    <Compile Include="Micro\OCMicro.cs" />
     <Compile Include="OC\AppOC.cs" />
     <Compile Include="OC\AppOCFCGroup.cs" />
     <Compile Include="OC\Folder.cs" />
